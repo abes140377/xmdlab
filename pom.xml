@@ -112,9 +112,10 @@
         <module>xmdlab-metamodels</module>
         <module>xmdlab-cartridge-generator</module>
         <module>xmdlab-cartridges</module>
-        <module>xmdlab-examples</module>
         <!-- <module>xmdlab-features</module> -->
         <!-- <module>xmdlab-plugins</module> -->
+        <module>xmdlab-maven</module>
+        <module>xmdlab-examples</module>
       </modules>
       <build>
         <plugins>
@@ -624,22 +625,22 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
           </exclusion>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
+          <!-- <exclusion> -->
+          <!-- <groupId>log4j</groupId> -->
+          <!-- <artifactId>log4j</artifactId> -->
+          <!-- </exclusion> -->
         </exclusions>
       </dependency>
       <dependency>
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>org.eclipse.xtend.core</artifactId>
         <version>${xtext-version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
-        </exclusions>
+        <!-- <exclusions> -->
+        <!-- <exclusion> -->
+        <!-- <groupId>log4j</groupId> -->
+        <!-- <artifactId>log4j</artifactId> -->
+        <!-- </exclusion> -->
+        <!-- </exclusions> -->
       </dependency>
       <dependency>
         <groupId>org.eclipse.xtext</groupId>
@@ -647,10 +648,15 @@
         <version>${xtext-version}</version>
       </dependency>
       <dependency>
-        <groupId>org.eclipse.xtend</groupId>
-        <artifactId>org.eclipse.xtend.standalone</artifactId>
-        <version>2.4.3</version>
+        <groupId>org.eclipse.xtext</groupId>
+        <artifactId>org.eclipse.xtext.builder.standalone</artifactId>
+        <version>2.7.3</version>
       </dependency>
+      <!-- <dependency> -->
+      <!-- <groupId>org.eclipse.xtend</groupId> -->
+      <!-- <artifactId>org.eclipse.xtend.standalone</artifactId> -->
+      <!-- <version>2.4.3</version> -->
+      <!-- </dependency> -->
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>

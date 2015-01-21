@@ -81,7 +81,7 @@
       <artifactId>org.xmdlab.cartride.common</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.xmdlab.dsls</groupId>
       <artifactId>org.xmdlab.dsl.application</artifactId>
@@ -102,9 +102,9 @@
       <groupId>org.eclipse.xtext</groupId>
       <artifactId>org.eclipse.xtext.xbase</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.eclipse.xtend</groupId>
-      <artifactId>org.eclipse.xtend.standalone</artifactId>
-    </dependency>
+    <!-- <dependency> -->
+    <!-- <groupId>org.eclipse.xtend</groupId> -->
+    <!-- <artifactId>org.eclipse.xtend.standalone</artifactId> -->
+    <!-- </dependency> -->
   </dependencies>
 </project>

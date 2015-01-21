@@ -13,6 +13,7 @@
   <description>Xmdlab Maven module [${project.artifactId}]</description>
 
   <modules>
+    <module>xmdlab-maven-plugin</module>
     <module>xmdlab-maven-plugin2</module>
   </modules>
 
