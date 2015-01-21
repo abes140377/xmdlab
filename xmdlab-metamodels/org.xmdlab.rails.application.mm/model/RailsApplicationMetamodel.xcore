@@ -1,0 +1,31 @@
+package org.xmdlab.mm.rails.application
+
+class Application extends NamedObject {
+	String basePackage
+	contains Module[] modules opposite application
+}
+
+class Module {
+	String basePackage
+	
+	contains Model[] models opposite module
+	
+	container Application application opposite modules
+}
+
+class Model extends NamedObject {
+	String ^package
+	
+	contains Attribute[] attributes opposite model
+	
+	container Module module opposite models
+}
+
+class Attribute extends NamedObject {
+	String ^type
+	container Model model opposite attributes
+}
+
+class NamedObject {
+	String name
+}
