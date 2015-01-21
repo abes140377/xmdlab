@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.xmdlab</groupId>
+    <artifactId>xmdlab</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>xmdlab-features</artifactId>
+  <packaging>pom</packaging>
+  <name>Xmdlab Features module [${project.artifactId}]</name>
+  <description>Xmdlab Features module [${project.artifactId}]</description>
+
+  <modules>
+    <module>org.xmdlab.feature</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <!-- Activate Tycho -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <repositories>
+    <!-- Repository to resolve the Eclipse release train dependencies -->
+    <repository>
+      <id>p2.eclipse</id>
+      <url>${p2-repository-eclipse}</url>
+      <layout>p2</layout>
+    </repository>
+    <!-- Repository to resolve the XText dependencies -->
+    <repository>
+      <id>p2.eclipse.xtext</id>
+      <url>${p2-repository-eclipse-xtext}</url>
+      <layout>p2</layout>
+    </repository>
+    <!-- Repository to resolve the xtext-utils dependencies -->
+    <repository>
+      <id>p2.xtext-utils</id>
+      <url>${p2-repository-xtext-utils}</url>
+      <layout>p2</layout>
+    </repository>
+  </repositories>
+  
+</project>

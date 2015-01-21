@@ -1,0 +1,6 @@
+import "classpath:/model-toimport.application"
+import "classpath:/model-test.application"
+
+Application Test {
+    basePackage=com.acme
+}

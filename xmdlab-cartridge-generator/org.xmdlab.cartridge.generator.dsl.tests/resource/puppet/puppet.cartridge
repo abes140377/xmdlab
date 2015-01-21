@@ -1,0 +1,83 @@
+Cartridge puppet {
+	Properties {
+		PropertyGroup vagrant {
+			Property vmBox required = true default = "teamserver-precise64" {
+				"The Vagrant VM Box to use when 'vagrant up'"
+			}
+		}
+	}
+	
+	// model metafacade (root)
+	Metafacade modelMetafacade input = org.xmdlab.dsl.puppet.puppetDsl.DslModel {
+		
+	}
+	
+	Metafacade nodeMetafacade input = org.xmdlab.dsl.puppet.puppetDsl.DslNode {
+		propertyReference vmBox
+		facadeMethode getForgeModules type = "java.util.List<org.xmdlab.dsl.puppet.puppetDsl.DslModule>"
+		facadeMethode getGitModules type = "java.util.List<org.xmdlab.dsl.puppet.puppetDsl.DslModule>"
+	}
+	
+	Metafacade profileMetafacade input = org.xmdlab.dsl.puppet.puppetDsl.DslProfile {
+	
+	}
+	
+	Outlet siteBase overwrite = false
+	Outlet manifests overwrite = true
+	Outlet roleManifests overwrite = true
+	Outlet profileManifests overwrite = true
+	
+	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = siteBase {
+		ModelElement type = nodeMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = siteBase {
+		ModelElement type = nodeMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/SitePpTpl" outputPattern = "site.pp" outlet = manifests {
+		ModelElement type = nodeMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/RoleBaseTpl" outputPattern = "init.pp" outlet = roleManifests {
+		ModelElement type = nodeMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/RoleTpl" outlet = roleManifests {
+		ModelElement type = nodeMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/ProfileBaseTpl" outputPattern = "base.pp" outlet = profileManifests {
+		ModelElement type = profileMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/ProfileTpl" outlet = profileManifests {
+		ModelElement type = profileMetafacade {
+			
+		}
+	}
+	
+	//Template path = "templates/PuppetfileTpl" outputPattern = "Puppetfile" outlet = puppet {
+	//	ModelElement type = nodeMetafacade {
+	//		
+	//	}
+	//}
+	
+	Task test {
+		ModelElement type = profileMetafacade {
+			
+		}
+	}
+}

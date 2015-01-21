@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xmdlab.cartridge.puppet
+Bundle-Vendor: My Company
+Bundle-Version: 0.1.0.qualifier
+Bundle-SymbolicName: org.xmdlab.cartridge.puppet; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.xmdlab.dsl.puppet,
+ org.xmdlab.cartridge.generator.dsl,
+ org.xmdlab.3rdparty,
+ org.xmdlab.cartride.common,
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.objectweb.asm;resolution:=optional
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

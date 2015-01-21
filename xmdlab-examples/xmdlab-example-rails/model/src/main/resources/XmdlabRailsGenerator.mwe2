@@ -1,0 +1,20 @@
+module org.xmdlab.example.rails.RailsGenerator
+
+import org.eclipse.emf.mwe.utils.*
+
+Workflow {
+
+	bean = StandaloneSetup {
+		platformUri = "."
+	}
+
+	//	component = DirectoryCleaner {
+	//		directory = "core/src-gen"
+	//	}
+
+	component = @ org.xmdlab.cartridge.rails.generator.RailsCartridgeGenerator auto-inject {
+		modelPath = "model"
+		baseDir = '..'
+		applicationDir = '../app'
+	}
+}

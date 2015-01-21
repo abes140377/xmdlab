@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id: plugin.xml,v 1.1 2007/01/11 20:42:01 patrik_nordwall Exp $
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated jee-application-mm -->
+      <package
+            uri="http://xmdlab.org/applicationmetamodel"
+            class="org.xmdlab.jee.application.mm.JeeApplicationMmPackage"
+            genModel="model/jee-application-mm.genmodel"/>
+   </extension>
+
+</plugin>
+

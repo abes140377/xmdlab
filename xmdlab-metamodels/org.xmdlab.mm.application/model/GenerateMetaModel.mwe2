@@ -1,0 +1,23 @@
+module org.xmdlab.mm.application.GenerateMetaModel
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe2.ecore.*
+
+var projectName = "org.xmdlab.jee.application.mm"
+var runtimeProject = "./${projectName}"
+
+Workflow {
+	bean = StandaloneSetup {
+		scanClassPath = true
+		platformUri = ".."
+	}
+
+	component = DirectoryCleaner {
+		directory = "${runtimeProject}/src-gen"
+	}
+
+	component = EcoreGenerator {
+		genModel = "platform:/resource/${projectName}/model/jee-application-mm.genmodel"
+		srcPath ="platform:/resource/${projectName}/src"
+	}
+}

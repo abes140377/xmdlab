@@ -1,0 +1,96 @@
+grammar org.xmdlab.cartridge.generator.dsl.CartridgeDsl with org.eclipse.xtext.common.Terminals
+
+generate cartridgeDsl "http://www.xmdlab.org/cartridge/generator/dsl/CartridgeDsl"
+
+DslModel:
+	cartridge=DslCartridge;
+
+DslCartridge:
+	'Cartridge' name=ID '{'
+	(cartridgeProperties=DslCartridgeProperties)?
+	(transformation=DslTransformation)?
+	(metafacades+=DslMetafacade)*
+	(outlets+=DslOutlet)*
+	(templates+=DslTemplate)*
+	(resources+=DslResource)*
+	(tasks+=DslTask)*
+	'}';
+
+DslCartridgeProperties:
+	'Properties' '{' {DslCartridgeProperties}
+	propertyGroups+=DslPropertyGroup*
+	'}';
+	
+DslTransformation:
+	'Transformation' 'input' '=' input = DslJavaIdentifier 'output' '=' output = DslJavaIdentifier
+;
+
+DslTemplate:
+	'Template' 'path' '=' path=STRING ('outputPattern' '=' outputPattern=STRING)? 'outlet' '=' outlet=[DslOutlet]
+	('overwrite' '=' overwrite=BoolLiteral)? '{'
+	(modelElements+=DslModelElement)*
+	'}';
+	
+DslResource:
+	'Resource' 'path' '=' path=STRING ('outputPattern' '=' outputPattern=STRING)?
+;
+
+DslModelElement:
+	'ModelElement' 'type' '=' type=[DslMetafacade] '{'
+	(properties+=DslModelElementProperty)?
+	'}';
+
+DslOutlet:
+	'Outlet' name=ID ('overwrite' '=' overwrite=BoolLiteral)? ('createOutputDirectory' '='
+	createOutputDirectory=BoolLiteral)?
+	('cleanUpDerivedResources' '=' cleanUpDerivedResources=BoolLiteral)? ('setDerivedProperty' '='
+	setDerivedProperty=BoolLiteral)?
+	('description' '=' description=STRING)?;
+
+DslPropertyGroup:
+	'PropertyGroup' name=ID '{'
+	(properties+=DslProperty)*
+	'}';
+
+DslProperty:
+	'Property' name=ID ('required' '=' required=BoolLiteral)? ('default' '=' default=STRING)? '{'
+	(documentation=STRING)?
+	'}';
+
+DslMetafacade:
+	'Metafacade' name=ID 'modelElement' '=' modelElement=DslJavaIdentifier '{'
+	//(propertyReference+=DslPropertyReferende)*
+	(facadeMethods+=DslFacadeMethod)*
+	'}';
+
+DslPropertyReferende:
+	'propertyReference' propertyReference+=[DslProperty]
+;
+
+DslFacadeMethod:
+	'facadeMethode' name=ID 'type' '=' type=STRING;
+
+DslModelElementProperty:
+	'Property' name=ID;
+
+DslTask:
+	'Task' name=ID '{'
+	(modelElements+=DslModelElement)*
+	'}';
+	
+enum DslTaskType:
+	Shell | Ruby | Groovy | Perl | Python
+;
+
+	// ----------------------------------------------------------------------
+DslJavaIdentifier:
+	(ID ("." ID)*);
+
+BoolLiteral:
+	TrueLiteral | FalseLiteral;
+
+TrueLiteral:
+	'true' {TrueLiteral};
+
+FalseLiteral:
+	'false' {FalseLiteral};

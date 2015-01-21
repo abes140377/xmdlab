@@ -1,0 +1,10 @@
+Node server domain = femoplus.local {
+	Role appserver {
+		Profile play {
+			Module puppetlabs-ntp
+		}
+		Profile pdc {
+			Module teamserver-play git = "git@github.com:abes140377/puppet-play.git" ref = "0.1.0"
+		}
+	}
+}

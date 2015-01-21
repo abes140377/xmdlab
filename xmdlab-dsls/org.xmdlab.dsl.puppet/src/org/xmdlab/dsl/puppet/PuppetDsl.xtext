@@ -1,0 +1,42 @@
+grammar org.xmdlab.dsl.puppet.PuppetDsl with org.eclipse.xtext.common.Terminals
+
+generate puppetDsl "http://www.xmdlab.org/dsl/puppet/PuppetDsl"
+
+DslModel:
+	node=DslNode
+;
+
+DslNode:
+	'Node' name=ID 'domain' '=' domain=QualifiedName '{'
+		role=DslRole
+	'}'
+;
+
+DslRole:
+	'Role' name=ID '{'
+		(profiles+=DslProfile)+
+	'}'
+;
+
+DslProfile:
+	'Profile' name=ID '{'
+		((forgeModules+=DslForgeModule) | (gitModules+=DslGitModule))+
+	'}'
+;
+
+DslForgeModule:
+	'Module' name=ForgeId ('version' '=' version = Version)?
+;
+
+DslGitModule:
+	'Module' name=ForgeId 'git' '=' git = STRING ('ref' '=' ref = STRING)?
+;
+
+QualifiedName:
+  ID (=>'.' ID)*;
+  
+Version:
+  ID (=>'.' ID) (=>'.' ID);
+  
+ForgeId:
+  ID => '-' ID;

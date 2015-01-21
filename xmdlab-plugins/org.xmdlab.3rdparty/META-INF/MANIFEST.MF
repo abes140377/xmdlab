@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xmdlab 3rdparty
+Bundle-SymbolicName: org.xmdlab.3rdparty
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: xmdlab.com
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: lib/config-1.2.1.jar,
+ .
+Export-Package: com.typesafe.config,
+ com.typesafe.config.impl

@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.xmdlab.examples</groupId>
+    <artifactId>xmdlab-example-puppet</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>xmdlab-example-puppet-model</artifactId>
+  <name>Xmdlab example puppet model [${project.artifactId}]</name>
+  <description>Xmdlab example puppet model [${project.artifactId}]</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.fornax.toolsupport</groupId>
+        <artifactId>fornax-oaw-m2-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run-workflow</goal>
+            </goals>
+            <configuration>
+              <workflowEngine>mwe2</workflowEngine>
+              <workflowDescriptor>src/main/resources/XmdlabPuppetGenerator.mwe2</workflowDescriptor>
+              <timestampFileName>generator.timestamp</timestampFileName>
+              <checkFilesets>
+                <checkFileset>
+                  <directory>${basedir}</directory>
+                  <includes>
+                    <include>src/main/resources/*.mwe2</include>
+                    <include>model/example.*</include>
+                  </includes>
+                </checkFileset>
+              </checkFilesets>
+              <jvmSettings>
+                <fork>true</fork>
+                <jvmArgs>
+                  <jvmArg>-Xms100m</jvmArg>
+                  <jvmArg>-Xmx700m</jvmArg>
+                  <jvmArg>-XX:MaxPermSize=128m</jvmArg>
+                  <!-- required to read the xtext file with the correct encoding -->
+                  <jvmArgs>-Dfile.encoding=ISO-8859-1</jvmArgs>
+                </jvmArgs>
+              </jvmSettings>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build 
+          itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.fornax.toolsupport</groupId>
+                    <artifactId>fornax-oaw-m2-plugin</artifactId>
+                    <versionRange>[3.3.0,)</versionRange>
+                    <goals>
+                      <goal>run-workflow</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.xmdlab.cartridges</groupId>
+      <artifactId>org.xmdlab.cartridge.puppet</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.xmdlab.dsls</groupId>
+      <artifactId>org.xmdlab.dsl.puppet</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.xtext</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.xbase</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.xtend</groupId>
+      <artifactId>org.eclipse.xtend.standalone</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+  </dependencies>
+</project>

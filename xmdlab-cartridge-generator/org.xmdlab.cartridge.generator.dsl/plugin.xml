@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.xmdlab.org/cartridge/generator/dsl/CartridgeDsl" 
+       class = "org.xmdlab.cartridge.generator.dsl.cartridgeDsl.CartridgeDslPackage"
+       genModel = "model/generated/CartridgeDsl.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>

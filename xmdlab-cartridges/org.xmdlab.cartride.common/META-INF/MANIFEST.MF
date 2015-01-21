@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xmdlab Cartridge Common
+Bundle-SymbolicName: org.xmdlab.cartride.common
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: xmdlab.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.emf.mwe.core,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtext.generator;bundle-version="2.7.0",
+ org.eclipse.xtext;bundle-version="2.7.0"
+Export-Package: org.xmdlab.cartride.common.generator,
+ org.xmdlab.cartride.common.metafacade,
+ org.xmdlab.cartride.common.metamodel,
+ org.xmdlab.cartride.common.task,
+ org.xmdlab.cartride.common.util,
+ org.xmdlab.cartride.common.workflow

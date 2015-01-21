@@ -1,0 +1,29 @@
+module org.xmdlab.cartridge.generator.dsl.generator.CartridgeGenerator
+
+import org.eclipse.emf.mwe.utils.*
+
+/**
+ * 
+ */
+Workflow {
+
+	component = org.eclipse.xtext.mwe.Reader {
+		path = 'model'
+		useJavaClassPath = true
+		register = org.xmdlab.cartridge.generator.dsl.CartridgeDslStandaloneSetup {}
+
+		loadResource = {
+			slot = "model"
+			uri = ".*\\.cartridge"
+		}
+	}
+	
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+		register = org.xmdlab.cartridge.generator.dsl.CartridgeDslStandaloneSetup {}
+
+		slot = 'model'
+		outlet = {
+			path = "src-gen"
+		}
+	}
+}
