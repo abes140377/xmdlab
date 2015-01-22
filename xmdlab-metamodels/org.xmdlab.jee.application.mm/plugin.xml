@@ -14,8 +14,8 @@
       <!-- @generated JeeApplicationMm -->
       <package
             uri="org.xmdlab.jee.application.mm"
-            class="org.xmdlab.jee.application.mm.ApplicationPackage"
-            genModel="model/JeeApplicationMetamodel.xcore"/>
+            class="org.xmdlab.jee.application.mm.MmPackage"
+            genModel="src/JeeApplicationMetamodel.xcore"/>
    </extension>
 
 </plugin>

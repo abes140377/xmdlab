@@ -6,12 +6,11 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.xmdlab.mm.rails.application,
- org.xmdlab.mm.rails.application.impl,
- org.xmdlab.mm.rails.application.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.xtext.xbase.lib,
+Export-Package: org.xmdlab.rails.application.mm,
+ org.xmdlab.rails.application.mm.impl,
+ org.xmdlab.rails.application.mm.util
+Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xcore.lib
+Import-Package: org.apache.log4j
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

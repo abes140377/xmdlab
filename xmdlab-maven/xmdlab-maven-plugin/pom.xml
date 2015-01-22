@@ -55,33 +55,33 @@
           </execution>
         </executions>
       </plugin>
-<!--       <plugin> -->
-<!--         <groupId>org.apache.maven.plugins</groupId> -->
-<!--         <artifactId>maven-invoker-plugin</artifactId> -->
-<!--         <configuration> -->
-<!--           <debug>false</debug> -->
-<!--           <setupIncludes> -->
-<!--             <setupInclude>toimport/pom.xml</setupInclude> -->
-<!--           </setupIncludes> -->
-<!--           <pomIncludes> -->
-<!--             <pomInclude>test*/pom.xml</pomInclude> -->
-<!--           </pomIncludes> -->
-<!--           <streamLogs>false</streamLogs> -->
-<!--           <preBuildHookScript>setup</preBuildHookScript> -->
-<!--           <postBuildHookScript>verify</postBuildHookScript> -->
-<!--           <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath> -->
-<!--           <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo> -->
-<!--         </configuration> -->
-<!--         <executions> -->
-<!--           <execution> -->
-<!--             <id>integration-test</id> -->
-<!--             <goals> -->
-<!--               <goal>install</goal> -->
-<!--               <goal>run</goal> -->
-<!--             </goals> -->
-<!--           </execution> -->
-<!--         </executions> -->
-<!--       </plugin> -->
+      <!-- <plugin> -->
+      <!-- <groupId>org.apache.maven.plugins</groupId> -->
+      <!-- <artifactId>maven-invoker-plugin</artifactId> -->
+      <!-- <configuration> -->
+      <!-- <debug>false</debug> -->
+      <!-- <setupIncludes> -->
+      <!-- <setupInclude>toimport/pom.xml</setupInclude> -->
+      <!-- </setupIncludes> -->
+      <!-- <pomIncludes> -->
+      <!-- <pomInclude>test*/pom.xml</pomInclude> -->
+      <!-- </pomIncludes> -->
+      <!-- <streamLogs>false</streamLogs> -->
+      <!-- <preBuildHookScript>setup</preBuildHookScript> -->
+      <!-- <postBuildHookScript>verify</postBuildHookScript> -->
+      <!-- <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath> -->
+      <!-- <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo> -->
+      <!-- </configuration> -->
+      <!-- <executions> -->
+      <!-- <execution> -->
+      <!-- <id>integration-test</id> -->
+      <!-- <goals> -->
+      <!-- <goal>install</goal> -->
+      <!-- <goal>run</goal> -->
+      <!-- </goals> -->
+      <!-- </execution> -->
+      <!-- </executions> -->
+      <!-- </plugin> -->
     </plugins>
     <pluginManagement>
       <plugins>
@@ -134,16 +134,6 @@
     <dependency>
       <groupId>org.eclipse.xtext</groupId>
       <artifactId>org.eclipse.xtext.xtext</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.xmdlab.cartridges</groupId>
