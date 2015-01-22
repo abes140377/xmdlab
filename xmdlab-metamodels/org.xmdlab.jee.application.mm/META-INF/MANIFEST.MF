@@ -9,12 +9,8 @@ Bundle-Localization: plugin
 Export-Package: org.xmdlab.jee.application.mm,
  org.xmdlab.jee.application.mm.impl,
  org.xmdlab.jee.application.mm.util
-Require-Bundle: org.eclipse.emf.codegen.ecore,
- org.eclipse.emf.mwe2.launch,
- org.eclipse.emf.mwe2.lib,
- org.apache.commons.logging;resolution:=optional,
- org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xcore.lib
 Import-Package: org.apache.log4j
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

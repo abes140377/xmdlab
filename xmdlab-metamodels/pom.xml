@@ -15,7 +15,7 @@
   <description>Xmdlab Metamodels module [${project.artifactId}]</description>
 
   <modules>
-    <module>org.xmdlab.mm.application</module>
+    <module>org.xmdlab.jee.application.mm</module>
   </modules>
 
   <build>
