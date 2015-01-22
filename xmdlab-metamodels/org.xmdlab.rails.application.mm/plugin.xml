@@ -9,8 +9,8 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated RailsApplicationMetamodel -->
       <package
-            uri="org.xmdlab.mm.rails.application"
-            class="org.xmdlab.mm.rails.application.ApplicationPackage"
+            uri="org.xmdlab.rails.application.mm"
+            class="org.xmdlab.rails.application.mm.ApplicationPackage"
             genModel="model/RailsApplicationMetamodel.xcore"/>
    </extension>
 

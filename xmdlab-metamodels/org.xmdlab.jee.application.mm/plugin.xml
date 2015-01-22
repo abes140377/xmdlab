@@ -11,11 +11,11 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated jee-application-mm -->
+      <!-- @generated JeeApplicationMm -->
       <package
             uri="org.xmdlab.jee.application.mm"
-            class="org.xmdlab.jee.application.mm.MmPackage"
-            genModel="model/jee-application-mm.xcore"/>
+            class="org.xmdlab.jee.application.mm.ApplicationPackage"
+            genModel="model/JeeApplicationMetamodel.xcore"/>
    </extension>
 
 </plugin>
