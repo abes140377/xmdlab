@@ -11,7 +11,7 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated JeeApplicationMm -->
+      <!-- @generated RailsApplicationMm -->
       <package
             uri="org.xmdlab.rails.application.mm"
             class="org.xmdlab.rails.application.mm.MmPackage"
