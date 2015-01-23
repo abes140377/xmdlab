@@ -15,7 +15,17 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.EObject
 import java.lang.reflect.Method
 import org.xmdlab.cartridge.common.generator.XmdlabGeneratorException
+import org.xmdlab.jee.application.mm.Application
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.xtext.generator.IGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
+/**
+ * 
+ */
 class JeeCartridgeGeneratorWorkflow {
 
 	@Inject
@@ -23,22 +33,102 @@ class JeeCartridgeGeneratorWorkflow {
 
 	var XtextResourceSet resourceSet
 
+	/**
+	 * 
+	 */
 	@Inject
 	protected def final void setResourceSet(XtextResourceSet resourceSet) {
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
 		this.resourceSet = resourceSet
 	}
 
+	/**
+	 * 
+	 */
 	def final boolean run(String modelURI, Properties properties) {
 		if (readModel(modelURI)) {
 			val dslApp = getApplication()
-			println (dslApp.basePackage + " " + dslApp.name) 
+			println(dslApp.basePackage + " " + dslApp.name)
+			if (validateApplication(dslApp)) {
+				val app = transformAndModifyApplication(dslApp)
+				if (app != null) {
+//					if (generateCode(app) != null) {
+//						return true
+//					}
+					generateCode(app)
+				}
+			}
 		}
 
 		println("Executing workflow failed")
 		false
 	}
 
+	/**
+	 * 
+	 */
+	protected def void generateCode(Application application) {
+		if (application == null) {
+			XmdlabGeneratorContext.addIssue(
+				new XmdlabGeneratorIssueImpl(Severity.ERROR,
+					"Transformation and modification of application '" + application.name + "' failed"))
+		}
+		
+		// register the factory to be able to read xmi files
+		Resource::Factory::Registry::INSTANCE.getExtensionToFactoryMap().put(Resource::Factory::Registry::DEFAULT_EXTENSION,new XMIResourceFactoryImpl());
+		
+		// create emf resource from transformed model
+		var ResourceSet resourceSet = new ResourceSetImpl();
+		var Resource input = resourceSet.createResource(URI
+				.createURI("mm.sc"));
+		input.getContents().add(application);
+		
+		val IFileSystemAccess fsa = injector.getInstance(JavaIoFileSystemAccessExt)
+		val IGenerator generator = injector.getInstance(JeeCartridgeGenerator)
+		generator.doGenerate(input, fsa)
+	}
+
+	/**
+	 * 
+	 */
+	protected def org.xmdlab.jee.application.mm.Application transformAndModifyApplication(DslApplication application) {
+		println("Transforming application " + application.name)
+		var transformedApplication = runAction("org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation.transform",
+			application) as org.xmdlab.jee.application.mm.Application
+
+		//		if (transformedApplication != null) {
+		//			LOG.debug("Modifying transformed application '{}'", transformedApplication.name)
+		//			transformedApplication = runAction("org.sculptor.generator.transform.Transformation.modify",
+		//				transformedApplication) as Application
+		//		}
+		if (transformedApplication == null) {
+			XmdlabGeneratorContext.addIssue(
+				new XmdlabGeneratorIssueImpl(Severity.ERROR,
+					"Transformation and modification of application '" + application.name + "' failed"))
+		}
+		transformedApplication
+	}
+
+	/**
+	 * 
+	 */
+	protected def boolean validateApplication(DslApplication application) {
+		//		val appDiagnostic = diagnostitian.validate(application)
+		//		if (appDiagnostic.getSeverity() != Diagnostic.OK) {
+		//			logDiagnostic(appDiagnostic)
+		//			if (appDiagnostic.getSeverity() == Diagnostic.ERROR) {
+		//				SculptorGeneratorContext.addIssue(
+		//					new SculptorGeneratorIssueImpl(Severity.ERROR,
+		//						"Validating  application '" + application.name + "' failed"))
+		//				return false
+		//			}
+		//		}
+		true
+	}
+
+	/**
+	 * 
+	 */
 	protected def boolean readModel(String modelURI) {
 		// Read all the models from given URI and check for imports 
 		var newUris = newArrayList
@@ -81,8 +171,10 @@ class JeeCartridgeGeneratorWorkflow {
 		true
 	}
 
+	/**
+	 * 
+	 */
 	protected def DslApplication getApplication() {
-		//		LOG.debug("Retrieving application from resource set '{}'", resourceSet)
 		var DslApplication mainApp = null
 		for (Resource resource : resourceSet.resources) {
 			for (EObject obj : resource.contents) {
@@ -104,29 +196,14 @@ class JeeCartridgeGeneratorWorkflow {
 			XmdlabGeneratorContext.addIssue(
 				new XmdlabGeneratorIssueImpl(Severity.ERROR, "No application found in resource set: " + resourceSet))
 		}
-		
+
 		return mainApp
 	}
-	
-	protected def org.xmdlab.jee.application.mm.Application transformAndModifyApplication(DslApplication application) {
-		println("Transforming application" + application.name)
-		var transformedApplication = runAction("org.sculptor.generator.transform.DslTransformation.transform",
-			application) as org.xmdlab.jee.application.mm.Application
-//		if (transformedApplication != null) {
-//			LOG.debug("Modifying transformed application '{}'", transformedApplication.name)
-//			transformedApplication = runAction("org.sculptor.generator.transform.Transformation.modify",
-//				transformedApplication) as Application
-//		}
-		if (transformedApplication == null) {
-			XmdlabGeneratorContext.addIssue(
-				new XmdlabGeneratorIssueImpl(Severity.ERROR,
-					"Transformation and modification of application '" + application.name + "' failed"))
-		}
-		transformedApplication
-	}
-	
+
+	/**
+	 * 
+	 */
 	protected def Object runAction(String actionName, Object input) {
-//		LOG.debug("Running action '{}' on '{}'", actionName, input.class.name)
 		try {
 			val lastDot = actionName.lastIndexOf('.')
 			val actionClass = Class.forName(actionName.substring(0, lastDot))
@@ -147,6 +224,9 @@ class JeeCartridgeGeneratorWorkflow {
 		null
 	}
 
+	/**
+	 * 
+	 */
 	protected def updateConfiguration(Properties properties) {
 		if (properties != null) {
 			// println("Updating configuration with {}", properties)

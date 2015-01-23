@@ -56,12 +56,6 @@ public class JeeGeneratorRunner implements GeneratorRunner {
 		JeeCartridgeGeneratorWorkflow workflow = injector
 				.getInstance(JeeCartridgeGeneratorWorkflow.class);
 		XmdlabGeneratorContext.getGeneratedFiles().clear();
-		
-		try {
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 
 		try {
 			// Execute the generators workflow

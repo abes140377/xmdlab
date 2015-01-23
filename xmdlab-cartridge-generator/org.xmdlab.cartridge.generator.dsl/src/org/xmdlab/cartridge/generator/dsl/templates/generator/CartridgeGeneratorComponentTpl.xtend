@@ -32,7 +32,7 @@ class CartridgeGeneratorComponentTpl {
 		import org.eclipse.xtext.generator.IOutputConfigurationProvider;
 		import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 		import org.eclipse.xtext.generator.OutputConfiguration;
-		import org.xmdlab.mm.rails.application.Application;
+		import org.xmdlab.rails.application.mm.Application;
 		
 		import com.google.common.base.Function;
 		import com.google.inject.Injector;

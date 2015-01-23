@@ -6,7 +6,7 @@ package org.xmdlab.cartridge.rails.transformation
 
 import com.google.inject.Inject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.xmdlab.mm.rails.application.Application
+import org.xmdlab.rails.application.mm.Application
 import org.xmdlab.dsl.application.applicationDsl.DslModule
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
@@ -18,7 +18,7 @@ import org.xmdlab.dsl.application.applicationDsl.DslAttribute
 class RailsCartridgeTransformation extends RailsCartridgeTransformationBase {
 	@Inject extension HelperBase
 	
-	private static val org.xmdlab.mm.rails.application.ApplicationFactory FACTORY = org.xmdlab.mm.rails.application.ApplicationFactory::eINSTANCE
+	private static val org.xmdlab.rails.application.mm.MmFactory FACTORY = org.xmdlab.rails.application.mm.MmFactory::eINSTANCE
 	
 	var Application globalApp
 	

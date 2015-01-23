@@ -18,9 +18,9 @@ Cartridge rails {
 		}
 	}
 	
-	Transformation input = org.xmdlab.dsl.application.applicationDsl.DslModel output = org.xmdlab.mm.rails.application.Application
+	Transformation input = org.xmdlab.dsl.application.applicationDsl.DslModel output = org.xmdlab.rails.application.mm.Application
 	
-	Metafacade applicationMetafacade modelElement = org.xmdlab.mm.rails.application.Application {
+	Metafacade applicationMetafacade modelElement = org.xmdlab.rails.application.mm.Application {
 		
 	}
 	

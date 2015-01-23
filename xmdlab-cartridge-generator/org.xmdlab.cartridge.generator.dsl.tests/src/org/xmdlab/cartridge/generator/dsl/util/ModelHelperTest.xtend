@@ -7,16 +7,16 @@ class ModelHelperTest {
 	
 	@Test
 	def void testGetMmFactory() {
-		val transformationOutput = 'org.xmdlab.mm.rails.application.Application'
+		val transformationOutput = 'org.xmdlab.rails.application.mm.Application'
 		
 		val String result = ModelHelper.getMmFactory(transformationOutput)
 		
-		Assert.assertEquals('org.xmdlab.mm.rails.application.ApplicationFactory', result)
+		Assert.assertEquals('org.xmdlab.rails.application.mm.MmFactory', result)
 	}
 	
 	@Test
 	def void testGetMmRootClassSimpleName() {
-		val transformationOutput = 'org.xmdlab.mm.rails.application.Application'
+		val transformationOutput = 'org.xmdlab.rails.application.mm.Application'
 		
 		val String result = ModelHelper.getMmRootClassSimpleName(transformationOutput)
 		
@@ -25,11 +25,11 @@ class ModelHelperTest {
 	
 	@Test
 	def void testGetMmFactoryFromTransformationOutput() {
-		val String transformationOutput = 'org.xmdlab.mm.rails.application.RailsApplication'
+		val String transformationOutput = 'org.xmdlab.rails.application.mm.RailsApplication'
 		
 		val String result = ModelHelper.getMmFactory(transformationOutput)
 		
-		Assert.assertEquals('org.xmdlab.mm.rails.application.ApplicationFactory', result)
+		Assert.assertEquals('org.xmdlab.rails.application.mm.MmFactory', result)
 	}
 	
 	@Test

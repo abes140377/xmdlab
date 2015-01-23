@@ -12,6 +12,6 @@
   <modules>
     <module>xmdlab-example-jee</module>
     <!-- <module>xmdlab-example-puppet</module> -->
-    <module>xmdlab-example-rails</module>
+    <!-- <module>xmdlab-example-rails</module> -->
   </modules>
 </project>

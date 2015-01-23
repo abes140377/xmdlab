@@ -74,11 +74,11 @@
     </plugins>
   </build>
 
-  <!-- <dependencies> -->
-  <!-- <dependency> -->
-  <!-- <groupId>org.xmdlab.cartridges</groupId> -->
-  <!-- <artifactId>org.xmdlab.cartridge.jee</artifactId> -->
-  <!-- <version>${project.version}</version> -->
-  <!-- </dependency> -->
-  <!-- </dependencies> -->
+  <dependencies>
+    <dependency>
+      <groupId>org.xmdlab.cartridges</groupId>
+      <artifactId>org.xmdlab.cartridge.jee</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 </project>

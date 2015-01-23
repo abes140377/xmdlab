@@ -6,35 +6,36 @@ package org.xmdlab.cartridge.jee.transformation
 
 import com.google.inject.Inject
 import org.xmdlab.cartridge.common.metamodel.HelperBase
-import org.xmdlab.dsl.application.applicationDsl.DslModel
+import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModule
-import org.xmdlab.jee.application.mm.JeeApplicationMmFactory
+import org.xmdlab.jee.application.mm.Application
+import org.xmdlab.jee.application.mm.MmFactory
 
 class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	@Inject extension HelperBase
-	
-	private static val JeeApplicationMmFactory FACTORY = JeeApplicationMmFactory::eINSTANCE
-	
-	var org.xmdlab.jee.application.mm.Application globalApp
-	
-	override create FACTORY.createApplication transform(DslModel dslModel) {
+
+	private static val MmFactory FACTORY = MmFactory::eINSTANCE
+
+	var Application globalApp
+
+	override create FACTORY.createApplication transform(DslApplication dslApplication) {
 		globalApp = it
-		
-		val dslApp = dslModel.app
-		name =  dslApp.name
-		basePackage = dslApp.basePackage
-//		
-//		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApp, typeof(DslModule))
-//		modules.addAll(allDslModules.map[e | transform(e)])
+
+		name = dslApplication.name
+		basePackage = dslApplication.basePackage
+
+	//		
+	//		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApp, typeof(DslModule))
+	//		modules.addAll(allDslModules.map[e | transform(e)])
 	}
-	
+
 	def create FACTORY.createModule transform(DslModule dslModule) {
-//		application = globalApp
-//		
-//		basePackage = dslModule.basePackage
+		//		application = globalApp
+		//		
+		//		basePackage = dslModule.basePackage
 	}
-	
-	// this "method" is not used, it is kind of "abstract"
+
+// this "method" is not used, it is kind of "abstract"
 //	def dispatch create FACTORY.createModel transformSimpleDomainObject(DslSimpleDomainObject domainObject) {
 //		error("Wrong type of domainObject "+domainObject.name+"["+ (domainObject.^class.simpleName) +"] passed into transformSimpleDomainObject")
 //	}

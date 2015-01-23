@@ -69,7 +69,7 @@
 
     <java-version>1.7</java-version>
     <tycho-version>0.21.0</tycho-version>
-    <xtext-version>2.7.2</xtext-version>
+    <xtext-version>2.7.3</xtext-version>
     <guava-version>14.0</guava-version>
     <guice-version>3.0</guice-version>
     <slf4j-version>1.7.7</slf4j-version>
@@ -625,38 +625,34 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
           </exclusion>
-          <!-- <exclusion> -->
-          <!-- <groupId>log4j</groupId> -->
-          <!-- <artifactId>log4j</artifactId> -->
-          <!-- </exclusion> -->
         </exclusions>
       </dependency>
       <dependency>
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>org.eclipse.xtend.core</artifactId>
         <version>${xtext-version}</version>
-        <!-- <exclusions> -->
-        <!-- <exclusion> -->
-        <!-- <groupId>log4j</groupId> -->
-        <!-- <artifactId>log4j</artifactId> -->
-        <!-- </exclusion> -->
-        <!-- </exclusions> -->
       </dependency>
       <dependency>
         <groupId>org.eclipse.xtext</groupId>
-        <artifactId>org.eclipse.xtext.xbase</artifactId>
+    	<artifactId>org.eclipse.xtext.xbase</artifactId>
         <version>${xtext-version}</version>
       </dependency>
       <dependency>
+	    <groupId>org.eclipse.xtext</groupId>
+    	<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+	    <version>${xtext-version}</version>
+      </dependency>
+      <dependency>
+	    <groupId>org.eclipse.xtext</groupId>
+	    <artifactId>org.eclipse.xtext.dependencies</artifactId>
+	    <version>${xtext-version}</version>
+      </dependency>
+      
+      <dependency>
         <groupId>org.eclipse.xtext</groupId>
         <artifactId>org.eclipse.xtext.builder.standalone</artifactId>
-        <version>2.7.3</version>
+        <version>${xtext-version}</version>
       </dependency>
-      <!-- <dependency> -->
-      <!-- <groupId>org.eclipse.xtend</groupId> -->
-      <!-- <artifactId>org.eclipse.xtend.standalone</artifactId> -->
-      <!-- <version>2.4.3</version> -->
-      <!-- </dependency> -->
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>

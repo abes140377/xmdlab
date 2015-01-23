@@ -26,6 +26,6 @@ Require-Bundle: org.xmdlab.dsl.application,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
  org.objectweb.asm;resolution:=optional,
- org.xmdlab.mm.rails.application
+ org.xmdlab.rails.application.mm
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

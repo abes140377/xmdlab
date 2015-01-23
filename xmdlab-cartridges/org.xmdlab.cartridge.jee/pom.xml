@@ -102,9 +102,5 @@
       <groupId>org.eclipse.xtext</groupId>
       <artifactId>org.eclipse.xtext.xbase</artifactId>
     </dependency>
-    <!-- <dependency> -->
-    <!-- <groupId>org.eclipse.xtend</groupId> -->
-    <!-- <artifactId>org.eclipse.xtend.standalone</artifactId> -->
-    <!-- </dependency> -->
   </dependencies>
 </project>
