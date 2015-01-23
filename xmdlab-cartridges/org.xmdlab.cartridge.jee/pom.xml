@@ -78,7 +78,7 @@
   <dependencies>
     <dependency>
       <groupId>org.xmdlab.cartridges</groupId>
-      <artifactId>org.xmdlab.cartride.common</artifactId>
+      <artifactId>org.xmdlab.cartridge.common</artifactId>
       <version>${project.version}</version>
     </dependency>
 

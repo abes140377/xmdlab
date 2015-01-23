@@ -5,7 +5,7 @@
 package org.xmdlab.cartridge.jee.transformation
 
 import com.google.inject.Inject
-import org.xmdlab.cartride.common.metamodel.HelperBase
+import org.xmdlab.cartridge.common.metamodel.HelperBase
 import org.xmdlab.dsl.application.applicationDsl.DslModel
 import org.xmdlab.dsl.application.applicationDsl.DslModule
 import org.xmdlab.jee.application.mm.JeeApplicationMmFactory

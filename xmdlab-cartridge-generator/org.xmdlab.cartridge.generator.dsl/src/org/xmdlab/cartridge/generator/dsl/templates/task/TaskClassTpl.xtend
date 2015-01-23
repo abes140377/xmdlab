@@ -13,7 +13,7 @@ class TaskClassTpl {
 		«StringHelper.getGeneratedComment(class.name)»
 		package «basePackage».task
 		
-		import org.xmdlab.cartride.common.task.Task
+		import org.xmdlab.cartridge.common.task.Task
 		
 		/**
 		*

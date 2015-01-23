@@ -1,4 +1,4 @@
-package org.xmdlab.cartride.common.generator;
+package org.xmdlab.cartridge.common.generator;
 
 import java.io.File;
 import java.util.Properties;

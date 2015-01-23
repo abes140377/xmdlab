@@ -151,7 +151,7 @@ var baseDir
 */
 Workflow {
 	// print welcome message
-	component = org.xmdlab.cartride.common.workflow.WelcomeMessage {
+	component = org.xmdlab.cartridge.common.workflow.WelcomeMessage {
 		cartridge = "Rails Cartridge"
 	}
 	
@@ -248,7 +248,7 @@ File 8 : /myProject/src-gen/de/freund/xgen/cartridge/rails/metafacade/Applicatio
  */
 package de.freund.xgen.cartridge.rails.metafacade
 
-import org.xmdlab.cartride.common.metafacade.Metafacade
+import org.xmdlab.cartridge.common.metafacade.Metafacade
 
 interface ApplicationMetafacade extends Metafacade<org.xmdlab.dsl.application.applicationDsl.DslApplication> {
 }
@@ -261,7 +261,7 @@ File 9 : /myProject/src-gen/de/freund/xgen/cartridge/rails/metafacade/Applicatio
  */
 package de.freund.xgen.cartridge.rails.metafacade
 
-import org.xmdlab.cartride.common.metafacade.MetafacadeBase
+import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
 
 abstract class ApplicationMetafacadeBase extends MetafacadeBase<org.xmdlab.dsl.application.applicationDsl.DslApplication> implements ApplicationMetafacade {
 	
@@ -275,7 +275,7 @@ File 10 : /myProject/src-gen/de/freund/xgen/cartridge/rails/metafacade/ModelMeta
  */
 package de.freund.xgen.cartridge.rails.metafacade
 
-import org.xmdlab.cartride.common.metafacade.Metafacade
+import org.xmdlab.cartridge.common.metafacade.Metafacade
 
 interface ModelMetafacade extends Metafacade<org.xmdlab.dsl.application.applicationDsl.DslModel> {
 }
@@ -288,7 +288,7 @@ File 11 : /myProject/src-gen/de/freund/xgen/cartridge/rails/metafacade/ModelMeta
  */
 package de.freund.xgen.cartridge.rails.metafacade
 
-import org.xmdlab.cartride.common.metafacade.MetafacadeBase
+import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
 
 abstract class ModelMetafacadeBase extends MetafacadeBase<org.xmdlab.dsl.application.applicationDsl.DslModel> implements ModelMetafacade {
 	

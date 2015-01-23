@@ -10,7 +10,7 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>org.xmdlab.cartride.common</artifactId>
+  <artifactId>org.xmdlab.cartridge.common</artifactId>
   <packaging>eclipse-plugin</packaging>
   <name>Xmdlab cartridge common plugin [${project.artifactId}]</name>
   <description>Xmdlab cartridge common plugin [${project.artifactId}]</description>

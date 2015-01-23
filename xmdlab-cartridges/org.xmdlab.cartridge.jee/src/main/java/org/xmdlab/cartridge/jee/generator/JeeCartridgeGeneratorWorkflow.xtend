@@ -6,15 +6,15 @@ import java.util.Properties
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.common.util.URI
-import org.xmdlab.cartride.common.generator.XmdlabGeneratorContext
-import org.xmdlab.cartride.common.generator.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
-import org.xmdlab.cartride.common.generator.XmdlabGeneratorIssue.Severity
+import org.xmdlab.cartridge.common.generator.XmdlabGeneratorContext
+import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
+import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue.Severity
 import org.xmdlab.dsl.application.applicationDsl.DslModel
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.EObject
 import java.lang.reflect.Method
-import org.xmdlab.cartride.common.generator.XmdlabGeneratorException
+import org.xmdlab.cartridge.common.generator.XmdlabGeneratorException
 
 class JeeCartridgeGeneratorWorkflow {
 

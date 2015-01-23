@@ -6,7 +6,7 @@ package org.xmdlab.cartridge.rails.task
 
 import com.google.inject.Inject
 import java.io.File
-import org.xmdlab.cartride.common.task.Task
+import org.xmdlab.cartridge.common.task.Task
 import org.xmdlab.cartridge.rails.metafacade.ApplicationMetafacade
 import org.xmdlab.cartridge.rails.util.RailsCartridgeProjectProperties
 

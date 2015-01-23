@@ -13,7 +13,7 @@ class CartridgeMetafacadeBaseXtendTpl {
 		«getGeneratedComment(class.name)»
 		package «basePackage».metafacade
 		
-		import org.xmdlab.cartride.common.metafacade.MetafacadeBase
+		import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
 		
 		abstract class «metafacade.name.toFirstUpper»Base extends MetafacadeBase<«metafacade.modelElement»> implements «metafacade.name.toFirstUpper» {
 			

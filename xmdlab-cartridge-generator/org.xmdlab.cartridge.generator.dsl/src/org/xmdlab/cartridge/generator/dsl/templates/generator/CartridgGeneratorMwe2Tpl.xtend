@@ -28,7 +28,7 @@ class CartridgGeneratorMwe2Tpl {
 		*/
 		Workflow {
 			// print welcome message
-			component = org.xmdlab.cartride.common.workflow.WelcomeMessage {
+			component = org.xmdlab.cartridge.common.workflow.WelcomeMessage {
 				cartridge = "«cartridgeName.toFirstUpper» Cartridge"
 			}
 			

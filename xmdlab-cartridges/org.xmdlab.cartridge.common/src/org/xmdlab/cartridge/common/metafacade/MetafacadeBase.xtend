@@ -1,6 +1,6 @@
-package org.xmdlab.cartride.common.metafacade
+package org.xmdlab.cartridge.common.metafacade
 
-import org.xmdlab.cartride.common.metafacade.Metafacade
+import org.xmdlab.cartridge.common.metafacade.Metafacade
 
 class MetafacadeBase<T> implements Metafacade<T> {
 

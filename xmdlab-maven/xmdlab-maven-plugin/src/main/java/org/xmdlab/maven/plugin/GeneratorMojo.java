@@ -31,9 +31,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.codehaus.plexus.util.FileUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
-import org.xmdlab.cartride.common.generator.GeneratorRunner;
-import org.xmdlab.cartride.common.generator.XmdlabGeneratorIssue;
-import org.xmdlab.cartride.common.generator.XmdlabGeneratorResult;
+import org.xmdlab.cartridge.common.generator.GeneratorRunner;
+import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue;
+import org.xmdlab.cartridge.common.generator.XmdlabGeneratorResult;
 
 /**
  * @requiresDependencyResolution

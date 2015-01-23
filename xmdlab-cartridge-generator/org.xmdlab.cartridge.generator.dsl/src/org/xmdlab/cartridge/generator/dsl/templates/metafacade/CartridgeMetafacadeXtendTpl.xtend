@@ -20,7 +20,7 @@ class CartridgeMetafacadeXtendTpl {
 		«getGeneratedComment(class.name)»
 		package «basePackage».metafacade
 		
-		import org.xmdlab.cartride.common.metafacade.Metafacade
+		import org.xmdlab.cartridge.common.metafacade.Metafacade
 		
 		interface «metafacade.name.toFirstUpper» extends Metafacade<«metafacade.modelElement»> {
 			«FOR facadeMethod : metafacade.facadeMethods»

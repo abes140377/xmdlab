@@ -1,4 +1,4 @@
-package org.xmdlab.cartride.common.workflow
+package org.xmdlab.cartridge.common.workflow
 
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent2
 import org.eclipse.emf.mwe.core.WorkflowContext

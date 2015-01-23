@@ -317,7 +317,7 @@ var profileManifestsDir
 */
 Workflow {
 	// print welcome message
-	component = org.xmdlab.cartride.common.workflow.WelcomeMessage {
+	component = org.xmdlab.cartridge.common.workflow.WelcomeMessage {
 		cartridge = "Puppet Cartridge"
 	}
 	
@@ -626,7 +626,7 @@ File 16 : /myProject/src-gen/de/freund/xgen/cartridge/metafacade/ModelMetafacade
  */
 package de.freund.xgen.cartridge.metafacade
 
-import org.xmdlab.cartride.common.metafacade.Metafacade
+import org.xmdlab.cartridge.common.metafacade.Metafacade
 
 interface ModelMetafacade extends Metafacade<org.xmdlab.dsl.puppet.puppetDsl.DslModel> {
 }
@@ -639,7 +639,7 @@ File 17 : /myProject/src-gen/de/freund/xgen/cartridge/metafacade/ModelMetafacade
  */
 package de.freund.xgen.cartridge.metafacade
 
-import org.xmdlab.cartride.common.metafacade.MetafacadeBase
+import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
 
 abstract class ModelMetafacadeBase extends MetafacadeBase<org.xmdlab.dsl.puppet.puppetDsl.DslModel> implements ModelMetafacade {
 	
@@ -653,7 +653,7 @@ File 18 : /myProject/src-gen/de/freund/xgen/cartridge/metafacade/NodeMetafacade.
  */
 package de.freund.xgen.cartridge.metafacade
 
-import org.xmdlab.cartride.common.metafacade.Metafacade
+import org.xmdlab.cartridge.common.metafacade.Metafacade
 
 interface NodeMetafacade extends Metafacade<org.xmdlab.dsl.puppet.puppetDsl.DslNode> {
 	def java.util.List<org.xmdlab.dsl.puppet.puppetDsl.DslModule> getForgeModules()
@@ -668,7 +668,7 @@ File 19 : /myProject/src-gen/de/freund/xgen/cartridge/metafacade/NodeMetafacadeB
  */
 package de.freund.xgen.cartridge.metafacade
 
-import org.xmdlab.cartride.common.metafacade.MetafacadeBase
+import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
 
 abstract class NodeMetafacadeBase extends MetafacadeBase<org.xmdlab.dsl.puppet.puppetDsl.DslNode> implements NodeMetafacade {
 	
@@ -682,7 +682,7 @@ File 20 : /myProject/src-gen/de/freund/xgen/cartridge/metafacade/ProfileMetafaca
  */
 package de.freund.xgen.cartridge.metafacade
 
-import org.xmdlab.cartride.common.metafacade.Metafacade
+import org.xmdlab.cartridge.common.metafacade.Metafacade
 
 interface ProfileMetafacade extends Metafacade<org.xmdlab.dsl.puppet.puppetDsl.DslProfile> {
 }
@@ -695,7 +695,7 @@ File 21 : /myProject/src-gen/de/freund/xgen/cartridge/metafacade/ProfileMetafaca
  */
 package de.freund.xgen.cartridge.metafacade
 
-import org.xmdlab.cartride.common.metafacade.MetafacadeBase
+import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
 
 abstract class ProfileMetafacadeBase extends MetafacadeBase<org.xmdlab.dsl.puppet.puppetDsl.DslProfile> implements ProfileMetafacade {
 	

@@ -1,4 +1,4 @@
-package org.xmdlab.cartride.common.metamodel
+package org.xmdlab.cartridge.common.metamodel
 
 class HelperBase {
 	

@@ -11,7 +11,7 @@ import org.xmdlab.dsl.application.applicationDsl.DslModule
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.xmdlab.dsl.application.applicationDsl.DslSimpleDomainObject
-import org.xmdlab.cartride.common.metamodel.HelperBase
+import org.xmdlab.cartridge.common.metamodel.HelperBase
 import org.xmdlab.dsl.application.applicationDsl.DslEntity
 import org.xmdlab.dsl.application.applicationDsl.DslAttribute
 
