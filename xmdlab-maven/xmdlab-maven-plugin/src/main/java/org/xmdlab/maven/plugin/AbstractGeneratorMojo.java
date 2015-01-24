@@ -143,6 +143,102 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
 		}
 		return null;
 	}
+	
+//	/**
+//	 * Deletes the files in the directories marked as 'generated' and the
+//	 * unmodified one-shot generated files.
+//	 * <p>
+//	 * The list of all previously generated files is retrieved from the StatusFile
+//	 * (defined via {@link #statusFile}). Modified one-shot generated files are
+//	 * detected by a changed file checksum.
+//	 */
+//	protected boolean deleteGeneratedFiles() {
+//		boolean success;
+//		
+//		// First delete all files in the directories marked as 'generated'
+//		cleanDirectory(outletSrcDir);
+//		cleanDirectory(outletResDir);
+//		cleanDirectory(outletSrcTestDir);
+//		cleanDirectory(outletResTestDir);
+//
+//		// Finally delete the non-modified one-shot generated files in the other folders
+//		Properties statusFileProps = getStatusProperties();
+//
+//		// If there is no status file to compare against or no files are
+//		// generated then skip deletion
+//		if (statusFileProps == null || statusFileProps.isEmpty()) {
+//
+//			// No status file - we can't delete any previously generated files
+//			success = true;
+//		} else {
+//			try {
+//				// Iterate through the list of generated files
+//				for (String fileName : statusFileProps.stringPropertyNames()) {
+//					File file = new File(getProject().getBasedir(), fileName);
+//					if (file.exists()) {
+//
+//						// For one-shot generated files compare checksum before
+//						// deleting
+//						boolean delete;
+//						if (fileName
+//								.startsWith(getProjectRelativePath(outletSrcOnceDir))
+//								|| fileName
+//										.startsWith(getProjectRelativePath(outletResOnceDir))
+//								|| fileName
+//										.startsWith(getProjectRelativePath(outletWebrootDir))
+//								|| fileName
+//										.startsWith(getProjectRelativePath(outletSrcTestOnceDir))
+//								|| fileName
+//										.startsWith(getProjectRelativePath(outletResTestOnceDir))) {
+//							delete = calculateChecksum(file).equals(
+//									statusFileProps.getProperty(fileName));
+//							if (!delete
+//									&& (isVerbose() || getLog()
+//											.isDebugEnabled())) {
+//								getLog().info(
+//										"Keeping previously generated modified"
+//												+ " file: " + file);
+//							}
+//						} else {
+//							delete = false;
+//						}
+//						if (delete) {
+//							if (isVerbose() || getLog().isDebugEnabled()) {
+//								getLog().info(
+//										"Deleting previously generated file: "
+//												+ file);
+//							}
+//							// We have to make sure the file is deleted on
+//							// Windows as well
+//							FileUtils.forceDelete(file);
+//
+//							// Delete image file generated from dot file
+//							if (fileName.endsWith(".dot")) {
+//								File imageFile = new File(getProject()
+//										.getBasedir(), fileName + ".png");
+//								if (imageFile.exists()) {
+//									if (isVerbose()
+//											|| getLog().isDebugEnabled()) {
+//										getLog().info(
+//												"Deleting previously generated file: "
+//														+ imageFile);
+//									}
+//									// We have to make sure the file is deleted
+//									// on Windows as well
+//									FileUtils.forceDelete(imageFile);
+//								}
+//							}
+//						}
+//					}
+//				}
+//				success = true;
+//			} catch (IOException e) {
+//				getLog().warn("Reading status file failed: " + e.getMessage());
+//				success = false;
+//			}
+//		}
+//		return success;
+//	}
 
 	/**
 	 * Deletes all files within the given directory.

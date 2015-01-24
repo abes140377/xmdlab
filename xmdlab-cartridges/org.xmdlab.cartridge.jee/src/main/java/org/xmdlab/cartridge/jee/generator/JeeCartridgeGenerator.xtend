@@ -16,8 +16,8 @@ class JeeCartridgeGenerator extends JeeCartridgeGeneratorBase {
 //	@Inject ApplicationMetafacade applicationMetafacade
 //	@Inject CreateInitialProjectTask createInitialProjectTask
 
-//	override void beforeCompileEclipseProject() {
-//		createInitialProjectTask.run
-//	}
+	override void beforeCompileReadmeMd() {
+		
+	}
 
 }

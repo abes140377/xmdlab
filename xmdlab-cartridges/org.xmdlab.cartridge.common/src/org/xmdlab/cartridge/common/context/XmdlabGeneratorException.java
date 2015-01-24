@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.xmdlab.cartridge.common.generator;
+package org.xmdlab.cartridge.common.context;
 
 /**
  * This exception is used to indicate that the code generation failed.

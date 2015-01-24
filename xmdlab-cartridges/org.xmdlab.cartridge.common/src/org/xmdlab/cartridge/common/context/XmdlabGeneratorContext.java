@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.xmdlab.cartridge.common.generator;
+package org.xmdlab.cartridge.common.context;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,10 +30,10 @@ import java.util.List;
  */
 public final class XmdlabGeneratorContext {
 
-	private static final ThreadLocal<SculptorGeneratorContextHolder> threadLocal = new ThreadLocal<SculptorGeneratorContextHolder>() {
+	private static final ThreadLocal<XmdlabGeneratorContextHolder> threadLocal = new ThreadLocal<XmdlabGeneratorContextHolder>() {
 		@Override
-		protected SculptorGeneratorContextHolder initialValue() {
-			return new SculptorGeneratorContextHolder();
+		protected XmdlabGeneratorContextHolder initialValue() {
+			return new XmdlabGeneratorContextHolder();
 		}
 	};
 
@@ -57,7 +57,7 @@ public final class XmdlabGeneratorContext {
 		threadLocal.remove();
 	}
 
-	private static class SculptorGeneratorContextHolder {
+	private static class XmdlabGeneratorContextHolder {
 		private final List<File> generatedFiles = new ArrayList<File>();
 		private final List<XmdlabGeneratorIssue> issues = new ArrayList<XmdlabGeneratorIssue>();
 	}

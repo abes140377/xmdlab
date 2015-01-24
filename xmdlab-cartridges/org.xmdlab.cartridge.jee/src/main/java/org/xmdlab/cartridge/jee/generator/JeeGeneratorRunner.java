@@ -26,11 +26,11 @@ import java.util.Properties;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.ISetup;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult.Status;
 import org.xmdlab.cartridge.common.generator.GeneratorRunner;
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorContext;
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue;
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorResult;
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorResult.Status;
 import org.xmdlab.cartridge.common.util.FileHelper;
 import org.xmdlab.cartridge.jee.JeeCartridgeGeneratorStandaloneSetup;
 

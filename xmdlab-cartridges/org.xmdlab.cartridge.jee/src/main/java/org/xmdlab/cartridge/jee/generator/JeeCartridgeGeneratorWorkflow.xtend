@@ -3,25 +3,26 @@ package org.xmdlab.cartridge.jee.generator
 import com.google.inject.Inject
 import com.google.inject.Injector
 import java.util.Properties
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.emf.common.util.URI
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorContext
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue.Severity
-import org.xmdlab.dsl.application.applicationDsl.DslModel
-import org.xmdlab.dsl.application.applicationDsl.DslApplication
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.EObject
-import java.lang.reflect.Method
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorException
-import org.xmdlab.jee.application.mm.Application
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.xtext.generator.IGenerator
-import org.eclipse.xtext.generator.IFileSystemAccess
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
+import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
+import org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation
+import org.xmdlab.dsl.application.applicationDsl.DslApplication
+import org.xmdlab.dsl.application.applicationDsl.DslModel
+import org.xmdlab.jee.application.mm.Application
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
+import org.eclipse.emf.ecore.util.Diagnostician
+import org.eclipse.emf.common.util.Diagnostic
+import org.eclipse.xtext.validation.AbstractValidationDiagnostic
+import org.eclipse.xtext.util.EmfFormatter
 
 /**
  * 
@@ -52,16 +53,22 @@ class JeeCartridgeGeneratorWorkflow {
 			if (validateApplication(dslApp)) {
 				val app = transformAndModifyApplication(dslApp)
 				if (app != null) {
-//					if (generateCode(app) != null) {
-//						return true
-//					}
+
+					// init metafacades
+					var ApplicationMetafacade applicationMetafacade = injector.getInstance(ApplicationMetafacade)
+					applicationMetafacade.modelResource = app
+
+					// run generator
 					generateCode(app)
+
+					return true
 				}
 			}
 		}
 
 		println("Executing workflow failed")
-		false
+
+		return false
 	}
 
 	/**
@@ -73,34 +80,40 @@ class JeeCartridgeGeneratorWorkflow {
 				new XmdlabGeneratorIssueImpl(Severity.ERROR,
 					"Transformation and modification of application '" + application.name + "' failed"))
 		}
-		
+
 		// register the factory to be able to read xmi files
-		Resource::Factory::Registry::INSTANCE.getExtensionToFactoryMap().put(Resource::Factory::Registry::DEFAULT_EXTENSION,new XMIResourceFactoryImpl());
-		
+		// Resource.Factory.Registry::INSTANCE.getExtensionToFactoryMap().put(
+		// Resource.Factory.Registry::DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 		// create emf resource from transformed model
-		var ResourceSet resourceSet = new ResourceSetImpl();
-		var Resource input = resourceSet.createResource(URI
-				.createURI("mm.sc"));
-		input.getContents().add(application);
+		// var ResourceSet resourceSet = new ResourceSetImpl();
+		// var Resource input = resourceSet.createResource(URI.createURI("mm.sc"));
+		// input.getContents().add(application);
+		// get output configuration for cartridge an set in filesystem access
 		
-		val IFileSystemAccess fsa = injector.getInstance(JavaIoFileSystemAccessExt)
+		val JeeCartridgeOutputConfigurationProvider outputConfigurationProvider = injector.getInstance(
+			JeeCartridgeOutputConfigurationProvider)
+		val JavaIoFileSystemAccess fsa = injector.getInstance(JavaIoFileSystemAccessExt)
+		fsa.outputConfigurations = outputConfigurationProvider.outputConfigurations
 		val IGenerator generator = injector.getInstance(JeeCartridgeGenerator)
-		generator.doGenerate(input, fsa)
+
+		generator.doGenerate(fsa)
 	}
 
 	/**
 	 * 
 	 */
-	protected def org.xmdlab.jee.application.mm.Application transformAndModifyApplication(DslApplication application) {
+	protected def Application transformAndModifyApplication(DslApplication application) {
 		println("Transforming application " + application.name)
-		var transformedApplication = runAction("org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation.transform",
-			application) as org.xmdlab.jee.application.mm.Application
 
-		//		if (transformedApplication != null) {
-		//			LOG.debug("Modifying transformed application '{}'", transformedApplication.name)
-		//			transformedApplication = runAction("org.sculptor.generator.transform.Transformation.modify",
-		//				transformedApplication) as Application
-		//		}
+		val JeeCartridgeTransformation transformation = injector.getInstance(JeeCartridgeTransformation)
+		var transformedApplication = transformation.transform(application) as Application
+
+		// if (transformedApplication != null) {
+		//     LOG.debug("Modifying transformed application '{}'", transformedApplication.name)
+		//		transformedApplication = runAction("org.sculptor.generator.transform.Transformation.modify",
+		//		    transformedApplication) as Application
+		// }
+		
 		if (transformedApplication == null) {
 			XmdlabGeneratorContext.addIssue(
 				new XmdlabGeneratorIssueImpl(Severity.ERROR,
@@ -113,17 +126,42 @@ class JeeCartridgeGeneratorWorkflow {
 	 * 
 	 */
 	protected def boolean validateApplication(DslApplication application) {
-		//		val appDiagnostic = diagnostitian.validate(application)
-		//		if (appDiagnostic.getSeverity() != Diagnostic.OK) {
-		//			logDiagnostic(appDiagnostic)
-		//			if (appDiagnostic.getSeverity() == Diagnostic.ERROR) {
-		//				SculptorGeneratorContext.addIssue(
-		//					new SculptorGeneratorIssueImpl(Severity.ERROR,
-		//						"Validating  application '" + application.name + "' failed"))
-		//				return false
-		//			}
-		//		}
+		val appDiagnostic = Diagnostician.INSTANCE.validate(application)
+
+		if (appDiagnostic.getSeverity() != Diagnostic.OK) {
+			logDiagnostic(appDiagnostic)
+			if (appDiagnostic.getSeverity() == Diagnostic.ERROR) {
+				XmdlabGeneratorContext.addIssue(
+					new XmdlabGeneratorIssueImpl(Severity.ERROR,
+						"Validating  application '" + application.name + "' failed"))
+				return false
+			}
+		}
 		true
+	}
+
+	protected def void logDiagnostic(Diagnostic diagnostic) {
+		val eObject = if (diagnostic instanceof AbstractValidationDiagnostic)
+				(diagnostic).sourceEObject
+			else
+				null
+		if (eObject != null) {
+			val message = "Model validation error \"" + diagnostic.getMessage() + "\" at " +
+				EmfFormatter.objPath(eObject)
+			switch diagnostic.severity {
+				case Diagnostic.ERROR:
+					XmdlabGeneratorContext.addIssue(new XmdlabGeneratorIssueImpl(Severity.ERROR, message))
+				case Diagnostic.WARNING:
+					XmdlabGeneratorContext.addIssue(new XmdlabGeneratorIssueImpl(Severity.WARNING, message))
+				default:
+					XmdlabGeneratorContext.addIssue(new XmdlabGeneratorIssueImpl(Severity.INFO, message))
+			}
+		}
+		if (diagnostic.getChildren() != null) {
+			for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+				logDiagnostic(childDiagnostic)
+			}
+		}
 	}
 
 	/**
@@ -181,11 +219,11 @@ class JeeCartridgeGeneratorWorkflow {
 				if (obj instanceof DslModel) {
 					val model = obj
 					if (mainApp == null) {
-						println("Got Application: " + mainApp)
 						mainApp = model.app
+						println("Got Application: " + mainApp)
 					} else {
-						println("Got Modules: " + mainApp)
 						mainApp.modules.addAll(model.app.modules)
+						println("Got Modules: " + model.app.modules)
 					}
 				}
 			}
@@ -199,31 +237,7 @@ class JeeCartridgeGeneratorWorkflow {
 
 		return mainApp
 	}
-
-	/**
-	 * 
-	 */
-	protected def Object runAction(String actionName, Object input) {
-		try {
-			val lastDot = actionName.lastIndexOf('.')
-			val actionClass = Class.forName(actionName.substring(0, lastDot))
-			var Method actionMethod
-			try {
-				actionMethod = actionClass.getMethod(actionName.substring(lastDot + 1), input.class)
-			} catch (Throwable th) {
-				actionMethod = actionClass.getMethod(actionName.substring(lastDot + 1), input.class.interfaces.get(0))
-			}
-			val actionObj = injector.getInstance(actionClass)
-			return actionMethod.invoke(actionObj, input)
-		} catch (Throwable t) {
-			XmdlabGeneratorContext.addIssue(
-				new XmdlabGeneratorIssueImpl(Severity.ERROR,
-					"Error running action '" + actionName + "': " +
-						if(t.cause instanceof XmdlabGeneratorException) t.cause.message else t.message, t))
-		}
-		null
-	}
-
+	
 	/**
 	 * 
 	 */

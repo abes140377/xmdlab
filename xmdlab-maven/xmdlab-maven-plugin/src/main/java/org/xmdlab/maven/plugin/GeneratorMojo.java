@@ -31,9 +31,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.codehaus.plexus.util.FileUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
 import org.xmdlab.cartridge.common.generator.GeneratorRunner;
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorIssue;
-import org.xmdlab.cartridge.common.generator.XmdlabGeneratorResult;
 
 /**
  * @requiresDependencyResolution
@@ -135,12 +135,6 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		ClassLoader cl = ClassLoader.getSystemClassLoader();
-		URL[] urls = ((URLClassLoader) cl).getURLs();
-		for (URL url : urls) {
-			getLog().info(url.getFile());
-		}
-
 		// Initialize missing Mojo parameters
 		initMojoMultiValueParameters();
 
@@ -169,7 +163,6 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		// Code generator is only executed if force flag is set or source files
 		// are modified
 		if (changedFiles == null || !changedFiles.isEmpty()) {
-
 			// If clean flag set then delete the previously generated files
 			if (isClean()) {
 				// deleteGeneratedFiles();
@@ -207,7 +200,7 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
-		
+
 		if (generatedFiles != null) {
 			// If the code generation succeeded then write status file (and
 			// refresh Eclipse workspace) else delete generated files
@@ -249,7 +242,6 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 				.forName("org.xmdlab.cartridge.jee.generator.JeeGeneratorRunner");
 		Constructor<? extends GeneratorRunner> constructor = c.getConstructor();
 		GeneratorRunner runner = constructor.newInstance();
-		System.out.println(runner);
 
 		XmdlabGeneratorResult result = runner.run(getModelFile(),
 				new Properties());
