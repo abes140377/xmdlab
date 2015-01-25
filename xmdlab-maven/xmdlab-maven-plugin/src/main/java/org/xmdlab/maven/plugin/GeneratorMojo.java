@@ -243,8 +243,9 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		Constructor<? extends GeneratorRunner> constructor = c.getConstructor();
 		GeneratorRunner runner = constructor.newInstance();
 
-		XmdlabGeneratorResult result = runner.run(getModelFile(),
-				new Properties());
+		// XmdlabGeneratorResult result = runner.run(getModelFile(),
+		// new Properties());
+		XmdlabGeneratorResult result = runner.run(getModelFile());
 
 		// Log all issues occured during workflow execution
 		for (XmdlabGeneratorIssue issue : result.getIssues()) {

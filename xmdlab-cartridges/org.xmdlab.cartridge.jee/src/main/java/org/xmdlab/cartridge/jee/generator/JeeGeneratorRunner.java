@@ -18,14 +18,10 @@ package org.xmdlab.cartridge.jee.generator;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.xtext.ISetup;
+import org.xmdlab.cartridge.common.conf.CartridgeProperties;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
@@ -33,7 +29,9 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult.Status;
 import org.xmdlab.cartridge.common.generator.GeneratorRunner;
 import org.xmdlab.cartridge.common.util.FileHelper;
 import org.xmdlab.cartridge.jee.JeeCartridgeGeneratorStandaloneSetup;
+import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 /**
@@ -50,7 +48,7 @@ public class JeeGeneratorRunner implements GeneratorRunner {
 	/**
 	 * 
 	 */
-	public XmdlabGeneratorResult run(File modelFile, Properties generatorProperties) {
+	public XmdlabGeneratorResult run(File modelFile) {
 		Injector injector = new JeeCartridgeGeneratorStandaloneSetup()
 				.createInjectorAndDoEMFRegistration();
 		JeeCartridgeGeneratorWorkflow workflow = injector
@@ -60,8 +58,7 @@ public class JeeGeneratorRunner implements GeneratorRunner {
 		try {
 			// Execute the generators workflow
 			boolean success = workflow.run(
-					URI.createFileURI(modelFile.toString()).toString(),
-					generatorProperties);
+					URI.createFileURI(modelFile.toString()).toString());
 
 			List<XmdlabGeneratorIssue> issues = XmdlabGeneratorContext
 					.getIssues();

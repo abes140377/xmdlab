@@ -3,26 +3,28 @@ package org.xmdlab.cartridge.jee.generator
 import com.google.inject.Inject
 import com.google.inject.Injector
 import java.util.Properties
+import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.util.EmfFormatter
+import org.eclipse.xtext.validation.AbstractValidationDiagnostic
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
 import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
+import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
 import org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModel
 import org.xmdlab.jee.application.mm.Application
-import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
-import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
-import org.eclipse.emf.ecore.util.Diagnostician
-import org.eclipse.emf.common.util.Diagnostic
-import org.eclipse.xtext.validation.AbstractValidationDiagnostic
-import org.eclipse.xtext.util.EmfFormatter
+import org.xmdlab.cartridge.common.conf.CartridgeProperties
 
 /**
  * 
@@ -31,6 +33,9 @@ class JeeCartridgeGeneratorWorkflow {
 
 	@Inject
 	var Injector injector
+	
+	@Inject
+	CartridgeProperties cartridgeProperties;
 
 	var XtextResourceSet resourceSet
 
@@ -46,7 +51,8 @@ class JeeCartridgeGeneratorWorkflow {
 	/**
 	 * 
 	 */
-	def final boolean run(String modelURI, Properties properties) {
+	def final boolean run(String modelURI) {
+		println cartridgeProperties.toString
 		if (readModel(modelURI)) {
 			val dslApp = getApplication()
 			println(dslApp.basePackage + " " + dslApp.name)

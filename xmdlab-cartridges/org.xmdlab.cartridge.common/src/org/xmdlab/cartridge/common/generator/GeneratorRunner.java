@@ -5,6 +5,8 @@ import java.util.Properties;
 
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
 
+import com.google.inject.Inject;
+
 public interface GeneratorRunner {
 
 	/**
@@ -14,6 +16,5 @@ public interface GeneratorRunner {
 	 * @param generatorProperties
 	 * @return
 	 */
-	public XmdlabGeneratorResult run(File modelFile,
-			Properties generatorProperties);
+	public XmdlabGeneratorResult run(File modelFile);
 }
