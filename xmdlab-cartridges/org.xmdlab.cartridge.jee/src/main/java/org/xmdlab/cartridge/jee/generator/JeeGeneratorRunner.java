@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.xmdlab.cartridge.common.conf.CartridgeProperties;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
@@ -29,7 +28,6 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult.Status;
 import org.xmdlab.cartridge.common.generator.GeneratorRunner;
 import org.xmdlab.cartridge.common.util.FileHelper;
 import org.xmdlab.cartridge.jee.JeeCartridgeGeneratorStandaloneSetup;
-import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

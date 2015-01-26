@@ -16,7 +16,7 @@
 
   <modules>
     <module>org.xmdlab.jee.application.mm</module>
-    <module>org.xmdlab.rails.application.mm</module>
+	<module>org.xmdlab.rails.application.mm</module>
   </modules>
 
   <build>

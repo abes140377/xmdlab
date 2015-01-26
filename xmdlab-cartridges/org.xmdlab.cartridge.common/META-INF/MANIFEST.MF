@@ -15,5 +15,6 @@ Export-Package: org.xmdlab.cartridge.common.conf,
  org.xmdlab.cartridge.common.metafacade,
  org.xmdlab.cartridge.common.metamodel,
  org.xmdlab.cartridge.common.task,
+ org.xmdlab.cartridge.common.transformation,
  org.xmdlab.cartridge.common.util,
  org.xmdlab.cartridge.common.workflow

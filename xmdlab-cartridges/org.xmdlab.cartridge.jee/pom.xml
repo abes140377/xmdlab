@@ -27,7 +27,7 @@
             </goals>
             <configuration>
               <sources>
-                <source>src-gen</source>
+                <source>src-gen-man</source>
               </sources>
             </configuration>
           </execution>

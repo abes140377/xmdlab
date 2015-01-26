@@ -4,11 +4,11 @@ import java.util.Map
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.OutputConfiguration
 
-class DefaultOutputConfigurationProvider {
+class DefaultOutputConfigurationProvider implements IOutputConfigurationProvider {
 
 	Map<String, OutputConfiguration> outputs = newHashMap();
 
-	def Map<String, OutputConfiguration> getOutputConfigurations() {
+	def override Map<String, OutputConfiguration> getOutputConfigurations() {
 		//
 		var OutputConfiguration defaultOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT)
 		defaultOutput.setDescription("Output Folder");
