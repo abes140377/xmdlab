@@ -4,11 +4,6 @@
  */
 package org.xmdlab.cartridge.rails.generator
 
-import com.google.inject.Inject
-import org.xmdlab.cartridge.rails.metafacade.ApplicationMetafacade
-import org.xmdlab.cartridge.rails.task.CreateInitialProjectTask
-import org.xmdlab.cartridge.rails.util.RailsCartridgeProjectProperties
-
 /**
  * The RailsCartridgeGeneratorStandaloneSetup
  *
@@ -16,13 +11,5 @@ import org.xmdlab.cartridge.rails.util.RailsCartridgeProjectProperties
  *
  */
 class RailsCartridgeGenerator extends RailsCartridgeGeneratorBase {
-
-	@Inject extension RailsCartridgeProjectProperties properties
-	@Inject ApplicationMetafacade applicationMetafacade
-	@Inject CreateInitialProjectTask createInitialProjectTask
-
-	override void beforeCompileEclipseProject() {
-		createInitialProjectTask.run
-	}
 
 }

@@ -3,9 +3,7 @@
  */
 package org.xmdlab.cartridge.generator.dsl.scoping
 
-import org.eclipse.xtext.scoping.IScope
-import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslModel
-import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 
 /**
  * This class contains custom scoping description.
@@ -14,7 +12,7 @@ import org.eclipse.emf.ecore.EReference
  * on how and when to use it 
  *
  */
-class CartridgeDslScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
+class CartridgeDslScopeProvider extends AbstractDeclarativeScopeProvider {
 
 //	def IScope scope_Bar_foo(DslModel dslModel, EReference eReference) {
 //    	return delegateGetScope(bar, eReference);

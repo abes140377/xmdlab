@@ -35,13 +35,6 @@
       </plugin>
 
       <!-- <plugin> -->
-      <!-- <artifactId>maven-deploy-plugin</artifactId> -->
-      <!-- <configuration> -->
-      <!-- <skip>false</skip> -->
-      <!-- </configuration> -->
-      <!-- </plugin> -->
-
-      <!-- <plugin> -->
       <!-- <groupId>org.apache.maven.plugins</groupId> -->
       <!-- <artifactId>maven-clean-plugin</artifactId> -->
       <!-- <configuration> -->

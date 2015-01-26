@@ -5,52 +5,14 @@
 package org.xmdlab.cartridge.rails.templates
 
 import com.google.inject.Inject
-import org.xmdlab.cartridge.rails.metafacade.ApplicationMetafacade
-import org.xmdlab.cartridge.rails.util.RailsCartridgeOutputConfigurationProvider
+import org.xmdlab.cartridge.rails.metafacade.*
 import org.xmdlab.cartridge.rails.util.RailsCartridgeProjectProperties
 
 class ReadmeMdTpl extends ReadmeMdTplBase {
 	
-	@Inject extension RailsCartridgeProjectProperties
-	@Inject extension RailsCartridgeOutputConfigurationProvider provider
+	@Inject extension RailsCartridgeProjectProperties p
 	
 	override doGenerate() '''
-	«val appName = applicationMetafacade.modelResource.name»
-	«var applicationDir = ''»
-	«FOR oc : outputConfigurations»
-	«IF oc.name == RailsCartridgeOutputConfigurationProvider.OUTPUTCONFIG_APPLICATION»
-		«applicationDir = oc.outputDirectory»
-	«ENDIF»
-	«ENDFOR»
-	# Install Rails with rvm and create initial rails project 
 	
-	cd «applicationDir»
-	rvm use ruby-«rvmVersion»@«appName» --ruby-version --create
-	gem install rails --no-ri --no-rdoc
-	
-	rails new .
-	
-	«IF useAptana == "true"»
-	# Install Aptana IDE (optional)
-	
-	Download Aptana Studio 3 from «getAptanaDownloadLinkByOs()»
-	«ENDIF»
 	'''
-	
-	/**
-	 * 
-	 */
-	def getAptanaDownloadLinkByOs() {
-		val String OS = System.getProperty("os.name").toLowerCase();
- 
-		if (OS.indexOf("win") >= 0) {
-			return "https://github.com/aptana/studio3/releases/download/v" + aptanaVersion + "/Aptana_Studio_3_Setup_" + aptanaVersion + ".exe"
-		} else if (OS.indexOf("mac") >= 0) {
-			return "https://github.com/aptana/studio3/releases/download/v" + aptanaVersion + "/Aptana_Studio_3_Setup_" + aptanaVersion + ".dmg"
-		} else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0) {
-			return "https://github.com/aptana/studio3/releases/download/v" + aptanaVersion + "/Aptana_Studio_3_Setup_Linux_x86_64_" + aptanaVersion + ".zip"
-		} else {
-			throw new UnsupportedOperationException("Implement me!")
-		}
-	}
 }

@@ -55,8 +55,6 @@ class BaseMetafacadeComponentTpl {
 		//			return;
 		//		}
 		//
-		//		System.out.println(puppetModel);
-		//
 		//		SiteMetafacade siteMetafacade = injector.getInstance(SiteMetafacade.class);
 		//		System.out.println(siteMetafacade);
 			}

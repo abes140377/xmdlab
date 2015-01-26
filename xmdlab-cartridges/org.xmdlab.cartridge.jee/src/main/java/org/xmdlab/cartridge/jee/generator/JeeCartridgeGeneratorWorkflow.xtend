@@ -29,13 +29,14 @@ import java.util.Map.Entry
 import com.typesafe.config.ConfigValue
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.xmdlab.cartridge.common.generator.CartridgeGeneratorWorkflow
 
 /**
  * 
  */
-class JeeCartridgeGeneratorWorkflow {
+class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 	
-	private Logger LOGGER = LoggerFactory.getLogger(JeeCartridgeGeneratorWorkflow);
+	private Logger LOGGER = LoggerFactory.getLogger(JeeCartridgeGeneratorWorkflow)
 
 	@Inject
 	var Injector injector
@@ -58,16 +59,11 @@ class JeeCartridgeGeneratorWorkflow {
 	 * 
 	 */
 	def final boolean run(String modelURI) {
-		val Set<Entry<String, ConfigValue>> entrySet = cartridgeProperties.config.entrySet
-		entrySet.forEach[
-			LOGGER.info(it.key)
-			LOGGER.info(it.value.render)
-		]
 		if (readModel(modelURI)) {
 			val dslApp = getApplication()
-			println(dslApp.basePackage + " " + dslApp.name)
+			LOGGER.info(dslApp.basePackage + " " + dslApp.name)
 			if (validateApplication(dslApp)) {
-				val app = transformAndModifyApplication(dslApp)
+				val app = transformModel(dslApp)
 				if (app != null) {
 
 					// init metafacades
@@ -82,7 +78,7 @@ class JeeCartridgeGeneratorWorkflow {
 			}
 		}
 
-		println("Executing workflow failed")
+		LOGGER.error("Executing workflow failed")
 
 		return false
 	}
@@ -118,12 +114,14 @@ class JeeCartridgeGeneratorWorkflow {
 	/**
 	 * 
 	 */
-	protected def Application transformAndModifyApplication(DslApplication application) {
-		println("Transforming application " + application.name)
+	protected def Application transformModel(DslApplication application) {
+		LOGGER.info("Transforming application " + application.name)
 
+		// run transformation
 		val JeeCartridgeTransformation transformation = injector.getInstance(JeeCartridgeTransformation)
 		var transformedApplication = transformation.transform(application) as Application
 
+		
 		// if (transformedApplication != null) {
 		//     LOG.debug("Modifying transformed application '{}'", transformedApplication.name)
 		//		transformedApplication = runAction("org.sculptor.generator.transform.Transformation.modify",
@@ -133,51 +131,9 @@ class JeeCartridgeGeneratorWorkflow {
 		if (transformedApplication == null) {
 			XmdlabGeneratorContext.addIssue(
 				new XmdlabGeneratorIssueImpl(Severity.ERROR,
-					"Transformation and modification of application '" + application.name + "' failed"))
+					"Transformation and modification of model '" + application.name + "' failed"))
 		}
 		transformedApplication
-	}
-
-	/**
-	 * 
-	 */
-	protected def boolean validateApplication(DslApplication application) {
-		val appDiagnostic = Diagnostician.INSTANCE.validate(application)
-
-		if (appDiagnostic.getSeverity() != Diagnostic.OK) {
-			logDiagnostic(appDiagnostic)
-			if (appDiagnostic.getSeverity() == Diagnostic.ERROR) {
-				XmdlabGeneratorContext.addIssue(
-					new XmdlabGeneratorIssueImpl(Severity.ERROR,
-						"Validating  application '" + application.name + "' failed"))
-				return false
-			}
-		}
-		true
-	}
-
-	protected def void logDiagnostic(Diagnostic diagnostic) {
-		val eObject = if (diagnostic instanceof AbstractValidationDiagnostic)
-				(diagnostic).sourceEObject
-			else
-				null
-		if (eObject != null) {
-			val message = "Model validation error \"" + diagnostic.getMessage() + "\" at " +
-				EmfFormatter.objPath(eObject)
-			switch diagnostic.severity {
-				case Diagnostic.ERROR:
-					XmdlabGeneratorContext.addIssue(new XmdlabGeneratorIssueImpl(Severity.ERROR, message))
-				case Diagnostic.WARNING:
-					XmdlabGeneratorContext.addIssue(new XmdlabGeneratorIssueImpl(Severity.WARNING, message))
-				default:
-					XmdlabGeneratorContext.addIssue(new XmdlabGeneratorIssueImpl(Severity.INFO, message))
-			}
-		}
-		if (diagnostic.getChildren() != null) {
-			for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-				logDiagnostic(childDiagnostic)
-			}
-		}
 	}
 
 	/**
@@ -214,7 +170,7 @@ class JeeCartridgeGeneratorWorkflow {
 						for (import : obj.imports) {
 							val app = obj.app
 
-							println("Application loaded: " + app)
+							LOGGER.info("Application loaded: " + app)
 
 							newUris.add(import.importURI)
 						}
@@ -236,10 +192,10 @@ class JeeCartridgeGeneratorWorkflow {
 					val model = obj
 					if (mainApp == null) {
 						mainApp = model.app
-						println("Got Application: " + mainApp)
+						LOGGER.info("Got Application: " + mainApp)
 					} else {
 						mainApp.modules.addAll(model.app.modules)
-						println("Got Modules: " + model.app.modules)
+						LOGGER.info("Got Modules: " + model.app.modules)
 					}
 				}
 			}
@@ -252,15 +208,5 @@ class JeeCartridgeGeneratorWorkflow {
 		}
 
 		return mainApp
-	}
-	
-	/**
-	 * 
-	 */
-	protected def updateConfiguration(Properties properties) {
-		if (properties != null) {
-			// println("Updating configuration with {}", properties)
-			// properties.stringPropertyNames.forEach[key|configuration.setString(key, properties.getProperty(key))]
-		}
 	}
 }

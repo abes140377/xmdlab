@@ -10,31 +10,9 @@ import org.xmdlab.cartridge.rails.util.RailsCartridgeProjectProperties
 
 class EclipseProjectTpl extends EclipseProjectTplBase {
 	
-	@Inject extension RailsCartridgeProjectProperties
+	@Inject extension RailsCartridgeProjectProperties p
 	
 	override doGenerate() '''
-	«val appName = applicationMetafacade.modelResource.name»
-	<?xml version="1.0" encoding="UTF-8"?>
-	<projectDescription>
-	  <name>«appName»-app</name>
-	  <comment></comment>
-	  <projects>
-	  </projects>
-	  <buildSpec>
-	  	«IF useAptana == "true"»
-	  	<buildCommand>
-	  		<name>com.aptana.ide.core.unifiedBuilder</name>
-	  		<arguments>
-	  		</arguments>
-	  	</buildCommand>
-	    «ENDIF»
-	  </buildSpec>
-	  <natures>
-	  	«IF useAptana == "true"»
-	  	<nature>org.radrails.rails.core.railsnature</nature>
-	  	<nature>com.aptana.ruby.core.rubynature</nature>
-	    «ENDIF»
-	  </natures>
-	</projectDescription>
+	
 	'''
 }

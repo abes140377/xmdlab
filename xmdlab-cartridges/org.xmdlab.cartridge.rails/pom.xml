@@ -10,21 +10,60 @@
   </parent>
 
   <artifactId>org.xmdlab.cartridge.rails</artifactId>
-  <packaging>eclipse-plugin</packaging>
   <name>Xmdlab rails cartridge module [${project.artifactId}]</name>
   <description>Xgen rails cartridge module [${project.artifactId}]</description>
 
-  <properties>
-    <xtext-resources>${project.build.directory}/xtext</xtext-resources>
-  </properties>
-
   <build>
-    <resources>
-      <resource>
-        <directory>${xtext-resources}</directory>
-      </resource>
-    </resources>
     <plugins>
+      <plugin>
+		<groupId>org.eclipse.xtext</groupId>
+		<artifactId>xtext-maven-plugin</artifactId>
+		<version>${xtext-version}</version>
+		<executions>
+		  <execution>
+			<goals>
+			  <goal>generate</goal>
+			</goals>
+		  </execution>
+		</executions>
+		<configuration>
+		  <languages>
+		    <language>
+			  <setup>org.xmdlab.cartridge.generator.dsl.CartridgeDslStandaloneSetup</setup>
+			  <outputConfigurations>
+			    <outputConfiguration>
+				  <outputDirectory>src-gen</outputDirectory>
+				</outputConfiguration>
+			  </outputConfigurations>
+			</language>
+		  </languages>
+		</configuration>
+		<dependencies>
+		  <dependency>
+		    <groupId>org.xmdlab.cartridge.generator</groupId>
+			<artifactId>org.xmdlab.cartridge.generator.dsl</artifactId>
+			<version>${project.version}</version>
+		  </dependency>
+		</dependencies>
+	  </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src-gen</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
@@ -45,68 +84,6 @@
           </filesets>
         </configuration>
       </plugin>
-      <!-- The Xtext related sources files are referenced as classpath resources. So we copy them to a separate folder that 
-        is registered as resource folder. -->
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>initialize</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${xtext-resources}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>model</directory>
-                  <includes>
-                    <!-- <include>**/*.xtext</include> -->
-                    <include>**/*.mwe2</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.fornax.toolsupport</groupId>
-        <artifactId>fornax-oaw-m2-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>run-workflow</goal>
-            </goals>
-            <configuration>
-              <workflowEngine>mwe2</workflowEngine>
-              <workflowDescriptor>org.xmdlab.cartridge.rails.RailsCartridgeGenerator</workflowDescriptor>
-              <timestampFileName>generator.timestamp</timestampFileName>
-              <checkFilesets>
-                <checkFileset>
-                  <directory>${basedir}</directory>
-                  <includes>
-                    <include>model/*.cartridge</include>
-                    <include>model/*.conf</include>
-                  </includes>
-                </checkFileset>
-              </checkFilesets>
-              <jvmSettings>
-                <fork>true</fork>
-                <jvmArgs>
-                  <jvmArg>-Xms100m</jvmArg>
-                  <jvmArg>-Xmx700m</jvmArg>
-                  <jvmArg>-XX:MaxPermSize=128m</jvmArg>
-                  <!-- required to read the xtext file with the correct encoding -->
-                  <jvmArgs>-Dfile.encoding=${project.build.sourceEncoding}</jvmArgs>
-                </jvmArgs>
-              </jvmSettings>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>xtend-maven-plugin</artifactId>
@@ -125,4 +102,24 @@
       </plugin>
     </plugins>
   </build>
+  
+  <dependencies>
+  	<dependency>
+      <groupId>org.xmdlab.cartridges</groupId>
+      <artifactId>org.xmdlab.cartridge.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.xmdlab.dsls</groupId>
+      <artifactId>org.xmdlab.dsl.application</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.xmdlab.mm</groupId>
+      <artifactId>org.xmdlab.rails.application.mm</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 </project>

@@ -4,16 +4,14 @@
  */
 package org.xmdlab.cartridge.jee.transformation
 
-import com.google.inject.Inject
-import org.xmdlab.cartridge.common.metamodel.HelperBase
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModule
 import org.xmdlab.jee.application.mm.Application
 import org.xmdlab.jee.application.mm.MmFactory
 
 class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
-	@Inject extension HelperBase
 
+	//	@Inject extension HelperBase
 	private static val MmFactory FACTORY = MmFactory::eINSTANCE
 
 	var Application globalApp
