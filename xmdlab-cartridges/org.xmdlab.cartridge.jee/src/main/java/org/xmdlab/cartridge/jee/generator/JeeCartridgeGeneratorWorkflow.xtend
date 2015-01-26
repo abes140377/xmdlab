@@ -2,21 +2,19 @@ package org.xmdlab.cartridge.jee.generator
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import java.util.Properties
-import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.util.EmfFormatter
-import org.eclipse.xtext.validation.AbstractValidationDiagnostic
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.xmdlab.cartridge.common.conf.CartridgeProperties
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
+import org.xmdlab.cartridge.common.generator.CartridgeGeneratorWorkflow
 import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
@@ -24,12 +22,6 @@ import org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModel
 import org.xmdlab.jee.application.mm.Application
-import java.util.Set
-import java.util.Map.Entry
-import com.typesafe.config.ConfigValue
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.xmdlab.cartridge.common.generator.CartridgeGeneratorWorkflow
 
 /**
  * 
@@ -59,6 +51,10 @@ class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 	 * 
 	 */
 	def final boolean run(String modelURI) {
+		cartridgeProperties.config.entrySet.forEach[
+			LOGGER.info(it.key)
+			LOGGER.info(it.value.render)
+		]
 		if (readModel(modelURI)) {
 			val dslApp = getApplication()
 			LOGGER.info(dslApp.basePackage + " " + dslApp.name)
@@ -178,7 +174,8 @@ class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 				}
 			}
 		} while (!newUris.empty && numberResources != resourceSet.resources.size)
-		true
+		
+		return true
 	}
 
 	/**
