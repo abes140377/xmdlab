@@ -10,10 +10,10 @@
   </parent>
   <artifactId>eclipse-mirror</artifactId>
   <packaging>pom</packaging>
-  <name>Xgen Eclipse p2 Repository Mirror [${project.artifactId}]</name>
+  <name>Xmdlab Eclipse p2 Repository Mirror [${project.artifactId}]</name>
   <description>By activating the profile 'mirror' a local p2 repository is created
 				 in the directory '.p2-mirror' by mirroring all the Eclipse p2 repositories
-				 used by Xgen.
+				 used by Xmdlab.
 				 
 				 This local p2 mirror can be used in Mavens settings.xml as decribed in the
 				 blog post 'Using a mirror for p2 repositories (with tycho)'

@@ -13,23 +13,29 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.EmfFormatter
 import org.eclipse.xtext.validation.AbstractValidationDiagnostic
+import org.xmdlab.cartridge.common.conf.CartridgeProperties
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
 import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
-import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
 import org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModel
 import org.xmdlab.jee.application.mm.Application
-import org.xmdlab.cartridge.common.conf.CartridgeProperties
+import java.util.Set
+import java.util.Map.Entry
+import com.typesafe.config.ConfigValue
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * 
  */
 class JeeCartridgeGeneratorWorkflow {
+	
+	private Logger LOGGER = LoggerFactory.getLogger(JeeCartridgeGeneratorWorkflow);
 
 	@Inject
 	var Injector injector
@@ -52,7 +58,11 @@ class JeeCartridgeGeneratorWorkflow {
 	 * 
 	 */
 	def final boolean run(String modelURI) {
-		println cartridgeProperties.toString
+		val Set<Entry<String, ConfigValue>> entrySet = cartridgeProperties.config.entrySet
+		entrySet.forEach[
+			LOGGER.info(it.key)
+			LOGGER.info(it.value.render)
+		]
 		if (readModel(modelURI)) {
 			val dslApp = getApplication()
 			println(dslApp.basePackage + " " + dslApp.name)

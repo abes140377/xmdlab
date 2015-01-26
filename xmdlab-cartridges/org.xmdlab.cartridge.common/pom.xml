@@ -11,9 +11,8 @@
   </parent>
 
   <artifactId>org.xmdlab.cartridge.common</artifactId>
-  <packaging>eclipse-plugin</packaging>
-  <name>Xmdlab cartridge common plugin [${project.artifactId}]</name>
-  <description>Xmdlab cartridge common plugin [${project.artifactId}]</description>
+  <name>Xmdlab cartridge common [${project.artifactId}]</name>
+  <description>Xmdlab cartridge common [${project.artifactId}]</description>
 
   <build>
     <plugins>
@@ -51,4 +50,33 @@
       </plugin>
     </plugins>
   </build>
+  
+  <dependencies>
+  	<dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.xtext</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.xbase</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-classic</artifactId>
+	</dependency>
+	<dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>log4j-over-slf4j</artifactId>
+	</dependency>
+	<dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>jcl-over-slf4j</artifactId>
+	</dependency>
+  </dependencies>
 </project>

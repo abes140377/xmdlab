@@ -3,18 +3,18 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>de.freund.xgen</groupId>
-    <artifactId>xgen</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <relativePath>../../</relativePath>
+    <groupId>org.xmdlab</groupId>
+  	<artifactId>xmdlab</artifactId>
+  	<version>0.1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   
   <artifactId>eclipse-ide</artifactId>
   <packaging>eclipse-repository</packaging>
   
-  <name>Xgen Eclipse IDE [${project.artifactId}]</name>
+  <name>Xmdlab Eclipse IDE [${project.artifactId}]</name>
   
-  <description>Xgen Eclipse IDE [${project.artifactId}]</description>
+  <description>Xmdlab Eclipse IDE [${project.artifactId}]</description>
 
   <repositories>
     <!-- Repository to resolve the Eclipse release train dependencies -->
