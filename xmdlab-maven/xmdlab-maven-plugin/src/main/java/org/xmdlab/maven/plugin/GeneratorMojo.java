@@ -30,6 +30,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.codehaus.plexus.util.FileUtils;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.sonatype.plexus.build.incremental.BuildContext;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue;
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
@@ -59,6 +60,12 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 	 */
 	@Parameter(required = true)
 	private String model;
+	
+	/**
+	 * The cartridge
+	 */
+	@Parameter(required = true)
+	private String cartridge;
 
 	/**
 	 * A <code>java.util.List</code> of {@link FileSet}s that will be checked on
@@ -239,12 +246,10 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
 		Class c = Class
-				.forName("org.xmdlab.cartridge.jee.generator.JeeGeneratorRunner");
+				.forName("org.xmdlab.cartridge." + cartridge + ".generator." + StringExtensions.toFirstUpper(cartridge) + "GeneratorRunner");
 		Constructor<? extends GeneratorRunner> constructor = c.getConstructor();
 		GeneratorRunner runner = constructor.newInstance();
 
-		// XmdlabGeneratorResult result = runner.run(getModelFile(),
-		// new Properties());
 		XmdlabGeneratorResult result = runner.run(getModelFile());
 
 		// Log all issues occured during workflow execution

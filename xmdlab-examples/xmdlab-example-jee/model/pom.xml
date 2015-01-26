@@ -17,6 +17,7 @@
         <configuration>
           <verbose>true</verbose>
           <model>src/main/resources/xmdlab-example-jee.application</model>
+          <cartridge>jee</cartridge>
         </configuration>
         <executions>
           <execution>
