@@ -6,7 +6,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,12 +15,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
-import org.apache.maven.model.Resource;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.FileSet;
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Component;
@@ -37,7 +35,9 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult;
 import org.xmdlab.cartridge.common.generator.GeneratorRunner;
 
 /**
- * @requiresDependencyResolution
+ * 
+ * @author seba
+ *
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, threadSafe = true, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class GeneratorMojo extends AbstractGeneratorMojo {
@@ -140,6 +140,9 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		return clean;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		// Initialize missing Mojo parameters
@@ -276,6 +279,11 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 				.getGeneratedFiles() : null);
 	}
 
+	/**
+	 * 
+	 * @param classpathEntries
+	 * @throws MojoExecutionException
+	 */
 	public void extendPluginClasspath(List<Object> classpathEntries)
 			throws MojoExecutionException {
 		// we need a LinkedHashSet here to preserve insertion order
@@ -319,6 +327,9 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		Thread.currentThread().setContextClassLoader(classLoader);
 	}
 
+	/**
+	 * 
+	 */
 	private void refreshEclipseWorkspace() {
 		getLog().warn("Implement refreshEclipseWorkspace() in GeneratorMojo");
 		// buildContext.refresh(outletSrcOnceDir);
@@ -433,6 +444,11 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		return changedFiles;
 	}
 
+	/**
+	 * 
+	 * @param fileSet
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	private List<File> toFileList(FileSet fileSet) {
 		File directory = new File(fileSet.getDirectory());
@@ -448,6 +464,11 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * 
+	 * @param strings
+	 * @return
+	 */
 	private String toCommaSeparatedString(Collection<String> strings) {
 		StringBuilder sb = new StringBuilder();
 		for (String string : strings) {

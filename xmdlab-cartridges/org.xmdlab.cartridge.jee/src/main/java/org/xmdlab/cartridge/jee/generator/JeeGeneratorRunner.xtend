@@ -19,33 +19,31 @@ import org.xmdlab.cartridge.jee.JeeCartridgeGeneratorStandaloneSetup
  * 
  */
 class JeeGeneratorRunner implements GeneratorRunner {
-	
+
 	private Logger LOGGER = LoggerFactory.getLogger(JeeGeneratorRunner);
-	
+
 	/**
 	 * 
 	 */
 	override run(File modelFile) {
 		val Injector injector = new JeeCartridgeGeneratorStandaloneSetup().createInjectorAndDoEMFRegistration()
-		val JeeCartridgeGeneratorWorkflow workflow = injector
-				.getInstance(JeeCartridgeGeneratorWorkflow);
+		val JeeCartridgeGeneratorWorkflow workflow = injector.getInstance(JeeCartridgeGeneratorWorkflow);
 		XmdlabGeneratorContext.getGeneratedFiles().clear();
-		
-		try {
-			// Execute the generators workflow
-			val boolean success = workflow.run(
-					URI.createFileURI(modelFile.toString()).toString());
 
-			var List<XmdlabGeneratorIssue> issues = XmdlabGeneratorContext
-					.getIssues();
-			var List<File> generatedFiles = XmdlabGeneratorContext
-					.getGeneratedFiles();
+		try {
+
+			// Execute the generators workflow
+			val boolean success = workflow.run(URI.createFileURI(modelFile.toString()).toString());
+
+			var List<XmdlabGeneratorIssue> issues = XmdlabGeneratorContext.getIssues();
+			var List<File> generatedFiles = XmdlabGeneratorContext.getGeneratedFiles();
 			val status = [
-				if(success)
+				if (success)
 					Status::SUCCESS
 				else
 					Status::FAILED
 			].apply(success)
+
 			//val status = success ? Status::SUCCESS : Status::FAILED
 			var XmdlabGeneratorResult result = new XmdlabGeneratorResult(status, issues, generatedFiles)
 
@@ -67,5 +65,4 @@ class JeeGeneratorRunner implements GeneratorRunner {
 			XmdlabGeneratorContext.close();
 		}
 	}
-	
 }

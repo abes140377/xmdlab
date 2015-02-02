@@ -6,12 +6,13 @@ package org.xmdlab.cartridge.jee.templates
 
 import com.google.inject.Inject
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
+import org.xmdlab.cartridge.common.template.Template
 
-abstract class ReadmeMdTplBase {
+abstract class ReadmeMdTplBase implements Template {
 	
 	@Inject extension ApplicationMetafacade applicationMetafacade
 
-	def generate() '''
+	override generate() '''
 		«doGenerate()»
 	'''
 

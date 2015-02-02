@@ -6,7 +6,7 @@ package org.xmdlab.cartridge.jee.templates
 
 class ReadmeMdTpl extends ReadmeMdTplBase {
 
-	//	@Inject extension JeeCartridgeProjectProperties
+	// @Inject extension JeeCartridgeProjectProperties
 	
 	override doGenerate() '''
 		«val appName = applicationMetafacade.modelResource.name»

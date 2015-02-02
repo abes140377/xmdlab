@@ -113,7 +113,7 @@
         <module>xmdlab-cartridge-generator</module>
         <module>xmdlab-cartridges</module>
         <!-- <module>xmdlab-features</module> -->
-        <!-- <module>xmdlab-plugins</module> -->
+        <module>xmdlab-plugins</module>
         <module>xmdlab-maven</module>
         <module>xmdlab-examples</module>
       </modules>
