@@ -1,0 +1,26 @@
+// print some information of the build to stout
+println """\n
+Gradle-Build with version: $gradle.gradleVersion - http://www.gradle.org
+Gradle home: $gradle.gradleHomeDir
+Gradle user directory: $gradle.gradleUserHomeDir
+Running script: ${relativePath(buildFile)}\n"""
+
+// define common plugins, tasks and properties for all projects (including root) here
+allprojects {
+	apply plugin: 'eclipse-wtp'
+	apply plugin: 'eclipse'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'maven'
+	
+	sourceCompatibility = 1.7
+	group = 'org.xmdlab.example.ref.appmanager'
+	version = '1.0'
+	
+	repositories {
+		mavenLocal()
+    	mavenCentral()
+	}
+}
