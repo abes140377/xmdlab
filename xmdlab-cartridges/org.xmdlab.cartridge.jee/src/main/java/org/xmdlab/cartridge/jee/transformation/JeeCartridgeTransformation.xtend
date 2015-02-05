@@ -8,46 +8,141 @@ import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModule
 import org.xmdlab.jee.application.mm.Application
 import org.xmdlab.jee.application.mm.MmFactory
+import java.util.List
+import org.eclipse.xtext.EcoreUtil2
+import com.google.inject.Inject
+import org.xmdlab.dsl.application.applicationDsl.DslSimpleDomainObject
+import org.xmdlab.dsl.application.applicationDsl.DslEntity
+import org.xmdlab.jee.application.mm.DomainObject
+import org.xmdlab.dsl.application.applicationDsl.DslService
+import org.xmdlab.dsl.application.applicationDsl.DslAttribute
+import org.xmdlab.dsl.application.applicationDsl.DslCollectionType
+import org.xmdlab.cartridge.jee.util.HelperBase
 
 class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 
-	//	@Inject extension HelperBase
+	@Inject extension HelperBase
 	private static val MmFactory FACTORY = MmFactory::eINSTANCE
 
-	var Application globalApp
+	var Application mmAppplication
+	var DslApplication dslApplication
 
+	/**
+	 * 
+	 */
 	override create FACTORY.createApplication transform(DslApplication dslApplication) {
-		globalApp = it
+		this.mmAppplication = it
+		this.dslApplication = dslApplication
 
 		name = dslApplication.name
 		basePackage = dslApplication.basePackage
 
-	//		
-	//		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApp, typeof(DslModule))
-	//		modules.addAll(allDslModules.map[e | transform(e)])
+		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApplication, typeof(DslModule))
+		modules.addAll(allDslModules.map[e|transform(e)])
 	}
 
+	/**
+	 * 
+	 */
 	def create FACTORY.createModule transform(DslModule dslModule) {
-		//		application = globalApp
-		//		
-		//		basePackage = dslModule.basePackage
+		basePackage = dslModule.basePackage
+
+		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApplication, typeof(DslModule))
+
+		application = mmAppplication
+		doc = dslModule.doc
+		name = dslModule.name
+		hint = dslModule.hint
+		basePackage = dslModule.basePackage
+		domainObjects.addAll(dslModule.domainObjects.map[e|transformSimpleDomainObject(e)])
+		services.addAll(dslModule.services.map[e|transform(e)])
 	}
 
-// this "method" is not used, it is kind of "abstract"
-//	def dispatch create FACTORY.createModel transformSimpleDomainObject(DslSimpleDomainObject domainObject) {
-//		error("Wrong type of domainObject "+domainObject.name+"["+ (domainObject.^class.simpleName) +"] passed into transformSimpleDomainObject")
-//	}
-//	
-//	def dispatch create FACTORY.createModel transformSimpleDomainObject(DslEntity domainObject) {
-//		module = (domainObject.eContainer as DslModule).transform
-//		name = domainObject.name
-//		^package = domainObject.^package
-//		
-//		attributes.addAll(domainObject.attributes.map[e | transform(e)])
-//	}
-//	
-//	def create FACTORY.createAttribute transform(DslAttribute attribute) {
-//		name = attribute.name
-//		type = attribute.type
-//	}
+	/**
+	 * 
+	 */
+	def create FACTORY.createService transform(DslService dslService) {
+		module = (dslService.eContainer as DslModule).transform
+		doc = dslService.doc
+		name = dslService.name
+		hint = dslService.hint
+	}
+
+	private def DomainObject dummyCreateDomainObject() {
+		null
+	}
+
+	/**
+	 * this "method" is not used, it is kind of "abstract"
+	 */
+	def dispatch create dummyCreateDomainObject transformSimpleDomainObject(DslSimpleDomainObject dslSimpleDomainObject) {
+		throw new RuntimeException(
+			"Wrong type of domainObject " + dslSimpleDomainObject.name + "[" + (dslSimpleDomainObject.^class.simpleName) +
+				"] passed into transformSimpleDomainObject")
+	}
+
+	/**
+	 * 
+	 */
+	def dispatch create FACTORY.createEntity transformSimpleDomainObject(DslEntity domainObject) {
+		module = (domainObject.eContainer as DslModule).transform
+		name = domainObject.name
+		^package = domainObject.^package
+
+		attributes.addAll(domainObject.attributes.map[e|transform(e)])
+	}
+
+	/**
+	 * 
+	 */
+	def create FACTORY.createAttribute transform(DslAttribute dslAttribute) {
+		doc = dslAttribute.doc
+		name = dslAttribute.name
+		type = dslAttribute.type
+		collectionType = convertCollectionTypeEnum(dslAttribute.collectionType)
+		naturalKey = dslAttribute.key
+		changeable = !dslAttribute.notChangeable
+		required = dslAttribute.required
+		nullable = dslAttribute.nullable
+		index = dslAttribute.index
+		length = dslAttribute.length
+		validate = dslAttribute.handleValidation()
+	}
+
+	// ==========================================================================================
+	def String handleValidation(DslAttribute attribute) {
+		(if(attribute.validate != null) attribute.validate else "") +
+			handleParameterizedAnnotation("digits", "integer,fraction,message", attribute.digits, attribute.validate) +
+			handleParameterizedAnnotation("size", "min,max,message", attribute.size, attribute.validate) +
+			handleBooleanAnnotation("assertTrue", attribute.assertTrue, attribute.assertTrueMessage, attribute.validate) + handleBooleanAnnotation(
+				"assertFalse", attribute.assertFalse, attribute.assertFalseMessage, attribute.validate) + handleBooleanAnnotation(
+				"notNull", !attribute.nullable && !attribute.type.isPrimitiveType(), attribute.nullableMessage,
+				attribute.validate) +
+			handleBooleanAnnotation("future", attribute.future, attribute.futureMessage, attribute.validate) +
+			handleBooleanAnnotation("past", attribute.past, attribute.pastMessage, attribute.validate) +
+			handleSimpleAnnotation("min", attribute.min, attribute.validate) +
+			handleSimpleAnnotation("max", attribute.max, attribute.validate) +
+			handleSimpleAnnotation("decimalMin", attribute.decimalMin, attribute.validate) +
+			handleSimpleAnnotation("decimalMax", attribute.decimalMax, attribute.validate) +
+			handleParameterizedAnnotation("pattern", "regexp,message", attribute.pattern, attribute.validate) + handleBooleanAnnotation(
+				"creditCardNumber", attribute.creditCardNumber, attribute.creditCardNumberMessage,
+				attribute.validate) +
+			handleBooleanAnnotation("email", attribute.email, attribute.emailMessage, attribute.validate) +
+			handleBooleanAnnotation("notEmpty", attribute.notEmpty, attribute.notEmptyMessage, attribute.validate) +
+			handleBooleanAnnotation("notBlank", attribute.notBlank, attribute.notBlankMessage, attribute.validate) + handleParameterizedAnnotation(
+				"scriptAssert", "lang,script,alias,message", attribute.scriptAssert, attribute.validate) +
+			handleParameterizedAnnotation("url", "protocol,host,port,message", attribute.url, attribute.validate) +
+			handleParameterizedAnnotation("range", "min,max,message", attribute.range, attribute.validate) +
+			handleParameterizedAnnotation("length", "max,min,message", attribute.length, attribute.validate)
+	}
+
+	/**
+	 * 
+	 */
+	def String convertCollectionTypeEnum(DslCollectionType collectionType) {
+		if (collectionType == null || collectionType == DslCollectionType::NONE)
+			null
+		else
+			collectionType.toString()
+	}
 }

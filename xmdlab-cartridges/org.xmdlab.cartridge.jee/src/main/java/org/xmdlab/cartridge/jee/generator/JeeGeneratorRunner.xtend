@@ -20,7 +20,15 @@ import org.xmdlab.cartridge.jee.JeeCartridgeGeneratorStandaloneSetup
  */
 class JeeGeneratorRunner implements GeneratorRunner {
 
-	private Logger LOGGER = LoggerFactory.getLogger(JeeGeneratorRunner);
+	private Logger LOGGER = LoggerFactory.getLogger(JeeGeneratorRunner)
+	
+	/**
+	 * 
+	 */
+	def static void main(String... args) {
+		val modelFile = new File(args.get(0))
+		new JeeGeneratorRunner().run(modelFile)
+	}
 
 	/**
 	 * 

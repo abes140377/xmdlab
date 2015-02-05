@@ -13,6 +13,8 @@ import org.xmdlab.cartridge.jee.generator.JeeCartridgeGenerator;
 import org.xmdlab.cartridge.jee.generator.JeeCartridgeOutputConfigurationProvider;
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade;
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacadeImpl;
+import org.xmdlab.cartridge.jee.metafacade.EntityMetafacade;
+import org.xmdlab.cartridge.jee.metafacade.EntityMetafacadeImpl;
 
 import com.google.inject.Binder;
 
@@ -43,6 +45,10 @@ public class JeeCartridgeGeneratorModule extends AbstractGenericModule {
 
 	public Class<? extends ApplicationMetafacade> bindApplicationMetafacade() {
 		return ApplicationMetafacadeImpl.class;
+	}
+	
+	public Class<? extends EntityMetafacade> bindEntityMetafacade() {
+		return EntityMetafacadeImpl.class;
 	}
 
 	public Class<? extends JavaIoFileSystemAccess> bindJavaIoFileSystemAccess() {

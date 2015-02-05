@@ -7,6 +7,6 @@ package org.xmdlab.cartridge.jee.metafacade
 import com.google.inject.Singleton
 
 @Singleton
-class ApplicationMetafacadeImpl extends ApplicationMetafacadeBase {
+class EntityMetafacadeImpl extends EntityMetafacadeBase {
 
 }

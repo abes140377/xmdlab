@@ -1,11 +1,14 @@
-Application recipe_app {
-    basePackage=xmdlab.example.rails
+Application application-manager {
+
+    basePackage=org.application.manager
     
-    Module planet {
-        Entity Planet {
-            scaffold
-            String name key;
-            String message;
-        }
-    }
+    Entity Organisation {
+    	String name;
+        String description;
+	}
+	
+	Entity Team {
+    	String name;
+        String description;
+	}
 }

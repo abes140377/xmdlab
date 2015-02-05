@@ -9,6 +9,11 @@ import com.google.inject.Provider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.jee.templates.ReadmeMdTpl
+import org.xmdlab.cartridge.jee.templates.EntityTpl
+import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
+import org.xmdlab.jee.application.mm.Application
+import org.xmdlab.jee.application.mm.Entity
+import java.util.Iterator
 
 /**
  * The JeeCartridgeGeneratorBase
@@ -18,8 +23,9 @@ import org.xmdlab.cartridge.jee.templates.ReadmeMdTpl
  */
 abstract class JeeCartridgeGeneratorBase implements IGenerator {
 
-	//	@Inject JeeCartridgeProjectProperties properties
 	@Inject Provider<ReadmeMdTpl> readmeMdTpl
+	@Inject Provider<EntityTpl> entityTpl
+	@Inject ApplicationMetafacade applicationMetafacade
 
 	/**
 	* This method is a long sequence of calling all templates for the code generation
@@ -29,7 +35,29 @@ abstract class JeeCartridgeGeneratorBase implements IGenerator {
 		beforeCompileReadmeMd()
 		compileReadmeMd(fsa)
 		afterCompileReadmeMd()
+		
+		val Application application = applicationMetafacade.modelResource
+		
+		val Iterator<Entity> entities = application.eAllContents.filter(Entity)
+		
+		for(e : entities.toList) {
+			beforeCompileEntity()
+			compileEntity(fsa)
+			afterCompileEntity()	
+		}
 	}
+	
+	def void beforeCompileEntity() {}
+	
+	def void compileEntity(IFileSystemAccess fsa) {
+		val EntityTpl tpl = entityTpl.get
+		
+		val String fileName = "README.md"
+		
+		fsa.generateFile(fileName, tpl.generate())
+	}
+	
+	def void afterCompileEntity() {}
 
 	/**
 	 *
