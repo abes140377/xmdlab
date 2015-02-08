@@ -26,7 +26,7 @@ public class StringHelper {
 	}
 	
 	public static String getNameFromClass(String clazz) {
-		Class tClass;
+		Class<?> tClass;
 		try {
 			tClass = Class.forName(clazz);
 			

@@ -25,9 +25,16 @@ class CartridgeTransformationXtendTpl {
 		import org.eclipse.xtext.naming.IQualifiedNameProvider
 		
 		class «cartridgeName.toFirstUpper()»CartridgeTransformation extends «cartridgeName.toFirstUpper()»CartridgeTransformationBase {
+			val static final Logger LOG = LoggerFactory.getLogger(«cartridgeName.toFirstUpper()»CartridgeTransformation)
+			
 			private static val «getMmFactory(dslTransformation.output)» FACTORY = «getMmFactory(dslTransformation.output)»::eINSTANCE
 			
+			var «dslTransformation.output» «getMmRootClass(dslTransformation.output).toFirstLower»
+			var «dslTransformation.input» «getDslRootClass(dslTransformation.input).toFirstLower»
+			
 			override create FACTORY.create«getMmRootClassSimpleName(dslTransformation.output)» transform(«dslTransformation.input» «getDslRootClass(dslTransformation.input).toFirstLower») {
+				LOG.info("transform «getDslRootClass(dslTransformation.input).toFirstLower»: " + «getDslRootClass(dslTransformation.input).toFirstLower»)
+				
 				throw new UnsupportedOperationException("TODO: Implement me!")
 			}
 		}

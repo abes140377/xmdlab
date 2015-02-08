@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory
 
 class CartridgeProperties implements ICartridgeProperties {
 	
-	private Logger LOGGER = LoggerFactory.getLogger(CartridgeProperties);
+	private Logger LOG = LoggerFactory.getLogger(CartridgeProperties);
 	
-	private Config config;
+	protected Config config;
 	
 	new(Config config) {
 		this.config = config
 
-		LOGGER.info("Typsafe configuration loaded: " + config)
+		LOG.info("Typsafe configuration loaded: " + config)
 
 		// This verifies that the Config is sane and has our
 		// reference config. Importantly, we specify the "simple-lib"
@@ -33,7 +33,7 @@ class CartridgeProperties implements ICartridgeProperties {
 	
 	// this is the amazing functionality provided by simple-lib	
 	def void printSetting(String path) {
-		LOGGER.info("The setting '" + path + "' is: " + config.getString(path))
+		LOG.info("The setting '" + path + "' is: " + config.getString(path))
 	}
 	
 	override Config getConfig() {

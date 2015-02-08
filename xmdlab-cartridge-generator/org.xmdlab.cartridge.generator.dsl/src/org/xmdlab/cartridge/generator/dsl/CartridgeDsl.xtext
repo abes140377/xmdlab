@@ -41,7 +41,8 @@ DslModelElement:
 	'}';
 
 DslOutlet:
-	'Outlet' name=ID ('overwrite' '=' overwrite=BoolLiteral)? ('createOutputDirectory' '='
+	'Outlet' name=ID ('outputDirectory' '=' outputDirectory=STRING)?
+	('overwrite' '=' overwrite=BoolLiteral)? ('createOutputDirectory' '='
 	createOutputDirectory=BoolLiteral)?
 	('cleanUpDerivedResources' '=' cleanUpDerivedResources=BoolLiteral)? ('setDerivedProperty' '='
 	setDerivedProperty=BoolLiteral)?
@@ -82,7 +83,7 @@ enum DslTaskType:
 	Shell | Ruby | Groovy | Perl | Python
 ;
 
-	// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 DslJavaIdentifier:
 	(ID ("." ID)*);
 

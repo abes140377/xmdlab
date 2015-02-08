@@ -17,17 +17,18 @@ class TemplateBaseTpl {
 		
 		import com.google.inject.Inject
 		import «basePackage».metafacade.*
-				
+		import org.xmdlab.cartridge.common.template.Template
+		
 		«val tmp = "'''"»
 		«val open = "«"»
 		«val close = "»"»
-		abstract class «getTemplateNameFromPath(dslTemplate)»Base {
+		abstract class «getTemplateNameFromPath(dslTemplate)»Base implements Template {
 			
 			«FOR m : dslTemplate.modelElements»
 			@Inject extension «m.type.name.toFirstUpper» «m.type.name»
 			«ENDFOR»
 		
-			def generate() «tmp»
+			override generate() «tmp»
 				«open»doGenerate()«close»
 			«tmp»
 		

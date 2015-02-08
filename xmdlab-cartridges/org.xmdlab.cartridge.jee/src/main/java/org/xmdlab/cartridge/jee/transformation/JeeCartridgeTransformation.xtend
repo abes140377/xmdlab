@@ -6,7 +6,6 @@ package org.xmdlab.cartridge.jee.transformation
 
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModule
-import org.xmdlab.jee.application.mm.Application
 import org.xmdlab.jee.application.mm.MmFactory
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
@@ -18,19 +17,28 @@ import org.xmdlab.dsl.application.applicationDsl.DslService
 import org.xmdlab.dsl.application.applicationDsl.DslAttribute
 import org.xmdlab.dsl.application.applicationDsl.DslCollectionType
 import org.xmdlab.cartridge.jee.util.HelperBase
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.xmdlab.jee.application.mm.MmApplication
 
+/**
+ * 
+ */
 class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
+	val static final Logger LOG = LoggerFactory.getLogger(JeeCartridgeTransformation)
 
 	@Inject extension HelperBase
-	private static val MmFactory FACTORY = MmFactory::eINSTANCE
+	private static val org.xmdlab.jee.application.mm.MmFactory FACTORY = org.xmdlab.jee.application.mm.MmFactory::eINSTANCE
 
-	var Application mmAppplication
-	var DslApplication dslApplication
+	var MmApplication mmAppplication
+	var org.xmdlab.dsl.application.applicationDsl.DslApplication dslApplication
 
 	/**
 	 * 
 	 */
-	override create FACTORY.createApplication transform(DslApplication dslApplication) {
+	override create FACTORY.createMmApplication transform(DslApplication dslApplication) {
+		LOG.info("transform dslApplication: " + dslApplication)
+		
 		this.mmAppplication = it
 		this.dslApplication = dslApplication
 
@@ -44,10 +52,11 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	/**
 	 * 
 	 */
-	def create FACTORY.createModule transform(DslModule dslModule) {
+	def create FACTORY.createMmModule transform(DslModule dslModule) {
+		LOG.info("transform dslModule: " + dslModule)
 		basePackage = dslModule.basePackage
 
-		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApplication, typeof(DslModule))
+//		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApplication, typeof(DslModule))
 
 		application = mmAppplication
 		doc = dslModule.doc
@@ -61,7 +70,8 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	/**
 	 * 
 	 */
-	def create FACTORY.createService transform(DslService dslService) {
+	def create FACTORY.createMmService transform(DslService dslService) {
+		LOG.info("transform dslService: " + dslService)
 		module = (dslService.eContainer as DslModule).transform
 		doc = dslService.doc
 		name = dslService.name
@@ -84,7 +94,8 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	/**
 	 * 
 	 */
-	def dispatch create FACTORY.createEntity transformSimpleDomainObject(DslEntity domainObject) {
+	def dispatch create FACTORY.createMmEntity transformSimpleDomainObject(DslEntity domainObject) {
+		LOG.info("transformSimpleDomainObject domainObject: " + domainObject)
 		module = (domainObject.eContainer as DslModule).transform
 		name = domainObject.name
 		^package = domainObject.^package
@@ -95,7 +106,8 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	/**
 	 * 
 	 */
-	def create FACTORY.createAttribute transform(DslAttribute dslAttribute) {
+	def create FACTORY.createMmAttribute transform(DslAttribute dslAttribute) {
+		LOG.info("transform dslAttribute: " + dslAttribute)
 		doc = dslAttribute.doc
 		name = dslAttribute.name
 		type = dslAttribute.type
@@ -110,6 +122,7 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	}
 
 	// ==========================================================================================
+	
 	def String handleValidation(DslAttribute attribute) {
 		(if(attribute.validate != null) attribute.validate else "") +
 			handleParameterizedAnnotation("digits", "integer,fraction,message", attribute.digits, attribute.validate) +

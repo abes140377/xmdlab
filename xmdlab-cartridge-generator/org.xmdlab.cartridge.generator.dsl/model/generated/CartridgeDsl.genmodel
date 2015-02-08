@@ -51,6 +51,7 @@
     </genClasses>
     <genClasses ecoreClass="CartridgeDsl.ecore#//DslOutlet">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CartridgeDsl.ecore#//DslOutlet/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CartridgeDsl.ecore#//DslOutlet/outputDirectory"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CartridgeDsl.ecore#//DslOutlet/overwrite"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CartridgeDsl.ecore#//DslOutlet/createOutputDirectory"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CartridgeDsl.ecore#//DslOutlet/cleanUpDerivedResources"/>

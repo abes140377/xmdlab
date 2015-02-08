@@ -11,9 +11,11 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
 
-class CartridgeGeneratorWorkflow {
+abstract class CartridgeGeneratorWorkflow {
 	
 	val private Logger LOGGER = LoggerFactory.getLogger(CartridgeGeneratorWorkflow)
+	
+	def boolean run(String modelURI)
 	
 	/**
 	 * 
@@ -30,7 +32,8 @@ class CartridgeGeneratorWorkflow {
 				return false
 			}
 		}
-		true
+		
+		return true
 	}
 	
 	/**

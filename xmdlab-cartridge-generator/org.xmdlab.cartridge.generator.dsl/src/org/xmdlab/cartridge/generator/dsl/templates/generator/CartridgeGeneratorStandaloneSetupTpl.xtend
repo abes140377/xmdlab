@@ -32,8 +32,6 @@ class CartridgeGeneratorStandaloneSetupTpl {
 			
 			@Override
 			public Injector createInjector() {
-				// Reihenfolge ist entscheidend, «modelNameFirstUpper»CartridgeGeneratorModule
-				// muss nach DomainmodelRuntimeModule kommen
 				return Guice.createInjector(Modules2.mixin(
 					new «getRuntimeModuleClass(dslCartridge)»(),
 					new «modelNameFirstUpper»CartridgeGeneratorModule()));

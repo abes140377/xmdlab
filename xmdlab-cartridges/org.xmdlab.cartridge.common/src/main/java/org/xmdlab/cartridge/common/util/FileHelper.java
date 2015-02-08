@@ -19,7 +19,38 @@ package org.xmdlab.cartridge.common.util;
 import java.io.File;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+
 public final class FileHelper {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(FileHelper.class);
+	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public static String readFile(String path) {
+		return readFile(new File(path));
+	}
+	
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static String readFile(File file) {
+		try {
+			return Files.toString(file, Charsets.UTF_8);
+		} catch (IOException e) {
+			LOG.error("Unable to read file content from file " + file, e);
+			return null;
+		}
+	}
 
 	/**
 	 * Accommodate Windows bug: If the delete does not work, call

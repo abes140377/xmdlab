@@ -7,13 +7,16 @@ package org.xmdlab.cartridge.jee.generator
 import com.google.inject.Inject
 import com.google.inject.Provider
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.xmdlab.cartridge.common.generator.IGenerator
-import org.xmdlab.cartridge.jee.templates.ReadmeMdTpl
+import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
+import org.xmdlab.cartridge.jee.metafacade.*
 import org.xmdlab.cartridge.jee.templates.EntityTpl
-import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
-import org.xmdlab.jee.application.mm.Application
-import org.xmdlab.jee.application.mm.Entity
-import java.util.Iterator
+import org.xmdlab.cartridge.jee.templates.ReadmeMdTpl
+import org.xmdlab.jee.application.mm.*
+
+import static org.xmdlab.cartridge.jee.io.JeeCartridgeOutputConfigurationProvider.*
 
 /**
  * The JeeCartridgeGeneratorBase
@@ -23,61 +26,65 @@ import java.util.Iterator
  */
 abstract class JeeCartridgeGeneratorBase implements IGenerator {
 
+	val static final Logger LOG = LoggerFactory.getLogger(JeeCartridgeGeneratorBase)
+
+	@Inject JeeCartridgeProperties jeeCartridgeProperties
+
+	@Inject ApplicationMetafacade applicationMetafacade
+	@Inject EntityMetafacade entityMetafacade
+
 	@Inject Provider<ReadmeMdTpl> readmeMdTpl
 	@Inject Provider<EntityTpl> entityTpl
-	@Inject ApplicationMetafacade applicationMetafacade
 
 	/**
 	* This method is a long sequence of calling all templates for the code generation
 	*/
 	override void doGenerate(IFileSystemAccess fsa) {
+		LOG.info("")
+		LOG.info("// =============================================================================")
+		LOG.info("// Running generator")
+		LOG.info("// =============================================================================")
+		LOG.info("")
+
+		jeeCartridgeProperties.config.entrySet.forEach [
+			LOG.info(it.key + " -> " + it.value.render)
+		]
+
+		val MmApplication application = applicationMetafacade.modelResource
+
+		LOG.info("doGenerate: " + application)
+
 		// compile templates
-		beforeCompileReadmeMd()
 		compileReadmeMd(fsa)
-		afterCompileReadmeMd()
-		
-		val Application application = applicationMetafacade.modelResource
-		
-		val Iterator<Entity> entities = application.eAllContents.filter(Entity)
-		
-		for(e : entities.toList) {
-			beforeCompileEntity()
-			compileEntity(fsa)
-			afterCompileEntity()	
-		}
+
+		application.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
 	}
-	
-	def void beforeCompileEntity() {}
-	
-	def void compileEntity(IFileSystemAccess fsa) {
-		val EntityTpl tpl = entityTpl.get
-		
-		val String fileName = "README.md"
-		
-		fsa.generateFile(fileName, tpl.generate())
-	}
-	
-	def void afterCompileEntity() {}
 
 	/**
-	 *
+	 * 
 	 */
-	def void beforeCompileReadmeMd() {}
+	def void compileEntity(IFileSystemAccess fsa, MmEntity entity) {
+		LOG.info("compileEntity: " + entity)
+
+		val EntityTpl tpl = entityTpl.get
+
+		val String fileName = entity.name + ".java"
+
+		entityMetafacade.modelResource = entity
+
+		fsa.generateFile(fileName, OUTPUTCONFIG_CORE_GENERATED_SRC, tpl.generate())
+	}
 
 	/**
 	 *
 	 */
 	def compileReadmeMd(IFileSystemAccess fsa) {
+		LOG.info("compileReadmeMd")
+
 		val ReadmeMdTpl tpl = readmeMdTpl.get
 
 		val String fileName = "README.md"
 
-		//fsa.generateFile(fileName, OUTPUTCONFIG_BASE, tpl.generate())
 		fsa.generateFile(fileName, tpl.generate())
 	}
-
-	/**
-	 *
-	 */
-	def void afterCompileReadmeMd() {}
 }

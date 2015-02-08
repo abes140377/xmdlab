@@ -5,19 +5,18 @@ import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTransformation
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 import static extension org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
-import org.xmdlab.cartridge.generator.dsl.util.ModelHelper
+//import org.xmdlab.cartridge.generator.dsl.util.ModelHelper
 
 class CartridgeTransformationComponentTpl {
 	
 	@Inject extension GeneratorProperties generatorProperties
-	@Inject extension ModelHelper modelHelper
+//	@Inject extension ModelHelper modelHelper
 	
 	def generate(DslTransformation dslTransformation) '''
 	«getGeneratedComment(class.name)»
 	package «basePackage».transformation;
 
 	import java.util.Collection;
-	import java.util.List;
 	
 	import org.eclipse.emf.common.util.URI;
 	import org.eclipse.emf.ecore.resource.Resource;
@@ -27,14 +26,9 @@ class CartridgeTransformationComponentTpl {
 	import org.eclipse.emf.mwe.core.issues.Issues;
 	import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent2;
 	import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-	import org.eclipse.xtext.EcoreUtil2;
 	import org.eclipse.xtext.resource.XtextResource;
 	
 	import com.google.common.collect.Iterables;
-	import com.google.common.collect.Lists;
-	
-	import «getPackage(dslTransformation.input)».*;
-	import «getPackage(dslTransformation.output)».*;
 	
 	public class «cartridgeName.toFirstUpper»CartridgeTransformationComponent extends
 			AbstractWorkflowComponent2 {

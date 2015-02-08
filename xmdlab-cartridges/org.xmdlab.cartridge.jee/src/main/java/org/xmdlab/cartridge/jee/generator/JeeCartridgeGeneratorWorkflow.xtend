@@ -17,11 +17,12 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorI
 import org.xmdlab.cartridge.common.generator.CartridgeGeneratorWorkflow
 import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
+import org.xmdlab.cartridge.jee.io.JeeCartridgeOutputConfigurationProvider
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
 import org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation
 import org.xmdlab.dsl.application.applicationDsl.DslApplication
 import org.xmdlab.dsl.application.applicationDsl.DslModel
-import org.xmdlab.jee.application.mm.Application
+import org.xmdlab.jee.application.mm.MmApplication
 
 /**
  * 
@@ -50,7 +51,7 @@ class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 	/**
 	 * 
 	 */
-	def final boolean run(String modelURI) {
+	override boolean run(String modelURI) {
 		cartridgeProperties.config.entrySet.forEach[
 			LOGGER.info(it.key)
 			LOGGER.info(it.value.render)
@@ -82,7 +83,7 @@ class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 	/**
 	 * 
 	 */
-	protected def void generateCode(Application application) {
+	protected def void generateCode(MmApplication application) {
 		if (application == null) {
 			XmdlabGeneratorContext.addIssue(
 				new XmdlabGeneratorIssueImpl(Severity.ERROR,
@@ -110,12 +111,12 @@ class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 	/**
 	 * 
 	 */
-	protected def Application transformModel(DslApplication application) {
+	protected def MmApplication transformModel(DslApplication application) {
 		LOGGER.info("Transforming application " + application.name)
 
 		// run transformation
 		val JeeCartridgeTransformation transformation = injector.getInstance(JeeCartridgeTransformation)
-		var transformedApplication = transformation.transform(application) as Application
+		var transformedApplication = transformation.transform(application) as MmApplication
 
 		
 		// if (transformedApplication != null) {

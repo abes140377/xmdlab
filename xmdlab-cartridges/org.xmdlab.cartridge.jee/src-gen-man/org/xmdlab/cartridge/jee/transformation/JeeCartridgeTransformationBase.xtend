@@ -4,15 +4,11 @@
  */
 package org.xmdlab.cartridge.jee.transformation
 
-import org.xmdlab.dsl.application.applicationDsl.DslApplication
-import org.xmdlab.jee.application.mm.MmFactory
-
 class JeeCartridgeTransformationBase {
-	private static val MmFactory FACTORY = MmFactory::eINSTANCE
-
-	def create FACTORY.createApplication transform(DslApplication dslApplication) {
+	private static val org.xmdlab.jee.application.mm.MmFactory FACTORY = org.xmdlab.jee.application.mm.MmFactory::eINSTANCE
+	
+	def create FACTORY.createMmApplication transform(org.xmdlab.dsl.application.applicationDsl.DslApplication dslApplication) {
 		throw new UnsupportedOperationException(
 			"TODO: Override JeeCartridgeTransformationBase:transform() in JeeCartridgeTransformation")
 	}
-	
 }

@@ -16,12 +16,12 @@ class TemplateTpl {
 		
 		import com.google.inject.Inject
 		import «basePackage».metafacade.*
-		import «basePackage».util.«cartridgeName.toFirstUpper»CartridgeProjectProperties
+		import «basePackage».conf.«cartridgeName.toFirstUpper»CartridgeProperties
 		
 		«val tmp = "'''"»
 		class «getTemplateNameFromPath(dslTemplate).toFirstUpper» extends «getTemplateNameFromPath(dslTemplate)»Base {
 			
-			@Inject extension «cartridgeName.toFirstUpper»CartridgeProjectProperties p
+			@Inject extension «cartridgeName.toFirstUpper»CartridgeProperties
 			
 			override doGenerate() «tmp»
 			

@@ -25,7 +25,8 @@ class CartridgeTransformationBaseXtendTpl {
 			private static val «getMmFactory(dslTransformation.output)» FACTORY = «getMmFactory(dslTransformation.output)»::eINSTANCE
 			
 			def create FACTORY.create«getMmRootClassSimpleName(dslTransformation.output)» transform(«dslTransformation.input» «getDslRootClass(dslTransformation.input).toFirstLower») {
-				throw new UnsupportedOperationException("TODO: Override «cartridgeName.toFirstUpper»CartridgeTransformationBase:transform() in «cartridgeName.toFirstUpper»CartridgeTransformation")
+				throw new UnsupportedOperationException(
+					"TODO: Override «cartridgeName.toFirstUpper»CartridgeTransformationBase:transform() in «cartridgeName.toFirstUpper»CartridgeTransformation")
 			}
 		}
 	'''

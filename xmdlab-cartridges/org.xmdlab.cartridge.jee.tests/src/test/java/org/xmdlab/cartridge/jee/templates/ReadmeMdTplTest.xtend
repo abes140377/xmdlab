@@ -8,10 +8,10 @@ import org.xmdlab.cartridge.jee.JeeCartridgeGeneratorInjectorProvider
 import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
 import com.google.inject.Inject
 import org.xmdlab.jee.application.mm.MmFactory
-import org.xmdlab.jee.application.mm.Application
 import org.apache.log4j.Logger
 import static org.junit.Assert.*
 import org.junit.Before
+import org.xmdlab.jee.application.mm.MmApplication
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(JeeCartridgeGeneratorInjectorProvider))
@@ -24,7 +24,7 @@ class ReadmeMdTplTest {
 	
 	@Before
 	def void beforeClass() {
-		var Application application = MmFactory.eINSTANCE.createApplication
+		var MmApplication application = MmFactory.eINSTANCE.createMmApplication
 		application.basePackage = "de.xmdlab.test"
 		application.name = "TestEntity"
 		

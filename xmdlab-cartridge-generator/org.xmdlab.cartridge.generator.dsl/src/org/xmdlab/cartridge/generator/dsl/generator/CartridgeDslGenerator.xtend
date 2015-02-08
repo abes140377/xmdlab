@@ -24,7 +24,7 @@ import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeOutputCon
 import org.xmdlab.cartridge.generator.dsl.templates.metafacade.CartridgeMetafacadeBaseXtendTpl
 import org.xmdlab.cartridge.generator.dsl.templates.metafacade.CartridgeMetafacadeImplXtendTpl
 import org.xmdlab.cartridge.generator.dsl.templates.metafacade.CartridgeMetafacadeXtendTpl
-import org.xmdlab.cartridge.generator.dsl.templates.namespace.CartridgeProjectPropertiesTpl
+import org.xmdlab.cartridge.generator.dsl.templates.conf.CartridgePropertiesTpl
 import org.xmdlab.cartridge.generator.dsl.templates.templates.TemplateBaseTpl
 import org.xmdlab.cartridge.generator.dsl.templates.templates.TemplateTpl
 import org.xmdlab.cartridge.generator.dsl.templates.transformation.CartridgeTransformationBaseXtendTpl
@@ -33,7 +33,6 @@ import org.xmdlab.cartridge.generator.dsl.templates.transformation.CartridgeTran
 
 import static org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
-import org.xmdlab.cartridge.generator.dsl.templates.task.TaskRunnerMwe2Tpl
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTask
 import org.xmdlab.cartridge.generator.dsl.templates.task.TaskClassTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorComponentTpl
@@ -60,7 +59,7 @@ class CartridgeDslGenerator implements IGenerator {
 	@Inject extension Provider<CartridgeGeneratorXtendTpl> cartridgeGeneratorXtendTpl
 	@Inject extension Provider<CartridgeOutputConfigurationProviderTpl> cartridgeOutputConfigurationProviderTpl
 
-	@Inject extension Provider<CartridgeProjectPropertiesTpl> cartridgeProjectPropertiesTpl
+	@Inject extension Provider<CartridgePropertiesTpl> cartridgePropertiesTpl
 
 	@Inject extension Provider<ManifestMfTpl> manifestMfTpl
 	@Inject extension Provider<CartridgeTransformationXtendTpl> cartridgeTransformationXtendTpl
@@ -90,24 +89,27 @@ class CartridgeDslGenerator implements IGenerator {
 		//
 		val DslTransformation dslTransformation = dslCartridge.transformation
 		if (dslTransformation != null) {
-			generateCartridgeTransformationComponent(dslTransformation, fsa)
+			// nicht mehr benutz
+			//generateCartridgeTransformationComponent(dslTransformation, fsa)
 			generateCartridgeTransformationBaseXtend(dslTransformation, fsa)
 			generateCartridgeTransformationXtend(dslTransformation, fsa)
 		}
 
 		//
-		generateCartridgeGeneratorComponent(dslCartridge, fsa)
+		//generateCartridgeGeneratorComponent(dslCartridge, fsa)
 		generateCartridgeGeneratorModule(dslCartridge, fsa)
 		generateCartridgeGeneratorStandaloneSetup(dslCartridge, fsa)
-		generateMwe2CartridgeGenerator(dslCartridge, fsa)
+//		generateMwe2CartridgeGenerator(dslCartridge, fsa)
 		generateCartridgeGeneratorBaseXtend(dslCartridge, fsa)
-		generateCartridgeOutputConfigurationProvider(dslCartridge, fsa)
-		generateCartridgeGeneratorXtend(dslCartridge, fsa)
+//		generateCartridgeGeneratorXtend(dslCartridge, fsa)
 
 		//
-		for (task : dslCartridge.tasks) {
-			generateTaskClass(task, fsa)
-		}
+		generateCartridgeOutputConfigurationProvider(dslCartridge, fsa)
+
+		//
+//		for (task : dslCartridge.tasks) {
+//			generateTaskClass(task, fsa)
+//		}
 
 		//
 		for (metafacade : dslCartridge.metafacades) {
@@ -211,7 +213,7 @@ class CartridgeDslGenerator implements IGenerator {
 		val CartridgeOutputConfigurationProviderTpl tpl = cartridgeOutputConfigurationProviderTpl.get
 
 		val fileName = javaToFsPath(basePackage) + "/util/" + cartridgeName.toFirstUpper +
-			"CartridgeOutputConfigurationProvider.java"
+			"CartridgeOutputConfigurationProvider.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}
@@ -234,9 +236,9 @@ class CartridgeDslGenerator implements IGenerator {
 	 * 
 	 */
 	def generateCartridgeProjectProperties(DslCartridge dslCartridge, IFileSystemAccess fsa) {
-		val CartridgeProjectPropertiesTpl tpl = cartridgeProjectPropertiesTpl.get
+		val CartridgePropertiesTpl tpl = cartridgePropertiesTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/util/" + cartridgeName.toFirstUpper +
+		val fileName = javaToFsPath(basePackage) + "/conf/" + cartridgeName.toFirstUpper +
 			"CartridgeProjectProperties.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))

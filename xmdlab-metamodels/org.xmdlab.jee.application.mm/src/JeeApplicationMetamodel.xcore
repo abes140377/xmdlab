@@ -8,29 +8,29 @@ abstract class NamedElement {
 	String hint
 }
 
-class Application extends NamedElement {
+class MmApplication extends NamedElement {
 	String basePackage
-	contains Module[] modules opposite application
+	contains MmModule[] modules opposite application
 }
 
-class Module extends NamedElement {
+class MmModule extends NamedElement {
 	String basePackage
 	boolean external
 	String persistenceUnit
-	container Application application opposite modules
+	container MmApplication application opposite modules
 	contains DomainObject[] domainObjects opposite module
-	contains Service[] services opposite module
-	contains Consumer[] consumers opposite module
-	contains Resource[] resources opposite module
+	contains MmService[] services opposite module
+	contains MmConsumer[] consumers opposite module
+	contains MmResource[] resources opposite module
 }
 
 abstract class DomainObject extends NamedElement {
-	contains Reference[] references opposite from
+	contains MmReference[] references opposite from
 	refers DomainObject ^extends
-	contains Attribute[] attributes
+	contains MmAttribute[] attributes
 	boolean ^abstract
-	contains Repository repository opposite aggregateRoot
-	container Module module opposite domainObjects
+	contains MmRepository repository opposite aggregateRoot
+	container MmModule module opposite domainObjects
 	boolean optimisticLocking = "true"
 	boolean cache
 	String ^package
@@ -38,57 +38,57 @@ abstract class DomainObject extends NamedElement {
 	String extendsName
 	String validate
 	boolean gapClass
-	refers Inheritance inheritance
+	refers MmInheritance inheritance
 	String discriminatorColumnValue
 	boolean aggregateRoot = "true"
 	refers DomainObject belongsToAggregate
-	contains DomainObjectOperation[] operations opposite domainObject
-	refers Trait[] traits
+	contains MmDomainObjectOperation[] operations opposite domainObject
+	refers MmTrait[] traits
 }
 
-class DomainObjectOperation extends Operation {
+class MmDomainObjectOperation extends MmOperation {
 	container DomainObject domainObject opposite operations
 	boolean ^abstract
 }
 
-class Service extends NamedElement {
-	contains ServiceOperation[] operations opposite service
-	refers Repository[] repositoryDependencies
-	container Module module opposite services
+class MmService extends NamedElement {
+	contains MmServiceOperation[] operations opposite service
+	refers MmRepository[] repositoryDependencies
+	container MmModule module opposite services
 	unique String[] otherDependencies
-	refers Service[] serviceDependencies
+	refers MmService[] serviceDependencies
 	boolean gapClass
 	boolean webService
 	boolean remoteInterface = "true"
 	boolean localInterface = "true"
-	refers Subscribe subscribe
+	refers MmSubscribe subscribe
 }
 
-class ServiceOperation extends Operation {
-	container Service[1] service opposite operations
-	refers ServiceOperation serviceDelegate
-	refers RepositoryOperation delegate
+class MmServiceOperation extends MmOperation {
+	container MmService[1] service opposite operations
+	refers MmServiceOperation serviceDelegate
+	refers MmRepositoryOperation delegate
 }
 
-class Repository extends NamedElement {
+class MmRepository extends NamedElement {
 	boolean gapClass
 	container DomainObject aggregateRoot opposite repository
-	contains RepositoryOperation[] operations opposite repository
-	refers Repository[] repositoryDependencies
+	contains MmRepositoryOperation[] operations opposite repository
+	refers MmRepository[] repositoryDependencies
 	unique String[] otherDependencies
-	refers Subscribe subscribe
+	refers MmSubscribe subscribe
 }
 
-class RepositoryOperation extends Operation {
+class MmRepositoryOperation extends MmOperation {
 	boolean delegateToAccessObject = "false"
 	String accessObjectName
-	container Repository[1] repository opposite operations
+	container MmRepository[1] repository opposite operations
 }
 
-class Reference extends NamedElement {
+class MmReference extends NamedElement {
 	boolean many
 	String collectionType
-	refers Reference ^opposite
+	refers MmReference ^opposite
 	refers DomainObject[1] to
 	String cascade
 	String orderBy
@@ -108,13 +108,13 @@ class Reference extends NamedElement {
 	String databaseJoinColumn
 }
 
-class TypedElement extends NamedElement {
+class MmTypedElement extends NamedElement {
 	String ^type
 	String collectionType
 	String mapKeyType
 }
 
-class Attribute extends TypedElement {
+class MmAttribute extends MmTypedElement {
 	boolean changeable = "true"
 	String databaseType
 	boolean nullable
@@ -128,117 +128,117 @@ class Attribute extends TypedElement {
 	boolean ^transient
 }
 
-class DomainObjectTypedElement extends TypedElement {
+class MmDomainObjectTypedElement extends MmTypedElement {
 	refers DomainObject domainObjectType
 	refers DomainObject mapKeyDomainObjectType
 }
 
-class Operation extends DomainObjectTypedElement {
+class MmOperation extends MmDomainObjectTypedElement {
 	String ^throws
 	String visibility
-	contains Parameter[] parameters
-	refers Publish publish
+	contains MmParameter[] parameters
+	refers MmPublish publish
 }
 
-class Parameter extends DomainObjectTypedElement {
+class MmParameter extends MmDomainObjectTypedElement {
 }
 
-class Entity extends DomainObject {
+class MmEntity extends DomainObject {
 	boolean auditable = "true"
 }
 
-class ValueObject extends DomainObject {
+class MmValueObject extends DomainObject {
 	boolean immutable = "true"
 	boolean persistent = "true"
 }
 
-class BasicType extends ValueObject {
+class MmBasicType extends MmValueObject {
 }
 
-class Enum extends DomainObject {
-	contains EnumValue[] values
+class MmEnum extends DomainObject {
+	contains MmEnumValue[] values
 	boolean ordinal
 }
 
-class EnumValue extends NamedElement {
-	contains EnumConstructorParameter[] parameters
+class MmEnumValue extends NamedElement {
+	contains MmEnumConstructorParameter[] parameters
 }
 
-class EnumConstructorParameter {
+class MmEnumConstructorParameter {
 	String value
 }
 
-class Inheritance {
+class MmInheritance {
 	String discriminatorColumnName
 	String discriminatorColumnLength
-	InheritanceType ^type
-	DiscriminatorType discriminatorType
+	MmInheritanceType ^type
+	MmDiscriminatorType discriminatorType
 }
 
-enum InheritanceType {
+enum MmInheritanceType {
 	SINGLE_TABLE
 	JOINED
 }
 
-enum DiscriminatorType {
+enum MmDiscriminatorType {
 	STRING
 	CHAR
 	INTEGER
 }
 
-class DataTransferObject extends ValueObject {
+class MmDataTransferObject extends MmValueObject {
 }
 
-class Trait extends DomainObject {
+class MmTrait extends DomainObject {
 }
 
-abstract class Event extends ValueObject {
+abstract class Event extends MmValueObject {
 }
 
-class CommandEvent extends Event {
+class MmCommandEvent extends Event {
 }
 
-class DomainEvent extends Event {
+class MmDomainEvent extends Event {
 }
 
-class Consumer extends NamedElement {
-	container Module module opposite consumers
-	refers Repository[] repositoryDependencies
-	refers Service[] serviceDependencies
+class MmConsumer extends NamedElement {
+	container MmModule module opposite consumers
+	refers MmRepository[] repositoryDependencies
+	refers MmService[] serviceDependencies
 	String channel
 	refers DomainObject messageRoot
 	unique String[] otherDependencies
-	refers Subscribe subscribe
+	refers MmSubscribe subscribe
 }
 
-class Publish {
+class MmPublish {
 	String eventBus
 	String topic
 	refers Event eventType
 }
 
-class Subscribe {
+class MmSubscribe {
 	String eventBus
 	String topic
 }
 
-class Resource extends NamedElement {
-	refers Service[] serviceDependencies
+class MmResource extends NamedElement {
+	refers MmService[] serviceDependencies
 	boolean gapClass
 	String path
-	contains ResourceOperation[] operations opposite resource
-	container Module module opposite resources
+	contains MmResourceOperation[] operations opposite resource
+	container MmModule module opposite resources
 }
 
-class ResourceOperation extends Operation {
-	container Resource resource opposite operations
+class MmResourceOperation extends MmOperation {
+	container MmResource resource opposite operations
 	String path
-	HttpMethod httpMethod
-	refers ServiceOperation delegate
+	MmHttpMethod httpMethod
+	refers MmServiceOperation delegate
 	String returnString
 }
 
-enum HttpMethod {
+enum MmHttpMethod {
 	UNDEFINED
 	GET
 	POST

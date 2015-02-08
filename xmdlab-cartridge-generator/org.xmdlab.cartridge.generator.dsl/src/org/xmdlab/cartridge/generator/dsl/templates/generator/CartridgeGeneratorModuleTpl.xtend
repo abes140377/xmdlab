@@ -17,16 +17,17 @@ class CartridgeGeneratorModuleTpl {
 		«StringHelper.getGeneratedComment(class.name)»
 		package «basePackage»;
 		
-		import org.eclipse.xtext.generator.IOutputConfigurationProvider;
-		//import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
+		import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 		import org.eclipse.xtext.service.AbstractGenericModule;
+		import org.xmdlab.cartridge.common.conf.CartridgeProperties;
+		import org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider;
+		import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt;
+		import «basePackage».conf.«modelNameFirstUpper»CartridgeProperties;
+		import «basePackage».generator.«modelNameFirstUpper»CartridgeGenerator;
+		import «basePackage».io.«modelNameFirstUpper»CartridgeOutputConfigurationProvider;
+		import «basePackage».metafacade.*;
 		
 		import com.google.inject.Binder;
-		
-		import «basePackage».util.«modelNameFirstUpper»CartridgeOutputConfigurationProvider;
-		
-		import «basePackage».metafacade.*;
-		import «basePackage».generator.*;
 		
 		«StringHelper::getClassComment(className)»
 		public class «className» extends AbstractGenericModule {
@@ -35,24 +36,29 @@ class CartridgeGeneratorModuleTpl {
 			public void configure(Binder binder) {
 				super.configure(binder);
 			}
-		
-			public Class<? extends org.eclipse.xtext.generator.IGenerator> bindIGenerator() {
+			
+			public Class<? extends CartridgeProperties> bind«modelNameFirstUpper»CartridgeProjectProperties() {
+				return «modelNameFirstUpper»CartridgeProperties.class;
+			}
+			
+			public Class<? extends org.xmdlab.cartridge.common.generator.IGenerator> bindIGenerator() {
 				return «modelNameFirstUpper»CartridgeGenerator.class;
 			}
-		
+			
 			public Class<? extends IOutputConfigurationProvider> bindIOutputConfigurationProvider() {
 				return «modelNameFirstUpper»CartridgeOutputConfigurationProvider.class;
+			}
+			
+			public Class<? extends JavaIoFileSystemAccess> bindJavaIoFileSystemAccess() {
+				return JavaIoFileSystemAccessExt.class;
 			}
 			
 			«FOR metafacade : dslCartridge.metafacades»
 			public Class<? extends «metafacade.name.toFirstUpper»> bind«metafacade.name.toFirstUpper»() {
 				return «metafacade.name.toFirstUpper»Impl.class;
 			}
+			
 			«ENDFOR»
-		
-			// public Class<? extends JavaIoFileSystemAccess> bindJavaIoFileSystemAccess() {
-			//	return de.freund.xgen.xtext.core.fsa.JavaIoFileSystemAccessExt.class;
-			// }
 		}
 	'''
 }

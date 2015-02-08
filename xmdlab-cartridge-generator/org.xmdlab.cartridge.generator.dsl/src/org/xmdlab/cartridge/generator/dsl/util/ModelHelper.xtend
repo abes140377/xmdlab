@@ -11,7 +11,6 @@ import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslProperty
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTemplate
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.FalseLiteral
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.TrueLiteral
-import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTask
 
 class ModelHelper {
 	
@@ -36,13 +35,7 @@ class ModelHelper {
 	}
 	
 	def static String getMmRootClass(String transformationOutput) {
-		var String result
-		
-		val String package = getPackage(transformationOutput)
-		val String basePackage = package.substring(0, package.lastIndexOf("."))
-		val String subPackage = package.substring(package.lastIndexOf(".") + 1)
-		
-		result = basePackage + '.' + subPackage + '.' + subPackage.toFirstUpper
+		val result = getClass(transformationOutput)
 		 
 		return result
 	}

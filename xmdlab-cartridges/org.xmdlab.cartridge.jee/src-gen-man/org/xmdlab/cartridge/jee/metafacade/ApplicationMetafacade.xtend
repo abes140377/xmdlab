@@ -6,5 +6,5 @@ package org.xmdlab.cartridge.jee.metafacade
 
 import org.xmdlab.cartridge.common.metafacade.Metafacade
 
-interface ApplicationMetafacade extends Metafacade<org.xmdlab.jee.application.mm.Application> {
+interface ApplicationMetafacade extends Metafacade<org.xmdlab.jee.application.mm.MmApplication> {
 }

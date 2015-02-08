@@ -5,7 +5,6 @@
 package org.xmdlab.cartridge.jee.transformation;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -15,14 +14,9 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent2;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.XtextResource;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
-import org.xmdlab.dsl.application.applicationDsl.*;
-import org.xmdlab.jee.application.mm.*;
 
 public class JeeCartridgeTransformationComponent extends
 		AbstractWorkflowComponent2 {
@@ -67,7 +61,7 @@ public class JeeCartridgeTransformationComponent extends
 		}
 
 		// execute the transformation
-		org.xmdlab.jee.application.mm.Application transformed = new org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation()
+		org.xmdlab.jee.application.mm.MmApplication transformed = new org.xmdlab.cartridge.jee.transformation.JeeCartridgeTransformation()
 				.transform(dslModel.getApp());
 
 		// Create EMF resource

@@ -7,14 +7,12 @@ package org.xmdlab.cartridge.jee;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.service.AbstractGenericModule;
 import org.xmdlab.cartridge.common.conf.CartridgeProperties;
+import org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider;
 import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt;
 import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties;
 import org.xmdlab.cartridge.jee.generator.JeeCartridgeGenerator;
-import org.xmdlab.cartridge.jee.generator.JeeCartridgeOutputConfigurationProvider;
-import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade;
-import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacadeImpl;
-import org.xmdlab.cartridge.jee.metafacade.EntityMetafacade;
-import org.xmdlab.cartridge.jee.metafacade.EntityMetafacadeImpl;
+import org.xmdlab.cartridge.jee.io.JeeCartridgeOutputConfigurationProvider;
+import org.xmdlab.cartridge.jee.metafacade.*;
 
 import com.google.inject.Binder;
 
@@ -30,7 +28,7 @@ public class JeeCartridgeGeneratorModule extends AbstractGenericModule {
 	public void configure(Binder binder) {
 		super.configure(binder);
 	}
-
+	
 	public Class<? extends CartridgeProperties> bindJeeCartridgeProjectProperties() {
 		return JeeCartridgeProperties.class;
 	}
@@ -38,11 +36,15 @@ public class JeeCartridgeGeneratorModule extends AbstractGenericModule {
 	public Class<? extends org.xmdlab.cartridge.common.generator.IGenerator> bindIGenerator() {
 		return JeeCartridgeGenerator.class;
 	}
-
-	public Class<JeeCartridgeOutputConfigurationProvider> bindIOutputConfigurationProvider() {
+	
+	public Class<? extends IOutputConfigurationProvider> bindIOutputConfigurationProvider() {
 		return JeeCartridgeOutputConfigurationProvider.class;
 	}
-
+	
+	public Class<? extends JavaIoFileSystemAccess> bindJavaIoFileSystemAccess() {
+		return JavaIoFileSystemAccessExt.class;
+	}
+	
 	public Class<? extends ApplicationMetafacade> bindApplicationMetafacade() {
 		return ApplicationMetafacadeImpl.class;
 	}
@@ -50,8 +52,5 @@ public class JeeCartridgeGeneratorModule extends AbstractGenericModule {
 	public Class<? extends EntityMetafacade> bindEntityMetafacade() {
 		return EntityMetafacadeImpl.class;
 	}
-
-	public Class<? extends JavaIoFileSystemAccess> bindJavaIoFileSystemAccess() {
-		return JavaIoFileSystemAccessExt.class;
-	}
+	
 }

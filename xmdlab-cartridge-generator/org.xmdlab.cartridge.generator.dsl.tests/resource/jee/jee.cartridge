@@ -1,0 +1,41 @@
+Cartridge jee {
+	Properties {
+		PropertyGroup vagrant {
+			Property vmBox required = true default = "teamserver-precise64" {
+				"The Vagrant VM Box to use when 'vagrant up'"
+			}
+		}
+	}
+	
+	Transformation input = org.xmdlab.dsl.application.applicationDsl.DslApplication output = org.xmdlab.jee.application.mm.MmApplication
+	
+	// model metafacade (root)
+	Metafacade applicationMetafacade modelElement = org.xmdlab.jee.application.mm.MmApplication {
+		
+	}
+	
+	Metafacade entityMetafacade modelElement = org.xmdlab.jee.application.mm.MmEntity {
+		
+	}
+	
+	Outlet base outputDirectory = '..' overwrite = false
+	Outlet core_generated_src outputDirectory = '../core/src-gen' overwrite = true
+	
+	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {
+		ModelElement type = applicationMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/EntityTpl" outlet = core_generated_src {
+		ModelElement type = entityMetafacade {
+			
+		}
+	}
+	
+	//Task test {
+	//	ModelElement type = profileMetafacade {
+	//		
+	//	}
+	//}
+}

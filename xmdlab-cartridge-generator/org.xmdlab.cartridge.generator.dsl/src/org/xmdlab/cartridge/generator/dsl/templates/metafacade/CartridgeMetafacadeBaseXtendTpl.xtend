@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslMetafacade
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 
 class CartridgeMetafacadeBaseXtendTpl {
 
@@ -14,9 +15,9 @@ class CartridgeMetafacadeBaseXtendTpl {
 		package «basePackage».metafacade
 		
 		import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
+		import «metafacade.modelElement»
 		
-		abstract class «metafacade.name.toFirstUpper»Base extends MetafacadeBase<«metafacade.modelElement»> implements «metafacade.name.toFirstUpper» {
-			
+		abstract class «metafacade.name.toFirstUpper»Base extends MetafacadeBase<«getMmRootClassSimpleName(metafacade.modelElement)»> implements «metafacade.name.toFirstUpper» {
 		}
 	'''
 }

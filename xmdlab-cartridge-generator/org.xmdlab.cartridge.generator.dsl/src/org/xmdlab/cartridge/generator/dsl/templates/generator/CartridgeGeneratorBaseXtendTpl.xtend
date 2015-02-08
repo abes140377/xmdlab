@@ -2,13 +2,11 @@ package org.xmdlab.cartridge.generator.dsl.templates.generator
 
 import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
-import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTemplate
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 
 import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
 
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
-import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslMetafacade
 
 class CartridgeGeneratorBaseXtendTpl {
 	
@@ -17,64 +15,52 @@ class CartridgeGeneratorBaseXtendTpl {
 	def generate(DslCartridge dslCartridge) '''
 		«val className = cartridgeName.toFirstUpper + "CartridgeGeneratorBase"»
 		«val templates = dslCartridge.templates»
-		«val tasks = dslCartridge.tasks»
 		«getGeneratedComment(class.name)»
 		package «basePackage».generator
 		
 		import com.google.inject.Inject
 		import com.google.inject.Provider
-		import static «basePackage».util.«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider.*
 		import org.eclipse.xtext.generator.IFileSystemAccess
-		import org.eclipse.xtext.generator.IGenerator
-		//import org.eclipse.xtext.naming.IQualifiedNameProvider
-		import org.eclipse.emf.ecore.resource.Resource
-		
-		import «basePackage».util.«cartridgeName.toFirstUpper»CartridgeProjectProperties
-		
-		import «basePackage».metafacade.*
-		
+		import org.xmdlab.cartridge.common.generator.IGenerator
 		«FOR t : templates»
 		import «basePackage».«getTemplateSubpackageFromPath(t)».«getTemplateNameFromPath(t).toFirstUpper»
 		«ENDFOR»
+		import «basePackage».metafacade.*
+		import static «basePackage».io.«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider.*
+		import org.slf4j.LoggerFactory
+		import org.slf4j.Logger
+		import «basePackage».conf.«cartridgeName.toFirstUpper»CartridgeProperties
+		import org.xmdlab.jee.application.mm.*
 		
 		«getClassComment(className)»
 		abstract class «className» implements IGenerator {
 		
-			// @Inject extension IQualifiedNameProvider nameProvider
-			@Inject «cartridgeName.toFirstUpper»CartridgeProjectProperties properties
+			val static final Logger LOG = LoggerFactory.getLogger(«className»)
+
+			@Inject extension «cartridgeName.toFirstUpper»CartridgeProperties
 		
-			«FOR t : templates»				
-				@Inject Provider<«getTemplateNameFromPath(t).toFirstUpper»> «getTemplateNameFromPath(t).toFirstLower»
-			«ENDFOR»
 			«FOR m : dslCartridge.metafacades»
 				@Inject «m.name.toFirstUpper» «m.name»
 			«ENDFOR»
-		
+			«FOR t : templates»				
+				@Inject Provider<«getTemplateNameFromPath(t).toFirstUpper»> «getTemplateNameFromPath(t).toFirstLower»
+			«ENDFOR»
+			
 			/**
 			* This method is a long sequence of calling all templates for the code generation
 			*/
-			override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-«««				// Init metafacades
-«««				«FOR m : dslCartridge.nonModelMetafacades()»
-«««				«m.name».modelResource = resource.allContents.filter(typeof(«m.modelElement»)).head
-«««				«ENDFOR»
+			override void doGenerate(IFileSystemAccess fsa) {
+				val MmApplication application = applicationMetafacade.modelResource
+				
+				LOG.info("doGenerate: " + application)
 				
 				// compile templates
 				«FOR t : templates»
-«««				«val templateParameters = t.modelElements.map[type.name].join(', ')»
-				beforeCompile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»()
 				compile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»(fsa)
-				afterCompile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»()
-				
 				«ENDFOR»
 			}
-		
-			«FOR t : templates»
-			/**
-			 *
-			 */
-			def void beforeCompile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»() { }
 			
+			«FOR t : templates»
 			/**
 			 *
 			 */
@@ -93,14 +79,9 @@ class CartridgeGeneratorBaseXtendTpl {
 					fsa.generateFile(fileName, tpl.generate(«t.modelElements.map[type.name].join(', ')»))
 				«ENDIF»
 			}
-			
-			/**
-			 *
-			 */
-			def void afterCompile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»() { }
-			
 			«IF isNotSet(t.outputPattern)»
-			def String getCompile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern()
+			
+			def String get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern()
 			«ENDIF»
 			
 			«ENDFOR»
