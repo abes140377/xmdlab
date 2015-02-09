@@ -35,7 +35,7 @@ import static org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTask
 import org.xmdlab.cartridge.generator.dsl.templates.task.TaskClassTpl
-import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorComponentTpl
+import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorWorkflowTpl
 
 /**
  * Generates code from your model files on save.
@@ -50,7 +50,7 @@ class CartridgeDslGenerator implements IGenerator {
 
 	@Inject extension Provider<TaskClassTpl> taskClassTpl
 
-	@Inject extension Provider<CartridgeGeneratorComponentTpl> cartridgeGeneratorComponentTpl
+	@Inject extension Provider<CartridgeGeneratorWorkflowTpl> cartridgeGeneratorWorkflowTpl
 
 	@Inject extension Provider<CartridgGeneratorMwe2Tpl> cartridgGeneratorMwe2Tpl
 	@Inject extension Provider<CartridgeGeneratorStandaloneSetupTpl> cartridgeGeneratorStandaloneSetupTpl
@@ -96,22 +96,22 @@ class CartridgeDslGenerator implements IGenerator {
 		}
 
 		//
-		//generateCartridgeGeneratorComponent(dslCartridge, fsa)
+		generateCartridgeGeneratorWorkflow(dslCartridge, fsa)
 		generateCartridgeGeneratorModule(dslCartridge, fsa)
 		generateCartridgeGeneratorStandaloneSetup(dslCartridge, fsa)
-//		generateMwe2CartridgeGenerator(dslCartridge, fsa)
+
+		// nicht mehr benutz
+		// generateMwe2CartridgeGenerator(dslCartridge, fsa)
 		generateCartridgeGeneratorBaseXtend(dslCartridge, fsa)
-//		generateCartridgeGeneratorXtend(dslCartridge, fsa)
+		generateCartridgeGeneratorXtend(dslCartridge, fsa)
 
 		//
 		generateCartridgeOutputConfigurationProvider(dslCartridge, fsa)
 
-		//
-//		for (task : dslCartridge.tasks) {
-//			generateTaskClass(task, fsa)
-//		}
-
-		//
+		// for (task : dslCartridge.tasks) {
+		// 	 generateTaskClass(task, fsa)
+		// }
+		
 		for (metafacade : dslCartridge.metafacades) {
 			generateCartridgeMetafacadeXtend(metafacade, fsa)
 			generateCartridgeMetafacadeBaseXtend(metafacade, fsa)
@@ -150,11 +150,11 @@ class CartridgeDslGenerator implements IGenerator {
 	/**
 	 * 
 	 */
-	def generateCartridgeGeneratorComponent(DslCartridge dslCartridge, IFileSystemAccess fsa) {
-		val CartridgeGeneratorComponentTpl tpl = cartridgeGeneratorComponentTpl.get
+	def generateCartridgeGeneratorWorkflow(DslCartridge dslCartridge, IFileSystemAccess fsa) {
+		val CartridgeGeneratorWorkflowTpl tpl = cartridgeGeneratorWorkflowTpl.get
 
 		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
-			"CartridgeGeneratorComponent.java"
+			"CartridgeGeneratorWorkflow.java"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}

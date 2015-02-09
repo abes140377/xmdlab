@@ -11,10 +11,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.xmdlab.cartridge.common.generator.IGenerator
 import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
-import org.xmdlab.cartridge.jee.metafacade.*
+import org.xmdlab.cartridge.jee.metafacade.ApplicationMetafacade
+import org.xmdlab.cartridge.jee.metafacade.EntityMetafacade
 import org.xmdlab.cartridge.jee.templates.EntityTpl
 import org.xmdlab.cartridge.jee.templates.ReadmeMdTpl
-import org.xmdlab.jee.application.mm.*
+import org.xmdlab.jee.application.mm.MmApplication
+import org.xmdlab.jee.application.mm.MmEntity
 
 import static org.xmdlab.cartridge.jee.io.JeeCartridgeOutputConfigurationProvider.*
 
@@ -24,7 +26,7 @@ import static org.xmdlab.cartridge.jee.io.JeeCartridgeOutputConfigurationProvide
  * @author Sebastian Freund<seba1403@googlemail.com>
  *
  */
-abstract class JeeCartridgeGeneratorBase implements IGenerator {
+abstract class JeeCartridgeGeneratorBase implements IGenerator<MmApplication> {
 
 	val static final Logger LOG = LoggerFactory.getLogger(JeeCartridgeGeneratorBase)
 
@@ -39,7 +41,7 @@ abstract class JeeCartridgeGeneratorBase implements IGenerator {
 	/**
 	* This method is a long sequence of calling all templates for the code generation
 	*/
-	override void doGenerate(IFileSystemAccess fsa) {
+	override void doGenerate(MmApplication mmApplication, IFileSystemAccess fsa) {
 		LOG.info("")
 		LOG.info("// =============================================================================")
 		LOG.info("// Running generator")

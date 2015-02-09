@@ -11,31 +11,33 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
 
+/**
+ * 
+ */
 abstract class CartridgeGeneratorWorkflow {
-	
+
 	val private Logger LOGGER = LoggerFactory.getLogger(CartridgeGeneratorWorkflow)
-	
+
 	def boolean run(String modelURI)
-	
+
 	/**
 	 * 
 	 */
-	def protected boolean validateApplication(EObject eObject) {
+	def protected boolean validate(EObject eObject) {
 		val appDiagnostic = Diagnostician.INSTANCE.validate(eObject)
 
 		if (appDiagnostic.getSeverity() != Diagnostic.OK) {
 			logDiagnostic(appDiagnostic)
 			if (appDiagnostic.getSeverity() == Diagnostic.ERROR) {
 				XmdlabGeneratorContext.addIssue(
-					new XmdlabGeneratorIssueImpl(Severity.ERROR,
-						"Validating  EObject '" + eObject + "' failed"))
+					new XmdlabGeneratorIssueImpl(Severity.ERROR, "Validating  EObject '" + eObject + "' failed"))
 				return false
 			}
 		}
-		
+
 		return true
 	}
-	
+
 	/**
 	 * 
 	 */

@@ -11,12 +11,12 @@ class CartridgeGeneratorXtendTpl {
 	
 	def generate(DslCartridge dslCartridge) '''
 		«val modelNameFirstUpper = cartridgeName.toFirstUpper»
-		«val className = modelNameFirstUpper + "CartridgeGeneratorStandaloneSetup"»
+		«val className = modelNameFirstUpper + "CartridgeGenerator"»
 		«getGeneratedComment(class.name)»
 		package «basePackage».generator
 		
 		«getClassComment(className)»
-		class «modelNameFirstUpper»CartridgeGenerator extends «modelNameFirstUpper»CartridgeGeneratorBase {
+		class «className» extends «modelNameFirstUpper»CartridgeGeneratorBase {
 		
 			«FOR t : dslCartridge.templates»
 «««				«val output = t.metafacade.transformation.output.name»

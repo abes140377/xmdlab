@@ -5,13 +5,12 @@ import java.io.File
 import java.io.IOException
 import java.lang.reflect.Constructor
 import java.util.List
-import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.ISetup
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult
-import org.xmdlab.cartridge.common.util.FileHelper
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorResult.Status
+import org.xmdlab.cartridge.common.util.FileHelper
 
 /**
  * 
@@ -29,7 +28,7 @@ abstract class GeneratorRunner<S extends ISetup, W extends CartridgeGeneratorWor
 		val W workflow = injector.getInstance(getWorkflowClass());
 		XmdlabGeneratorContext.getGeneratedFiles().clear();
 
-		val boolean success = workflow.run(URI.createFileURI(modelFile).toString());
+		val boolean success = workflow.run(modelFile);
 
 		var List<XmdlabGeneratorIssue> issues = XmdlabGeneratorContext.getIssues();
 		var List<File> generatedFiles = XmdlabGeneratorContext.getGeneratedFiles();

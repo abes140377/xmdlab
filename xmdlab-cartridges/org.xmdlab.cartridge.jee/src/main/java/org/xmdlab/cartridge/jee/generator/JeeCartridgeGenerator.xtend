@@ -12,12 +12,4 @@ package org.xmdlab.cartridge.jee.generator
  */
 class JeeCartridgeGenerator extends JeeCartridgeGeneratorBase {
 
-//	@Inject extension JeeCartridgeProjectProperties properties
-//	@Inject ApplicationMetafacade applicationMetafacade
-//	@Inject CreateInitialProjectTask createInitialProjectTask
-
-//	override void beforeCompileReadmeMd() {
-//		
-//	}
-
 }
