@@ -108,8 +108,8 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 	/**
 	 * Returns <code>model</code> file.
 	 */
-	protected File getModelFile() {
-		return new File(project.getBasedir(), model);
+	protected String getModelFilePath() {
+		return project.getBasedir().getAbsolutePath() + model;
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		}
 
 		// Check model file
-		File modelFile = getModelFile();
+		File modelFile = new File(getModelFilePath());
 		if (!modelFile.exists() || !modelFile.isFile()) {
 			throw new MojoExecutionException("Model file '" + model
 					+ "' specified in <model/> does not exists");
@@ -253,7 +253,7 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 		Constructor<? extends GeneratorRunner> constructor = c.getConstructor();
 		GeneratorRunner runner = constructor.newInstance();
 
-		XmdlabGeneratorResult result = runner.run(getModelFile());
+		XmdlabGeneratorResult result = runner.run(getModelFilePath());
 
 		// Log all issues occured during workflow execution
 		for (XmdlabGeneratorIssue issue : result.getIssues()) {
