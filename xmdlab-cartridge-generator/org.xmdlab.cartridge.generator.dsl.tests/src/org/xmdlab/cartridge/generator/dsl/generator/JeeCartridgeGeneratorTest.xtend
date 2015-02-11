@@ -7,17 +7,17 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.xmdlab.cartridge.generator.dsl.CartridgeGeneratorInjectorProviderCustom
-import org.eclipse.xtext.xbase.compiler.CompilationTestHelper
 import org.xmdlab.cartridge.generator.dsl.GeneratorConstants
 import java.io.File
 import com.google.common.io.Files
 import com.google.common.base.Charsets
+import org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(CartridgeGeneratorInjectorProviderCustom))
 class JeeCartridgeGeneratorTest {
 
-	@Inject extension CompilationTestHelper compilationTestHelper
+	@Inject extension ExtCompilationTestHelper compilationTestHelper
 
 	val modelName = 'jee'
 	var String modelAsString = null
@@ -36,6 +36,10 @@ class JeeCartridgeGeneratorTest {
 	def void testGeneratedCode() {
 		val String result = Files.toString(new File("resource/jee/" + modelName + "-generator-test-result.txt"), Charsets.ISO_8859_1)
 		
-		modelAsString.assertCompilesTo(result)
+		var srcFolders = newHashMap()
+		srcFolders.put("src", "/Users/seba/Projekte/xgen/workspace-src/xmdlab/xmdlab-cartridges/org.xmdlab.cartridge.jee/src/main/java")
+		srcFolders.put("src-gen", "/Users/seba/Projekte/xgen/workspace-src/xmdlab/xmdlab-cartridges/org.xmdlab.cartridge.jee/src-gen-man")
+		
+		modelAsString.assertCompilesToReference(result, srcFolders)
 	}
 }

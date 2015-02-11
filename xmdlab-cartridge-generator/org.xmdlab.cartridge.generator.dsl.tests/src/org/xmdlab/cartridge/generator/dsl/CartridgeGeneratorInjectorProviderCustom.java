@@ -1,5 +1,7 @@
 package org.xmdlab.cartridge.generator.dsl;
 
+import org.xmdlab.cartridge.generator.dsl.generator.CartridgeOutputsConfigurationProvider;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -23,6 +25,11 @@ public class CartridgeGeneratorInjectorProviderCustom extends CartridgeDslInject
 					@SuppressWarnings("unused")
 					public Class<? extends com.google.inject.Provider<org.eclipse.xtext.xbase.file.WorkspaceConfig>> provideWorkspaceConfig() {
 						return org.eclipse.xtext.xbase.file.RuntimeWorkspaceConfigProvider.class;
+					}
+					
+					@SuppressWarnings("unused")
+					public Class<? extends org.eclipse.xtext.generator.IOutputConfigurationProvider> bindIOutputConfigurationProvider() {
+						return CartridgeOutputsConfigurationProvider.class;
 					}
 				});
 			}
