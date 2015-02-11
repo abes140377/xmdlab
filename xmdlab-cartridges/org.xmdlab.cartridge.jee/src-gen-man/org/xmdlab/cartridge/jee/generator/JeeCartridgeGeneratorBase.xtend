@@ -52,14 +52,10 @@ abstract class JeeCartridgeGeneratorBase implements IGenerator<MmApplication> {
 			LOG.info(it.key + " -> " + it.value.render)
 		]
 
-		val MmApplication application = applicationMetafacade.modelResource
-
-		LOG.info("doGenerate: " + application)
-
 		// compile templates
-		compileReadmeMd(fsa)
+		compileReadmeMd(fsa, mmApplication)
 
-		application.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
+		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
 	}
 
 	/**
@@ -80,12 +76,14 @@ abstract class JeeCartridgeGeneratorBase implements IGenerator<MmApplication> {
 	/**
 	 *
 	 */
-	def compileReadmeMd(IFileSystemAccess fsa) {
+	def compileReadmeMd(IFileSystemAccess fsa, MmApplication mmApplication) {
 		LOG.info("compileReadmeMd")
 
 		val ReadmeMdTpl tpl = readmeMdTpl.get
 
 		val String fileName = "README.md"
+		
+		applicationMetafacade.modelResource = mmApplication
 
 		fsa.generateFile(fileName, tpl.generate())
 	}

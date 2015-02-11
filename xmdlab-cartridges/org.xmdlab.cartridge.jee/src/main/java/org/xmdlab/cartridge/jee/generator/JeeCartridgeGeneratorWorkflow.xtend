@@ -44,11 +44,11 @@ class JeeCartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 		val DslApplication dslApplication = dslModel.eAllContents.filter(DslApplication).head
 
 		if (validate(dslApplication)) {
+			
 			val mmApplication = transformModel(dslApplication)
+			
 			if (mmApplication != null) {
-
 				generateCode(mmApplication)
-
 				return true
 			}
 		}

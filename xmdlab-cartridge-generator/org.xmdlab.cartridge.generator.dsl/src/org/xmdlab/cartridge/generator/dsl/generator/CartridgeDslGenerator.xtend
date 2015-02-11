@@ -84,7 +84,7 @@ class CartridgeDslGenerator implements IGenerator {
 		generatorProperties.modelUri = resource.URI
 
 		//
-		generateCartridgeProjectProperties(dslCartridge, fsa)
+		generateCartridgeProperties(dslCartridge, fsa)
 
 		//
 		val DslTransformation dslTransformation = dslCartridge.transformation
@@ -154,7 +154,7 @@ class CartridgeDslGenerator implements IGenerator {
 		val CartridgeGeneratorWorkflowTpl tpl = cartridgeGeneratorWorkflowTpl.get
 
 		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
-			"CartridgeGeneratorWorkflow.java"
+			"CartridgeGeneratorWorkflow.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}
@@ -212,7 +212,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeOutputConfigurationProvider(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeOutputConfigurationProviderTpl tpl = cartridgeOutputConfigurationProviderTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/util/" + cartridgeName.toFirstUpper +
+		val fileName = javaToFsPath(basePackage) + "/io/" + cartridgeName.toFirstUpper +
 			"CartridgeOutputConfigurationProvider.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -235,11 +235,11 @@ class CartridgeDslGenerator implements IGenerator {
 	/**
 	 * 
 	 */
-	def generateCartridgeProjectProperties(DslCartridge dslCartridge, IFileSystemAccess fsa) {
+	def generateCartridgeProperties(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgePropertiesTpl tpl = cartridgePropertiesTpl.get
 
 		val fileName = javaToFsPath(basePackage) + "/conf/" + cartridgeName.toFirstUpper +
-			"CartridgeProjectProperties.xtend"
+			"CartridgeProperties.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}
