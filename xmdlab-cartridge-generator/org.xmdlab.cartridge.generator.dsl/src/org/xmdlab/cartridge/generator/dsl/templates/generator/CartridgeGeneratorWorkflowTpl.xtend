@@ -4,25 +4,26 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
 import org.xmdlab.cartridge.generator.dsl.util.StringHelper
+import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 
 class CartridgeGeneratorWorkflowTpl {
 
 	@Inject extension GeneratorProperties generatorProperties
+//	@Inject extension ModelHelper
 	
 	def generate(DslCartridge dslCartridge) '''
+	«StringHelper.getGeneratedComment(class.name)»
 	package «basePackage».generator
 
+	import com.google.common.base.Charsets
+	import com.google.common.io.Files
 	import com.google.inject.Inject
 	import com.google.inject.Injector
-	import org.eclipse.emf.common.util.URI
-	import org.eclipse.emf.ecore.EObject
-	import org.eclipse.emf.ecore.resource.Resource
+	import java.io.File
 	import org.eclipse.xtext.generator.JavaIoFileSystemAccess
-	import org.eclipse.xtext.resource.XtextResource
-	import org.eclipse.xtext.resource.XtextResourceSet
+	import org.eclipse.xtext.junit4.util.ParseHelper
 	import org.slf4j.Logger
 	import org.slf4j.LoggerFactory
-	import org.xmdlab.cartridge.common.conf.CartridgeProperties
 	import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 	import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
 	import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
@@ -30,56 +31,40 @@ class CartridgeGeneratorWorkflowTpl {
 	import org.xmdlab.cartridge.common.generator.IGenerator
 	import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
 	import «basePackage».io.«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider
-	import «basePackage».metafacade.ApplicationMetafacade
 	import «basePackage».transformation.«cartridgeName.toFirstUpper»CartridgeTransformation
-	import org.xmdlab.dsl.application.applicationDsl.*
-	import org.xmdlab.jee.application.mm.*
+	import «dslCartridge.getTransformationInputClassName»
+	import «dslCartridge.getDslModelClassName()»
+	import «dslCartridge.getTransformationOutputClassName»
 	
-	«StringHelper.getGeneratedComment(class.name)»
+	/**
+	 * 
+	 */
 	class «cartridgeName.toFirstUpper»CartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
-		
+	
 		private Logger LOGGER = LoggerFactory.getLogger(«cartridgeName.toFirstUpper»CartridgeGeneratorWorkflow)
 	
 		@Inject
 		var Injector injector
-		
-		@Inject
-		CartridgeProperties cartridgeProperties;
 	
-		var XtextResourceSet resourceSet
-	
-		/**
-		 * 
-		 */
 		@Inject
-		protected def final void setResourceSet(XtextResourceSet resourceSet) {
-			resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
-			this.resourceSet = resourceSet
-		}
+		ParseHelper<«dslCartridge.getDslModelClassSimpleName»> parser
 	
 		/**
 		 * 
 		 */
 		override boolean run(String modelURI) {
-			cartridgeProperties.config.entrySet.forEach[
-				LOGGER.info(it.key)
-				LOGGER.info(it.value.render)
-			]
-			if (readModel(modelURI)) {
-				val dslApp = getApplication()
-				if (validateApplication(dslApp)) {
-					val app = transformModel(dslApp)
-					if (app != null) {
+			LOGGER.info(parser.toString)
+			val «dslCartridge.getDslModelClassSimpleName» «dslCartridge.getDslModelClassSimpleName.toFirstLower» = parser.parse(Files.toString(new File(modelURI), Charsets.ISO_8859_1))
 	
-						// init metafacades
-						var ApplicationMetafacade applicationMetafacade = injector.getInstance(ApplicationMetafacade)
-						applicationMetafacade.modelResource = app
+			val «dslCartridge.transformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» = «dslCartridge.getDslModelClassSimpleName.toFirstLower».eAllContents.filter(«dslCartridge.transformationInputClassSimpleName»).head
 	
-						// run generator
-						generateCode(app)
-	
-						return true
-					}
+			if (validate(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower»)) {
+				
+				val «dslCartridge.getTransformationOutputClassSimpleName.toFirstLower» = transformModel(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower»)
+				
+				if («dslCartridge.getTransformationOutputClassSimpleName.toFirstLower» != null) {
+					generateCode(«dslCartridge.getTransformationOutputClassSimpleName.toFirstLower»)
+					return true
 				}
 			}
 	
@@ -91,130 +76,35 @@ class CartridgeGeneratorWorkflowTpl {
 		/**
 		 * 
 		 */
-		protected def void generateCode(MmApplication application) {
-			if (application == null) {
-				XmdlabGeneratorContext.addIssue(
-					new XmdlabGeneratorIssueImpl(Severity.ERROR,
-						"Transformation and modification of application '" + application.name + "' failed"))
-			}
-	
-			// register the factory to be able to read xmi files
-			// Resource.Factory.Registry::INSTANCE.getExtensionToFactoryMap().put(
-			// Resource.Factory.Registry::DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-			// create emf resource from transformed model
-			// var ResourceSet resourceSet = new ResourceSetImpl();
-			// var Resource input = resourceSet.createResource(URI.createURI("mm.sc"));
-			// input.getContents().add(application);
-			// get output configuration for cartridge an set in filesystem access
-			
+		protected def void generateCode(«dslCartridge.getTransformationOutputClassSimpleName» «dslCartridge.getTransformationOutputClassSimpleName.toFirstLower») {
 			val «cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider outputConfigurationProvider = injector.getInstance(
 				«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider)
 			val JavaIoFileSystemAccess fsa = injector.getInstance(JavaIoFileSystemAccessExt)
 			fsa.outputConfigurations = outputConfigurationProvider.outputConfigurations
-			val IGenerator generator = injector.getInstance(«cartridgeName.toFirstUpper»CartridgeGenerator)
+			val IGenerator<«dslCartridge.getTransformationOutputClassSimpleName»> generator = injector.getInstance(«cartridgeName.toFirstUpper»CartridgeGenerator)
 	
-			generator.doGenerate(fsa)
+			generator.doGenerate(«dslCartridge.getTransformationOutputClassSimpleName.toFirstLower», fsa)
 		}
 	
 		/**
 		 * 
 		 */
-		protected def MmApplication transformModel(DslApplication application) {
+		protected def «dslCartridge.getTransformationOutputClassSimpleName» transformModel(«dslCartridge.getTransformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower») {
 			LOGGER.info("Transforming application " + application.name)
 	
 			// run transformation
 			val «cartridgeName.toFirstUpper»CartridgeTransformation transformation = injector.getInstance(«cartridgeName.toFirstUpper»CartridgeTransformation)
-			var transformedApplication = transformation.transform(application) as MmApplication
+			var transformedModel = transformation.transform(application) as «dslCartridge.getTransformationOutputClassSimpleName»
 	
-			
-			// if (transformedApplication != null) {
-			//     LOG.debug("Modifying transformed application '{}'", transformedApplication.name)
-			//		transformedApplication = runAction("org.sculptor.generator.transform.Transformation.modify",
-			//		    transformedApplication) as Application
-			// }
-			
-			if (transformedApplication == null) {
+			if (transformedModel == null) {
 				XmdlabGeneratorContext.addIssue(
 					new XmdlabGeneratorIssueImpl(Severity.ERROR,
 						"Transformation and modification of model '" + application.name + "' failed"))
 			}
-			transformedApplication
+	
+			return transformedModel
 		}
 	
-		/**
-		 * 
-		 */
-		protected def boolean readModel(String modelURI) {
-			// Read all the models from given URI and check for imports 
-			var newUris = newArrayList
-			newUris.add(modelURI)
-			var int numberResources
-			do {
-	
-				// Remember the current number of resources in the resource set 
-				numberResources = resourceSet.resources.size
-	
-				// Convert given text into URIs
-				var realUris = newArrayList
-				for (uri : newUris) {
-					try {
-						realUris.add(URI.createURI(uri))
-					} catch (Exception e) {
-						XmdlabGeneratorContext.addIssue(
-							new XmdlabGeneratorIssueImpl(Severity.ERROR, "Invalid URI '" + uri + "' : " + e.message, e))
-						return false
-					}
-				}
-	
-				// Check the exising URIs for new URIs from imports
-				newUris = newArrayList
-				for (uri : realUris) {
-					val resource = resourceSet.getResource(uri, true)
-					for (obj : resource.contents) {
-						if (obj instanceof DslModel) {
-							for (import : obj.imports) {
-								val app = obj.app
-	
-								LOGGER.info("Application loaded: " + app)
-	
-								newUris.add(import.importURI)
-							}
-						}
-					}
-				}
-			} while (!newUris.empty && numberResources != resourceSet.resources.size)
-			
-			return true
-		}
-	
-		/**
-		 * 
-		 */
-		protected def DslApplication getApplication() {
-			var DslApplication mainApp = null
-			for (Resource resource : resourceSet.resources) {
-				for (EObject obj : resource.contents) {
-					if (obj instanceof DslModel) {
-						val model = obj
-						if (mainApp == null) {
-							mainApp = model.app
-							LOGGER.info("Got Application: " + mainApp)
-						} else {
-							mainApp.modules.addAll(model.app.modules)
-							LOGGER.info("Got Modules: " + model.app.modules)
-						}
-					}
-				}
-			}
-			if (mainApp != null) {
-				// LOG.debug("Found application '{}'", mainApp.name)
-			} else {
-				XmdlabGeneratorContext.addIssue(
-					new XmdlabGeneratorIssueImpl(Severity.ERROR, "No application found in resource set: " + resourceSet))
-			}
-	
-			return mainApp
-		}
 	}
 	'''
 	

@@ -37,7 +37,7 @@ class CartridgeGeneratorModuleTpl {
 				super.configure(binder);
 			}
 			
-			public Class<? extends CartridgeProperties> bind«modelNameFirstUpper»CartridgeProjectProperties() {
+			public Class<? extends CartridgeProperties> bind«modelNameFirstUpper»CartridgeProperties() {
 				return «modelNameFirstUpper»CartridgeProperties.class;
 			}
 			

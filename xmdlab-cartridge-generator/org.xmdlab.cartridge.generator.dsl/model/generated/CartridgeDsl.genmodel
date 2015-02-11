@@ -33,6 +33,7 @@
     <genClasses ecoreClass="CartridgeDsl.ecore#//DslTransformation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CartridgeDsl.ecore#//DslTransformation/input"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CartridgeDsl.ecore#//DslTransformation/output"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CartridgeDsl.ecore#//DslTransformation/root"/>
     </genClasses>
     <genClasses ecoreClass="CartridgeDsl.ecore#//DslTemplate">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CartridgeDsl.ecore#//DslTemplate/path"/>
