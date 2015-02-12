@@ -13,6 +13,7 @@ import com.google.common.io.Files
 import java.io.File
 import com.google.common.base.Charsets
 import org.junit.Test
+import org.eclipse.ui.internal.keys.model.ModelElement
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(CartridgeGeneratorInjectorProviderCustom))
@@ -27,6 +28,27 @@ class ModelHelperTest {
 		model = Files.toString(new File("resource/jee/jee.cartridge"), Charsets.UTF_8).parse
 
 		Assert.assertNotNull(model)
+	}
+	
+	@Test
+	def void testGetMetafacadeModelElementClassName() {
+		val result = ModelHelper.getMetafacadeModelElementClassName(model.cartridge.metafacades.head)
+		
+		Assert.assertEquals("org.xmdlab.jee.application.mm.MmApplication" , result)
+	}
+	
+	@Test
+	def void testGetMetafacadeModelElementSimpleClassName() {
+		val result = ModelHelper.getMetafacadeModelElementSimpleClassName(model.cartridge.metafacades.head)
+		
+		Assert.assertEquals("MmApplication" , result)
+	}
+	
+	@Test
+	def void testGetTemplateNameFromPathWithoutSuffix() {
+		val result = ModelHelper.getTemplateNameFromPathWithoutSuffix(model.cartridge.templates.head)
+		
+		Assert.assertEquals("ReadmeMd" , result)
 	}
 	
 	@Test

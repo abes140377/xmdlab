@@ -16,7 +16,7 @@ class TemplateBaseTpl {
 		package «basePackage».«getTemplateSubpackageFromPath(dslTemplate)»
 		
 		import com.google.inject.Inject
-		import «basePackage».metafacade.*
+		import «basePackage».metafacade.«dslTemplate.modelElement.type.name.toFirstUpper»
 		import org.xmdlab.cartridge.common.template.Template
 		
 		«val tmp = "'''"»
@@ -24,9 +24,7 @@ class TemplateBaseTpl {
 		«val close = "»"»
 		abstract class «getTemplateNameFromPath(dslTemplate)»Base implements Template {
 			
-			«FOR m : dslTemplate.modelElements»
-			@Inject extension «m.type.name.toFirstUpper» «m.type.name»
-			«ENDFOR»
+			@Inject extension «dslTemplate.modelElement.type.name.toFirstUpper» «dslTemplate.modelElement.type.name»
 		
 			override generate() «tmp»
 				«open»doGenerate()«close»
@@ -34,11 +32,9 @@ class TemplateBaseTpl {
 		
 			def String doGenerate()
 			
-			«FOR m : dslTemplate.modelElements»
-			def get«m.type.name.toFirstUpper»() {
-				return «m.type.name»
+			def get«dslTemplate.modelElement.type.name.toFirstUpper»() {
+				return «dslTemplate.modelElement.type.name»
 			}
-			«ENDFOR»
 		}
 	'''
 }

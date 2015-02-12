@@ -32,16 +32,16 @@ class CartridgeOutputConfigurationProviderTpl {
 			«ENDFOR»
 		
 			override public Map<String, OutputConfiguration> getOutputConfigurations() {
-			«FOR o : dslCartridge.outlets»
+				«FOR o : dslCartridge.outlets»
 				//
 				var OutputConfiguration «o.name»Output = new OutputConfiguration(«prefix»«camelCaseToUnderscore(o.name)»);
 				«o.name»Output.setDescription("«o.name» output configuraton");
 				«o.name»Output.setOutputDirectory("«o.outputDirectory»");
 				«o.name»Output.setOverrideExistingResources(«o.overwrite.asString»);
-				
+
 				outputs.put(«prefix»«camelCaseToUnderscore(o.name)», «o.name»Output);
-				
-			«ENDFOR»
+				«ENDFOR»
+		
 				return outputs;
 			}
 		}

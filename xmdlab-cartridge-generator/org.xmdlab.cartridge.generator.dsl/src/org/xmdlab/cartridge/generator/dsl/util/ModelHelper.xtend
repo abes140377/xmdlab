@@ -13,6 +13,24 @@ import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.FalseLiteral
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.TrueLiteral
 
 class ModelHelper {
+	
+	/**
+	 * 
+	 */
+	def static getMetafacadeModelElementSimpleClassName(DslMetafacade dslMetafacade) {
+		val result = getMetafacadeModelElementClassName(dslMetafacade).getSimpleClassName
+		
+		return result
+	}
+	
+	/**
+	 * 
+	 */
+	def static getMetafacadeModelElementClassName(DslMetafacade dslMetafacade) {
+		val result = dslMetafacade.modelElement
+		
+		return result
+	}	
 
 	/**
 	 * 
@@ -179,16 +197,9 @@ class ModelHelper {
 	def static String getMmRootClassSimpleName(String transformationOutput) {
 		var String result
 
-		result = getClass(transformationOutput).toFirstUpper
+		result = getSimpleClassName(transformationOutput).toFirstUpper
 
 		return result
-	}
-
-	/**
-	 * 
-	 */
-	def static String getClass(String fqClassName) {
-		return fqClassName.substring(fqClassName.lastIndexOf(".") + 1)
 	}
 
 	/**
@@ -210,7 +221,7 @@ class ModelHelper {
 	 * 
 	 */
 	def static String getDslRootClass(String transformationInput) {
-		val result = getClass(transformationInput)
+		val result = getSimpleClassName(transformationInput)
 
 		return result
 	}
@@ -222,16 +233,7 @@ class ModelHelper {
 		val package = getPackage(output)
 
 		return package + '.' + package.substring(package.lastIndexOf('.') + 1).toFirstUpper + 'Package'
-	}
-
-	/**
-	 * 
-	 */
-	def static String getMmRootClass(String transformationOutput) {
-		val result = getClass(transformationOutput)
-
-		return result
-	}
+	}	
 
 	/**
 	 * 
@@ -248,6 +250,13 @@ class ModelHelper {
 	}
 
 	// ============================
+	
+	/**
+	 * 
+	 */
+	def static String getSimpleClassName(String fqClassName) {
+		return fqClassName.substring(fqClassName.lastIndexOf(".") + 1)
+	}
 	
 	def private static String getPackage(String fqClassName) {
 		return fqClassName.substring(0, fqClassName.lastIndexOf("."))

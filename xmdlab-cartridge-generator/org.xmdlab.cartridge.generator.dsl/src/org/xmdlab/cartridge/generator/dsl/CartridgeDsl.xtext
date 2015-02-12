@@ -28,7 +28,7 @@ DslTransformation:
 DslTemplate:
 	'Template' 'path' '=' path=STRING ('outputPattern' '=' outputPattern=STRING)? 'outlet' '=' outlet=[DslOutlet]
 	('overwrite' '=' overwrite=BoolLiteral)? '{'
-	(modelElements+=DslModelElement)*
+	(modelElement = DslModelElement)?
 	'}';
 	
 DslResource:

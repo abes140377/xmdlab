@@ -18,7 +18,7 @@ public class JeeCartridgeOutputConfigurationProvider extends DefaultOutputConfig
 	Map<String, OutputConfiguration> outputs = super.getOutputConfigurations();
 
 	public static String OUTPUTCONFIG_BASE = "base";
-	public static String OUTPUTCONFIG_CORE_GENERATED_SRC = "core_generated_src";
+	public static String OUTPUTCONFIG_CORE_GENERATED_SRC = "coreGeneratedSrc";
 
 	override public Map<String, OutputConfiguration> getOutputConfigurations() {
 		//
@@ -28,14 +28,13 @@ public class JeeCartridgeOutputConfigurationProvider extends DefaultOutputConfig
 		baseOutput.setOverrideExistingResources(false);
 
 		outputs.put(OUTPUTCONFIG_BASE, baseOutput);
-		
 		//
-		var OutputConfiguration coreOutput = new OutputConfiguration(OUTPUTCONFIG_CORE_GENERATED_SRC);
-		coreOutput.setDescription("core generated source output configuraton");
-		coreOutput.setOutputDirectory("../core/src-gen");
-		coreOutput.setOverrideExistingResources(true);
+		var OutputConfiguration coreGeneratedSrcOutput = new OutputConfiguration(OUTPUTCONFIG_CORE_GENERATED_SRC);
+		coreGeneratedSrcOutput.setDescription("coreGeneratedSrc output configuraton");
+		coreGeneratedSrcOutput.setOutputDirectory("../core/src-gen");
+		coreGeneratedSrcOutput.setOverrideExistingResources(true);
 
-		outputs.put(OUTPUTCONFIG_CORE_GENERATED_SRC, coreOutput);
+		outputs.put(OUTPUTCONFIG_CORE_GENERATED_SRC, coreGeneratedSrcOutput);
 
 		return outputs;
 	}

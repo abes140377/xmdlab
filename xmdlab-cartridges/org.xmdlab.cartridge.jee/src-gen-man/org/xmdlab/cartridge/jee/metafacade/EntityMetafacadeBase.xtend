@@ -5,6 +5,7 @@
 package org.xmdlab.cartridge.jee.metafacade
 
 import org.xmdlab.cartridge.common.metafacade.MetafacadeBase
+import org.xmdlab.jee.application.mm.MmEntity
 
-abstract class EntityMetafacadeBase extends MetafacadeBase<org.xmdlab.jee.application.mm.MmEntity> implements EntityMetafacade {
+abstract class EntityMetafacadeBase extends MetafacadeBase<MmEntity> implements EntityMetafacade {
 }

@@ -17,15 +17,6 @@ import org.xmdlab.jee.application.mm.MmEntity
 class JeeCartridgeGenerator extends JeeCartridgeGeneratorBase {
 
 	override doGenerate(MmApplication mmApplication, IFileSystemAccess fsa) {
-
-		// compile templates
-		compileReadmeMd(fsa, mmApplication)
-
-		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
+		throw new UnsupportedOperationException("Generated method stub JeeCartridgeGenerator:doGenerate(..). Implement me!")
 	}
-	
-	override getEntityOutputPattern(MmEntity mmEntity) {
-		return mmEntity.package + "." + mmEntity.name + ".java"
-	}
-
 }

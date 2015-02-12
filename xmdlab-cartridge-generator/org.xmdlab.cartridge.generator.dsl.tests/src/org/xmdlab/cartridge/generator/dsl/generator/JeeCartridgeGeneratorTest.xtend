@@ -37,8 +37,11 @@ class JeeCartridgeGeneratorTest {
 		val String result = Files.toString(new File("resource/jee/" + modelName + "-generator-test-result.txt"), Charsets.ISO_8859_1)
 		
 		var srcFolders = newHashMap()
-		srcFolders.put("src", "/Users/seba/Projekte/xgen/workspace-src/xmdlab/xmdlab-cartridges/org.xmdlab.cartridge.jee/src/main/java")
-		srcFolders.put("src-gen", "/Users/seba/Projekte/xgen/workspace-src/xmdlab/xmdlab-cartridges/org.xmdlab.cartridge.jee/src-gen-man")
+		
+		val String basePath = new File('../..').absolutePath
+				
+		srcFolders.put("src", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src/main/java")
+		srcFolders.put("src-gen", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src-gen-man")
 		
 		modelAsString.assertCompilesToReference(result, srcFolders)
 	}

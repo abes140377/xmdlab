@@ -5,6 +5,7 @@
 package org.xmdlab.cartridge.jee.conf
 
 import com.google.inject.Singleton
+import org.xmdlab.cartridge.common.conf.CartridgeProperties
 
 /**
  * The org.xmdlab.cartridge.generator.dsl.templates.conf.CartridgePropertiesTpl
@@ -13,7 +14,7 @@ import com.google.inject.Singleton
  *
  */
 @Singleton
-class JeeCartridgeProperties extends org.xmdlab.cartridge.common.conf.CartridgeProperties {
+class JeeCartridgeProperties extends CartridgeProperties {
 
 	// Properties for group vagrant
 	def String getVmBox() {

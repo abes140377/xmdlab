@@ -19,7 +19,7 @@ Cartridge jee {
 	}
 	
 	Outlet base outputDirectory = '..' overwrite = false
-	Outlet core_generated_src outputDirectory = '../core/src-gen' overwrite = true
+	Outlet coreGeneratedSrc outputDirectory = '../core/src-gen' overwrite = true
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {
 		ModelElement type = applicationMetafacade {
@@ -27,7 +27,7 @@ Cartridge jee {
 		}
 	}
 	
-	Template path = "templates/EntityTpl" outlet = core_generated_src {
+	Template path = "templates/EntityTpl" outlet = coreGeneratedSrc {
 		ModelElement type = entityMetafacade {
 			
 		}

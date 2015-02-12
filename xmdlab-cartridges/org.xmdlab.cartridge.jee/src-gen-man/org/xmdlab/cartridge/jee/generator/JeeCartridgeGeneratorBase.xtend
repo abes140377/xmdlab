@@ -39,52 +39,30 @@ abstract class JeeCartridgeGeneratorBase implements IGenerator<MmApplication> {
 	@Inject Provider<EntityTpl> entityTpl
 
 	/**
-	* This method is a long sequence of calling all templates for the code generation
-	*/
-	override void doGenerate(MmApplication mmApplication, IFileSystemAccess fsa) {
-		LOG.info("")
-		LOG.info("// =============================================================================")
-		LOG.info("// Running generator")
-		LOG.info("// =============================================================================")
-		LOG.info("")
-
-		jeeCartridgeProperties.config.entrySet.forEach [
-			LOG.info(it.key + " -> " + it.value.render)
-		]
-
-		// compile templates
-		compileReadmeMd(fsa, mmApplication)
-
-		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
+	 * 
+	 */
+	def compileReadmeMd(IFileSystemAccess fsa, MmApplication mmApplication) {
+		val ReadmeMdTpl tpl = readmeMdTpl.get
+		
+		val String fileName = "README.md"
+		
+		applicationMetafacade.modelResource = mmApplication
+		
+		fsa.generateFile(fileName, OUTPUTCONFIG_BASE, tpl.generate())
 	}
 
 	/**
 	 * 
 	 */
-	def void compileEntity(IFileSystemAccess fsa, MmEntity entity) {
-		LOG.info("compileEntity: " + entity)
-
+	def compileEntity(IFileSystemAccess fsa, MmEntity mmEntity) {
 		val EntityTpl tpl = entityTpl.get
-
-		val String fileName = entity.name + ".java"
-
-		entityMetafacade.modelResource = entity
-
+		
+		val String fileName = getEntityOutputPattern(mmEntity)
+		
+		entityMetafacade.modelResource = mmEntity
+		
 		fsa.generateFile(fileName, OUTPUTCONFIG_CORE_GENERATED_SRC, tpl.generate())
 	}
 
-	/**
-	 *
-	 */
-	def compileReadmeMd(IFileSystemAccess fsa, MmApplication mmApplication) {
-		LOG.info("compileReadmeMd")
-
-		val ReadmeMdTpl tpl = readmeMdTpl.get
-
-		val String fileName = "README.md"
-		
-		applicationMetafacade.modelResource = mmApplication
-
-		fsa.generateFile(fileName, tpl.generate())
-	}
+	def String getEntityOutputPattern(MmEntity mmEntity)
 }

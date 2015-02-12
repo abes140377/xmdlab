@@ -29,7 +29,7 @@ public class JeeCartridgeGeneratorModule extends AbstractGenericModule {
 		super.configure(binder);
 	}
 	
-	public Class<? extends CartridgeProperties> bindJeeCartridgeProjectProperties() {
+	public Class<? extends CartridgeProperties> bindJeeCartridgeProperties() {
 		return JeeCartridgeProperties.class;
 	}
 	

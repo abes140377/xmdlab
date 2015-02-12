@@ -18,6 +18,5 @@ class CartridgeMetafacadeImplXtendTpl {
 		@Singleton
 		class «metafacade.name.toFirstUpper»Impl extends «metafacade.name.toFirstUpper»Base {
 		
-		}
-	'''
+		}'''
 }

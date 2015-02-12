@@ -22,11 +22,12 @@ class CartridgePropertiesTpl {
 		package «basePackage».conf
 		
 		import com.google.inject.Singleton
+		import org.xmdlab.cartridge.common.conf.CartridgeProperties
 		
 		«getClassComment(class.name)»
 		@Singleton
-		class «cartridgeName.toFirstUpper»CartridgeProperties extends org.xmdlab.cartridge.common.conf.CartridgeProperties {
-			
+		class «cartridgeName.toFirstUpper»CartridgeProperties extends CartridgeProperties {
+		
 			«FOR pgMap : dslCartridge.propertyGroupMap.entrySet»
 			// Properties for group «pgMap.key»
 			«FOR p : pgMap.value»

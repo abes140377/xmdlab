@@ -59,9 +59,9 @@ class CartridgeGeneratorWorkflowTpl {
 			val «dslCartridge.transformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» = «dslCartridge.getDslModelClassSimpleName.toFirstLower».eAllContents.filter(«dslCartridge.transformationInputClassSimpleName»).head
 	
 			if (validate(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower»)) {
-				
+	
 				val «dslCartridge.getTransformationOutputClassSimpleName.toFirstLower» = transformModel(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower»)
-				
+	
 				if («dslCartridge.getTransformationOutputClassSimpleName.toFirstLower» != null) {
 					generateCode(«dslCartridge.getTransformationOutputClassSimpleName.toFirstLower»)
 					return true
@@ -90,16 +90,16 @@ class CartridgeGeneratorWorkflowTpl {
 		 * 
 		 */
 		protected def «dslCartridge.getTransformationOutputClassSimpleName» transformModel(«dslCartridge.getTransformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower») {
-			LOGGER.info("Transforming application " + application.name)
+			LOGGER.info("Transforming «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» " + «dslCartridge.getTransformationInputClassSimpleName.toFirstLower».name)
 	
 			// run transformation
 			val «cartridgeName.toFirstUpper»CartridgeTransformation transformation = injector.getInstance(«cartridgeName.toFirstUpper»CartridgeTransformation)
-			var transformedModel = transformation.transform(application) as «dslCartridge.getTransformationOutputClassSimpleName»
+			var transformedModel = transformation.transform(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower») as «dslCartridge.getTransformationOutputClassSimpleName»
 	
 			if (transformedModel == null) {
 				XmdlabGeneratorContext.addIssue(
 					new XmdlabGeneratorIssueImpl(Severity.ERROR,
-						"Transformation and modification of model '" + application.name + "' failed"))
+						"Transformation and modification of model '" + «dslCartridge.getTransformationInputClassSimpleName.toFirstLower».name + "' failed"))
 			}
 	
 			return transformedModel
