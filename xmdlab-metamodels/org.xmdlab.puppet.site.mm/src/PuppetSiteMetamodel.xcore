@@ -1,0 +1,31 @@
+@Ecore(nsPrefix="sc", nsURI="http://xmdlab.org/puppet-site-mm")
+@GenModel(modelDirectory="./src-gen", importerID="org.eclipse.emf.importer.ecore", complianceLevel="5.0")
+package org.xmdlab.puppet.site.mm
+
+abstract class NamedElement {
+	String name
+}
+
+class MmNode extends NamedElement {
+	
+	contains MmRole role opposite node
+}
+
+class MmRole extends NamedElement {
+	
+	container MmNode node opposite role
+	
+	contains MmProfile[] profiles opposite role
+}
+
+class MmProfile extends NamedElement {
+	
+	container MmRole role opposite profiles
+	
+	contains MmModule modules opposite profile
+}
+
+class MmModule extends NamedElement {
+	
+	container MmProfile profile opposite modules
+}

@@ -14,7 +14,6 @@ import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslMetafacade
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslModel
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTemplate
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTransformation
-import org.xmdlab.cartridge.generator.dsl.templates.ManifestMfTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgGeneratorMwe2Tpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorBaseXtendTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorModuleTpl
@@ -36,6 +35,7 @@ import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTask
 import org.xmdlab.cartridge.generator.dsl.templates.task.TaskClassTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorWorkflowTpl
+import org.xmdlab.cartridge.generator.dsl.templates.PomXmlTpl
 
 /**
  * Generates code from your model files on save.
@@ -61,7 +61,7 @@ class CartridgeDslGenerator implements IGenerator {
 
 	@Inject extension Provider<CartridgePropertiesTpl> cartridgePropertiesTpl
 
-	@Inject extension Provider<ManifestMfTpl> manifestMfTpl
+	@Inject extension Provider<PomXmlTpl> pomXmlTpl
 	@Inject extension Provider<CartridgeTransformationXtendTpl> cartridgeTransformationXtendTpl
 	@Inject extension Provider<CartridgeTransformationComponentTpl> cartridgeTransformationComponentTpl
 	@Inject extension Provider<CartridgeTransformationBaseXtendTpl> cartridgeTransformationBaseXtendTpl
@@ -122,13 +122,15 @@ class CartridgeDslGenerator implements IGenerator {
 		for (template : dslCartridge.templates) {
 			generateTemplate(template, fsa)
 		}
+		
+		generatePomXml(dslCartridge, fsa)
 	}
 
 	// =======================================================================================================================================
-	def generateManifestMf(DslCartridge dslCartridge, IFileSystemAccess fsa) {
-		val ManifestMfTpl tpl = manifestMfTpl.get
+	def generatePomXml(DslCartridge dslCartridge, IFileSystemAccess fsa) {
+		val PomXmlTpl tpl = pomXmlTpl.get
 
-		val fileName = "META-INF/MANIFEST.MF_gen"
+		val fileName = "pom.xml"
 
 		fsa.generateFile(fileName, CartridgeOutputsConfigurationProvider::BASEDIR_OUTPUT, tpl.generate(dslCartridge))
 	}

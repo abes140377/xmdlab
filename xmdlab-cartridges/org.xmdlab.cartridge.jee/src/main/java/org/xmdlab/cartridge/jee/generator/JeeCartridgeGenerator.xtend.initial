@@ -19,4 +19,8 @@ class JeeCartridgeGenerator extends JeeCartridgeGeneratorBase {
 	override doGenerate(MmApplication mmApplication, IFileSystemAccess fsa) {
 		throw new UnsupportedOperationException("Generated method stub JeeCartridgeGenerator:doGenerate(..). Implement me!")
 	}
+	
+	override String getEntityOutputPattern(MmEntity mmEntity) {
+		throw new UnsupportedOperationException("Generated method stub JeeCartridgeGenerator:getEntityOutputPattern(..). Implement me!")
+	}
 }

@@ -14,9 +14,9 @@
   <description>Xmdlab DSL Plugins module [${project.artifactId}]</description>
 
   <modules>
-<!--     <module>org.xmdlab.dsl.puppet</module> -->
-<!--     <module>org.xmdlab.dsl.puppet.ui</module> -->
-<!--     <module>org.xmdlab.dsl.puppet.tests</module> -->
+    <module>org.xmdlab.dsl.puppet</module>
+    <module>org.xmdlab.dsl.puppet.ui</module>
+    <module>org.xmdlab.dsl.puppet.tests</module>
     <module>org.xmdlab.dsl.application</module>
     <module>org.xmdlab.dsl.application.ui</module>
     <module>org.xmdlab.dsl.application.tests</module>

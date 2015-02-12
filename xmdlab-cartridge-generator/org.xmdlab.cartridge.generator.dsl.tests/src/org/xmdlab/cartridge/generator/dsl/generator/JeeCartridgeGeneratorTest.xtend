@@ -39,9 +39,10 @@ class JeeCartridgeGeneratorTest {
 		var srcFolders = newHashMap()
 		
 		val String basePath = new File('../..').absolutePath
-				
+		
+		srcFolders.put("base", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee")
 		srcFolders.put("src", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src/main/java")
-		srcFolders.put("src-gen", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src-gen-man")
+		srcFolders.put("src-gen", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src-gen-man")	
 		
 		modelAsString.assertCompilesToReference(result, srcFolders)
 	}

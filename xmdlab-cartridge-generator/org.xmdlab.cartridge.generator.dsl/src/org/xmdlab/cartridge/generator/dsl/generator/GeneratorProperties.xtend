@@ -62,4 +62,12 @@ class GeneratorProperties {
 	def String getCartridgeName() {
 		return getPropertyValue("cartridge.name")
 	}
+	
+	def String getCartridgeDslModel() {
+		return getPropertyValue("cartridge.dslModel")
+	}
+	
+	def String getCartridgeMetaModel() {
+		return getPropertyValue("cartridge.metaModel")
+	}
 }

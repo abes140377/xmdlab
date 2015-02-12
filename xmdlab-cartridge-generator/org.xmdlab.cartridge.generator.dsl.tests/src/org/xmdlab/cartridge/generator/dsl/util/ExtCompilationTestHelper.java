@@ -32,6 +32,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 			throws IOException {
 		final List<String> srcFiles = new ArrayList<String>();
 		final List<String> srcGenFiles = new ArrayList<String>();
+		final List<String> baseFiles = new ArrayList<String>();
 
 		final boolean[] called = { false };
 		compile(source, new IAcceptor<CompilationTestHelper.Result>() {
@@ -41,12 +42,15 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 
 				String refSrcFolder = null;
 				String refSrcGenFolder = null;
+				String refBaseFolder = null;
 
 				for (Entry<String, String> tFolder : srcFolders.entrySet()) {
 					if (tFolder.getKey().equals("src")) {
 						refSrcFolder = tFolder.getValue();
 					} else if (tFolder.getKey().equals("src-gen")) {
 						refSrcGenFolder = tFolder.getValue();
+					} else if (tFolder.getKey().equals("base")) {
+						refBaseFolder = tFolder.getValue();
 					}
 				}
 
@@ -55,10 +59,14 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 					String path = entry.getKey();
 					String trimmed = path.substring(11);
 
+					System.out.println(trimmed);
+
 					if (trimmed.startsWith("src/")) {
 						srcFiles.add(trimmed.substring(4));
 					} else if (trimmed.startsWith("src-gen/")) {
 						srcGenFiles.add(trimmed.substring(8));
+					} else if (trimmed.indexOf("/") == -1) {
+						baseFiles.add(trimmed);
 					} else {
 						throw new RuntimeException("Folder not available");
 					}
@@ -67,46 +75,74 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 				for (String srcFile : srcFiles) {
 					CharSequence generatedFileContent = generatedResources
 							.get("/myProject/src/" + srcFile);
-					
+
 					File expectedFile = null;
 					String expectedFileContent = null;
 					try {
-						File initialFile = new File(refSrcFolder + "/" + srcFile + ".initial");
-						if(initialFile.exists()) {
+						File initialFile = new File(refSrcFolder + "/"
+								+ srcFile + ".initial");
+						if (initialFile.exists()) {
 							expectedFile = initialFile;
 						} else {
-							expectedFile = new File(refSrcFolder + "/" + srcFile);
+							expectedFile = new File(refSrcFolder + "/"
+									+ srcFile);
 						}
-						expectedFileContent = Files.toString(expectedFile, Charsets.ISO_8859_1);
+						expectedFileContent = Files.toString(expectedFile,
+								Charsets.ISO_8859_1);
 					} catch (IOException e) {
 						Assert.assertTrue("Expected File " + expectedFile
 								+ " does not exist.", false);
 					}
-					
+
 					System.out.print("[refSrcFolder] Compare file: ");
 					System.out.println(srcFile + " < - > " + expectedFile);
-					
+
 					Assert.assertEquals(expectedFileContent,
 							generatedFileContent.toString());
 				}
 
-				File expectedFile = null;
-				String expectedFileContent = null;
 				for (String srcGenFile : srcGenFiles) {
+					File expectedFile = null;
+					String expectedFileContent = null;
+
 					CharSequence generatedFileContent = generatedResources
 							.get("/myProject/src-gen/" + srcGenFile);
-					
+
 					expectedFile = new File(refSrcGenFolder + "/" + srcGenFile);
 					try {
-						expectedFileContent = Files.toString(expectedFile, Charsets.ISO_8859_1);
+						expectedFileContent = Files.toString(expectedFile,
+								Charsets.ISO_8859_1);
 					} catch (IOException e) {
 						Assert.assertTrue("Expected File " + expectedFile
 								+ " does not exist.", false);
 					}
-					
+
 					System.out.print("[refSrcFolder] Compare file: ");
 					System.out.println(srcGenFile + " < - > " + expectedFile);
-					
+
+					Assert.assertEquals(expectedFileContent,
+							generatedFileContent.toString());
+				}
+
+				for (String baseFile : baseFiles) {
+					File expectedFile = null;
+					String expectedFileContent = null;
+
+					CharSequence generatedFileContent = generatedResources
+							.get("/myProject/" + baseFile);
+
+					expectedFile = new File(refBaseFolder + "/" + baseFile);
+					try {
+						expectedFileContent = Files.toString(expectedFile,
+								Charsets.ISO_8859_1);
+					} catch (IOException e) {
+						Assert.assertTrue("Expected File " + expectedFile
+								+ " does not exist.", false);
+					}
+
+					System.out.print("[refBaseFolder] Compare file: ");
+					System.out.println(baseFile + " < - > " + expectedFile);
+
 					Assert.assertEquals(expectedFileContent,
 							generatedFileContent.toString());
 				}

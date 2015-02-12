@@ -24,10 +24,17 @@ class CartridgeGeneratorXtendTpl {
 		«getClassComment(className)»
 		class «className» extends «modelNameFirstUpper»CartridgeGeneratorBase {
 		
-			override doGenerate(«getTransformationOutputClassSimpleName(dslCartridge)» «getTransformationOutputClassSimpleName(
-			dslCartridge).toFirstLower», IFileSystemAccess fsa) {
+			override doGenerate(«getTransformationOutputClassSimpleName(dslCartridge)» «getTransformationOutputClassSimpleName(dslCartridge).toFirstLower», IFileSystemAccess fsa) {
 				throw new UnsupportedOperationException("Generated method stub «className»:doGenerate(..). Implement me!")
 			}
+			
+			«FOR t : dslCartridge.templates»
+			«IF isNotSet(t.outputPattern)»
+			override String get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern(«getMetafacadeModelElementSimpleClassName(t.modelElement.type)» «getMetafacadeModelElementSimpleClassName(t.modelElement.type).toFirstLower») {
+				throw new UnsupportedOperationException("Generated method stub «className»:get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern(..). Implement me!")
+			}
+			«ENDIF»
+			«ENDFOR»
 		}
 	'''
 }
