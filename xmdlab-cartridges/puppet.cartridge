@@ -1,0 +1,30 @@
+Cartridge puppet {
+	Properties {
+		PropertyGroup vagrant {
+			Property vmBox required = true default = "teamserver-precise64" {
+				"The Vagrant VM Box to use when 'vagrant up'"
+			}
+		}
+	}
+	
+	Transformation input = org.xmdlab.dsl.domain.domainDsl.DslDomain output = org.xmdlab.puppet.site.mm.MmSite
+	
+	// model metafacade (root)
+	Metafacade siteMetafacade modelElement = org.xmdlab.puppet.site.mm.MmSite {
+		
+	}
+	
+	Outlet base outputDirectory = '..' overwrite = false
+	
+	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {
+		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	//Task test {
+	//	ModelElement type = profileMetafacade {
+	//		
+	//	}
+	//}
+}
