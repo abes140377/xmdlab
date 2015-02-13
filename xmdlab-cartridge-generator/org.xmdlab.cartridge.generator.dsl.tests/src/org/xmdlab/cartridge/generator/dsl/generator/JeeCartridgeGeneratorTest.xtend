@@ -52,6 +52,7 @@ class JeeCartridgeGeneratorTest {
 		srcFolders.put(BASE_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName)
 		srcFolders.put(MAN_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/src/main/java")
 		srcFolders.put(GEN_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/src-gen")
+		srcFolders.put(GEN_TEST_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/test-src-gen")
 
 		modelAsString.assertCompilesToReference(srcFolders)
 	}

@@ -1,7 +1,6 @@
 package org.xmdlab.dsl.domain.parser
 
 import com.google.inject.Inject
-import org.eclipse.ui.internal.Model
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -10,10 +9,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.xmdlab.dsl.domain.DomainDslInjectorProvider
 import org.xmdlab.dsl.domain.domainDsl.DslModel
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.xmdlab.dsl.domain.domainDsl.DomainDslPackage
-import org.xmdlab.dsl.domain.validation.IssueCodes
-import static extension org.eclipse.xtext.formatting.INodeModelFormatter.*
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(DomainDslInjectorProvider))

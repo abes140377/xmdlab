@@ -16,17 +16,15 @@
  */
 package org.xmdlab.cartridge.jee.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Utilities for code generation and transformation. It is used from templates
  * and transformations via extensions.
  */
 public class HelperBase {
 
-	private static final Logger LOG = LoggerFactory.getLogger(HelperBase.class);
-	
+	// private static final Logger LOG =
+	// LoggerFactory.getLogger(HelperBase.class);
+
 	private PrimitiveTypeMapper primitiveTypeMapper = new PrimitiveTypeMapper();
 
 	/**
@@ -161,7 +159,7 @@ public class HelperBase {
 
 		return result + " ";
 	}
-	
+
 	public boolean isPrimitiveType(String typeName) {
 		return primitiveTypeMapper.isPrimitiveType(typeName);
 	}

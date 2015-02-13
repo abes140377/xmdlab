@@ -18,6 +18,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 	
 	public static final String MAN_SRC_FOLDER_KEY = "src";
 	public static final String GEN_SRC_FOLDER_KEY = "src-gen";
+	public static final String GEN_TEST_SRC_FOLDER_KEY = "test-src-gen";
 	public static final String BASE_FOLDER_KEY = "base";
 
 	/**
@@ -35,6 +36,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 			final Map<String, String> srcFolders) throws IOException {
 		final List<String> srcFiles = new ArrayList<String>();
 		final List<String> srcGenFiles = new ArrayList<String>();
+		final List<String> testSrcGenFiles = new ArrayList<String>();
 		final List<String> baseFiles = new ArrayList<String>();
 
 		final boolean[] called = { false };
@@ -45,6 +47,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 
 				String refSrcFolder = null;
 				String refSrcGenFolder = null;
+				String refTestSrcGenFolder = null;
 				String refBaseFolder = null;
 
 				for (Entry<String, String> tFolder : srcFolders.entrySet()) {
@@ -52,13 +55,15 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 						refSrcFolder = tFolder.getValue();
 					} else if (tFolder.getKey().equals(GEN_SRC_FOLDER_KEY)) {
 						refSrcGenFolder = tFolder.getValue();
+					} else if (tFolder.getKey().equals(GEN_TEST_SRC_FOLDER_KEY)) {
+						refTestSrcGenFolder = tFolder.getValue();
 					} else if (tFolder.getKey().equals(BASE_FOLDER_KEY)) {
 						refBaseFolder = tFolder.getValue();
 					}
 				}
 
 				if (refSrcFolder == null || refSrcGenFolder == null
-						|| refBaseFolder == null)
+						|| refBaseFolder == null || refTestSrcGenFolder == null)
 					throw new RuntimeException(
 							"Unable to exetute ExtCompilationTestHelper.assertCompilesToReference because on of"
 									+ "refSrcFolder, refSrcGenFolder or refBaseFolder could not be determined.");
@@ -74,6 +79,8 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 						srcFiles.add(trimmed.substring(14));
 					} else if (trimmed.startsWith("src-gen/")) {
 						srcGenFiles.add(trimmed.substring(8));
+					} else if (trimmed.startsWith("test-src-gen/")) {
+						testSrcGenFiles.add(trimmed.substring(13));
 					} else if (trimmed.indexOf("/") == -1) {
 						baseFiles.add(trimmed);
 					} else {
@@ -151,6 +158,29 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 
 					System.out.print("[refBaseFolder] Compare file: ");
 					System.out.println(baseFile + " < - > " + expectedFile);
+
+					Assert.assertEquals(expectedFileContent,
+							generatedFileContent.toString());
+				}
+				
+				for (String testSrcGenFile : testSrcGenFiles) {
+					File expectedFile = null;
+					String expectedFileContent = null;
+
+					CharSequence generatedFileContent = generatedResources
+							.get("/myProject/test-src-gen/" + testSrcGenFile);
+
+					expectedFile = new File(refTestSrcGenFolder + "/" + testSrcGenFile);
+					try {
+						expectedFileContent = Files.toString(expectedFile,
+								Charsets.ISO_8859_1);
+					} catch (IOException e) {
+						Assert.assertTrue("Expected File " + expectedFile
+								+ " does not exist.", false);
+					}
+
+					System.out.print("[refTestSrcGen] Compare file: ");
+					System.out.println(testSrcGenFile + " < - > " + expectedFile);
 
 					Assert.assertEquals(expectedFileContent,
 							generatedFileContent.toString());

@@ -4,13 +4,9 @@
  */
 package org.xmdlab.cartridge.jee.templates
 
-import com.google.inject.Inject
-import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
-
 class ReadmeMdTpl extends ReadmeMdTplBase {
 
-	@Inject extension JeeCartridgeProperties
-	
+	//	@Inject extension JeeCartridgeProperties
 	override doGenerate() '''
 		«val appName = applicationMetafacade.modelResource.name»
 		# TODO «appName»

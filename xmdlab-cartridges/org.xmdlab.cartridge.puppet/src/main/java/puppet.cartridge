@@ -13,7 +13,7 @@ Cartridge puppet {
 	Metafacade siteMetafacade modelElement = org.xmdlab.puppet.site.mm.MmSite {
 		
 	}
-	
+		
 	Outlet base outputDirectory = '..' overwrite = false
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {

@@ -8,7 +8,7 @@ import org.eclipse.emf.mwe.utils.*
 Workflow {
 
 	component = org.eclipse.xtext.mwe.Reader {
-		path = 'model'
+		path = 'src/main/java'
 		useJavaClassPath = true
 		register = org.xmdlab.cartridge.generator.dsl.CartridgeDslStandaloneSetup {}
 

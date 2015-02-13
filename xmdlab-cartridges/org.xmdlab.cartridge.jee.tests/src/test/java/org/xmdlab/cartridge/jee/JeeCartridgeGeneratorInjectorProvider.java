@@ -58,7 +58,6 @@ public class JeeCartridgeGeneratorInjectorProvider implements
 //						return org.eclipse.xtext.xbase.file.RuntimeWorkspaceConfigProvider.class;
 //					}
 
-					@SuppressWarnings("unused")
 					public Class<? extends org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider> bindIOutputConfigurationProvider() {
 						return JeeCartridgeOutputConfigurationProvider.class;
 					}

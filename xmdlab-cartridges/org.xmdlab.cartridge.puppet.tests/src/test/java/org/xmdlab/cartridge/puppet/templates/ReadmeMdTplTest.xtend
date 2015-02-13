@@ -1,6 +1,5 @@
 package org.xmdlab.cartridge.puppet.templates
 
-import org.apache.log4j.Logger
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
@@ -12,8 +11,7 @@ import org.xmdlab.cartridge.puppet.PuppetCartridgeGeneratorInjectorProvider
 @InjectWith(typeof(PuppetCartridgeGeneratorInjectorProvider))
 class ReadmeMdTplTest {
 
-	private final static Logger LOG = Logger.getLogger(ReadmeMdTplTest);
-
+	//	private final static Logger LOG = Logger.getLogger(ReadmeMdTplTest)
 	//	@Inject ApplicationMetafacade applicationMetafacade
 	//	@Inject ReadmeMdTpl readmeMdTpl
 	@Before

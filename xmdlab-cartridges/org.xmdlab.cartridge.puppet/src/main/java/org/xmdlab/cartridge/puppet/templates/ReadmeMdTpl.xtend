@@ -4,14 +4,9 @@
  */
 package org.xmdlab.cartridge.puppet.templates
 
-import com.google.inject.Inject
-import org.xmdlab.cartridge.puppet.metafacade.*
-import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
-
 class ReadmeMdTpl extends ReadmeMdTplBase {
-	
-	@Inject extension PuppetCartridgeProperties
-	
+
+	//	@Inject extension PuppetCartridgeProperties
 	override doGenerate() '''
 	
 	'''

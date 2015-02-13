@@ -1,19 +1,18 @@
 package org.xmdlab.cartridge.generator.dsl.util
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import com.google.inject.Inject
+import java.io.File
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.xmdlab.cartridge.generator.dsl.CartridgeGeneratorInjectorProviderCustom
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslModel
-import com.google.common.io.Files
-import java.io.File
-import com.google.common.base.Charsets
-import org.junit.Test
-import org.eclipse.ui.internal.keys.model.ModelElement
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(CartridgeGeneratorInjectorProviderCustom))

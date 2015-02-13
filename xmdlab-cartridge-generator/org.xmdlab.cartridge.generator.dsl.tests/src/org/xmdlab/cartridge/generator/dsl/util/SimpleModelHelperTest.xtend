@@ -1,8 +1,5 @@
 package org.xmdlab.cartridge.generator.dsl.util
 
-import org.junit.Test
-import org.junit.Assert
-
 class SimpleModelHelperTest {
 	
 //	@Test

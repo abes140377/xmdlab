@@ -240,23 +240,23 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
 //		return success;
 //	}
 
-	/**
-	 * Deletes all files within the given directory.
-	 */
-	private void cleanDirectory(File dir) {
-		if (isVerbose() || getLog().isDebugEnabled()) {
-			getLog().info(
-					"Deleting previously generated files in directory: "
-							+ dir.getPath());
-		}
-		if (dir.exists()) {
-			try {
-				FileUtils.cleanDirectory(dir);
-			} catch (IOException e) {
-				getLog().warn("Cleaning directory failed: " + e.getMessage());
-			}
-		}
-	}
+//	/**
+//	 * Deletes all files within the given directory.
+//	 */
+//	private void cleanDirectory(File dir) {
+//		if (isVerbose() || getLog().isDebugEnabled()) {
+//			getLog().info(
+//					"Deleting previously generated files in directory: "
+//							+ dir.getPath());
+//		}
+//		if (dir.exists()) {
+//			try {
+//				FileUtils.cleanDirectory(dir);
+//			} catch (IOException e) {
+//				getLog().warn("Cleaning directory failed: " + e.getMessage());
+//			}
+//		}
+//	}
 
 	/**
 	 * Returns the path of given file relative to the enclosing Maven project.

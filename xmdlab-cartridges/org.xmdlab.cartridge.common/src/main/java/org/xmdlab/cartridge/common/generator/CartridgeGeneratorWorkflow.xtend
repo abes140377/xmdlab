@@ -5,8 +5,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.xtext.util.EmfFormatter
 import org.eclipse.xtext.validation.AbstractValidationDiagnostic
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.Severity
 import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
@@ -16,7 +14,7 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorI
  */
 abstract class CartridgeGeneratorWorkflow {
 
-	val private Logger LOGGER = LoggerFactory.getLogger(CartridgeGeneratorWorkflow)
+	//val private Logger LOGGER = LoggerFactory.getLogger(CartridgeGeneratorWorkflow)
 
 	def boolean run(String modelURI)
 

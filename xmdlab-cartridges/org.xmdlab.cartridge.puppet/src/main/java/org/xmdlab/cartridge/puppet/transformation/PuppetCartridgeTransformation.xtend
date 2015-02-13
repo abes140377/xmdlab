@@ -4,22 +4,23 @@
  */
 package org.xmdlab.cartridge.puppet.transformation
 
-import com.google.inject.Inject
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.xmdlab.dsl.domain.domainDsl.DslDomain
+import org.xmdlab.puppet.site.mm.MmFactory
+import org.xmdlab.puppet.site.mm.MmSite
 
 class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 	val static final Logger LOG = LoggerFactory.getLogger(PuppetCartridgeTransformation)
-	
-	private static val org.xmdlab.puppet.site.mm.MmFactory FACTORY = org.xmdlab.puppet.site.mm.MmFactory::eINSTANCE
-	
-	var org.xmdlab.puppet.site.mm.MmSite mmSite
-	var org.xmdlab.dsl.domain.domainDsl.DslDomain dslDomain
-	
-	override create FACTORY.createMmSite transform(org.xmdlab.dsl.domain.domainDsl.DslDomain dslDomain) {
+
+	private static val MmFactory FACTORY = MmFactory::eINSTANCE
+
+	var MmSite mmSite
+	var DslDomain dslDomain
+
+	override create FACTORY.createMmSite transform(DslDomain dslDomain) {
 		LOG.info("transform dslDomain: " + dslDomain)
-		
+
 		throw new UnsupportedOperationException("TODO: Implement me!")
 	}
 }

@@ -4,13 +4,9 @@
  */
 package org.xmdlab.cartridge.jee.templates
 
-import com.google.inject.Inject
-import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
-
 class EntityTpl extends EntityTplBase {
 
-	@Inject extension JeeCartridgeProperties
-	
+	//	@Inject extension JeeCartridgeProperties
 	override doGenerate() '''
 		«val entity = entityMetafacade.modelResource»
 		public class «entity.name» {
