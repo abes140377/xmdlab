@@ -36,6 +36,8 @@ import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTask
 import org.xmdlab.cartridge.generator.dsl.templates.task.TaskClassTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorWorkflowTpl
 import org.xmdlab.cartridge.generator.dsl.templates.PomXmlTpl
+import static org.xmdlab.cartridge.generator.dsl.io.CartridgeOutputsConfigurationProvider.*
+import org.xmdlab.cartridge.generator.dsl.templates.test.CartridgeInjectorProviderTpl
 
 /**
  * Generates code from your model files on save.
@@ -72,6 +74,9 @@ class CartridgeDslGenerator implements IGenerator {
 
 	@Inject extension Provider<TemplateBaseTpl> templateBaseTpl
 	@Inject extension Provider<TemplateTpl> templateTpl
+	
+	// Test
+	@Inject extension Provider<CartridgeInjectorProviderTpl> cartridgeInjectorProviderTpl
 
 	/**
 	 * 
@@ -89,8 +94,6 @@ class CartridgeDslGenerator implements IGenerator {
 		//
 		val DslTransformation dslTransformation = dslCartridge.transformation
 		if (dslTransformation != null) {
-			// nicht mehr benutz
-			//generateCartridgeTransformationComponent(dslTransformation, fsa)
 			generateCartridgeTransformationBaseXtend(dslTransformation, fsa)
 			generateCartridgeTransformationXtend(dslTransformation, fsa)
 		}
@@ -100,18 +103,16 @@ class CartridgeDslGenerator implements IGenerator {
 		generateCartridgeGeneratorModule(dslCartridge, fsa)
 		generateCartridgeGeneratorStandaloneSetup(dslCartridge, fsa)
 
-		// nicht mehr benutz
-		// generateMwe2CartridgeGenerator(dslCartridge, fsa)
 		generateCartridgeGeneratorBaseXtend(dslCartridge, fsa)
 		generateCartridgeGeneratorXtend(dslCartridge, fsa)
 
 		//
 		generateCartridgeOutputConfigurationProvider(dslCartridge, fsa)
 
-		// for (task : dslCartridge.tasks) {
-		// 	 generateTaskClass(task, fsa)
-		// }
-		
+		for (task : dslCartridge.tasks) {
+			generateTaskClass(task, fsa)
+		}
+
 		for (metafacade : dslCartridge.metafacades) {
 			generateCartridgeMetafacadeXtend(metafacade, fsa)
 			generateCartridgeMetafacadeBaseXtend(metafacade, fsa)
@@ -122,17 +123,20 @@ class CartridgeDslGenerator implements IGenerator {
 		for (template : dslCartridge.templates) {
 			generateTemplate(template, fsa)
 		}
-		
+
 		generatePomXml(dslCartridge, fsa)
+		
+		// Test
+		generateCartridgeInjectorProvider(dslCartridge, fsa)
 	}
 
 	// =======================================================================================================================================
 	def generatePomXml(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val PomXmlTpl tpl = pomXmlTpl.get
 
-		val fileName = "pom.xml"
+		val fileName = "pom.xml_generated"
 
-		fsa.generateFile(fileName, CartridgeOutputsConfigurationProvider::BASEDIR_OUTPUT, tpl.generate(dslCartridge))
+		fsa.generateFile(fileName, BASEDIR_OUTPUT, tpl.generate(dslCartridge))
 	}
 
 	// =======================================================================================================================================
@@ -145,7 +149,7 @@ class CartridgeDslGenerator implements IGenerator {
 
 		val fileName = javaToFsPath(basePackage) + "/task/" + dslTask.name.toFirstUpper + "Task.xtend"
 
-		fsa.generateFile(fileName, CartridgeOutputsConfigurationProvider::GEN_MAN_OUTPUT, tpl.generate(dslTask))
+		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslTask))
 	}
 
 	// =======================================================================================================================================
@@ -229,7 +233,7 @@ class CartridgeDslGenerator implements IGenerator {
 		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
 			"CartridgeGenerator.xtend"
 
-		fsa.generateFile(fileName, CartridgeOutputsConfigurationProvider::GEN_MAN_OUTPUT, tpl.generate(dslCartridge))
+		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslCartridge))
 	}
 
 	// =======================================================================================================================================
@@ -269,8 +273,7 @@ class CartridgeDslGenerator implements IGenerator {
 		val fileName = javaToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
 			"CartridgeTransformation.xtend"
 
-		fsa.generateFile(fileName, CartridgeOutputsConfigurationProvider::GEN_MAN_OUTPUT,
-			tpl.generate(dslTransformation))
+		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslTransformation))
 	}
 
 	/**
@@ -317,7 +320,7 @@ class CartridgeDslGenerator implements IGenerator {
 
 		val fileName = javaToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + "Impl.xtend"
 
-		fsa.generateFile(fileName, CartridgeOutputsConfigurationProvider::GEN_MAN_OUTPUT, tpl.generate(dslMetafacade))
+		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslMetafacade))
 	}
 
 	// =======================================================================================================================================
@@ -335,7 +338,20 @@ class CartridgeDslGenerator implements IGenerator {
 			getTemplateNameFromPath(template).toFirstUpper + ".xtend"
 
 		fsa.generateFile(fileNameTemplateBase, templateBaseTpl.generate(template))
-		fsa.generateFile(fileNameTemplate, CartridgeOutputsConfigurationProvider::GEN_MAN_OUTPUT,
-			templateTpl.generate(template))
+		fsa.generateFile(fileNameTemplate, GEN_MAN_OUTPUT, templateTpl.generate(template))
+	}
+	
+	// =======================================================================================================================================
+	// Tests
+	
+	/**
+	 * 
+	 */
+	def generateCartridgeInjectorProvider(DslCartridge dslCartridge, IFileSystemAccess fsa) {
+		val CartridgeInjectorProviderTpl tpl = cartridgeInjectorProviderTpl.get
+		
+		val fileName = javaToFsPath(basePackage) + "/" + dslCartridge.name.toFirstUpper + "CartridgeInjectorProvider.java"
+		
+		fsa.generateFile(fileName, TEST_GEN_OUTPUT, tpl.generate(dslCartridge))
 	}
 }

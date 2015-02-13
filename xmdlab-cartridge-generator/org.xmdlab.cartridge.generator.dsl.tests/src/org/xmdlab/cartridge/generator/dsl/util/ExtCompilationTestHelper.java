@@ -15,6 +15,10 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 public class ExtCompilationTestHelper extends CompilationTestHelper {
+	
+	public static final String MAN_SRC_FOLDER_KEY = "src";
+	public static final String GEN_SRC_FOLDER_KEY = "src-gen";
+	public static final String BASE_FOLDER_KEY = "base";
 
 	/**
 	 * Asserts that the expected code is generated for the given source. Assumes
@@ -28,8 +32,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 	 *             if the resource loading fails
 	 */
 	public void assertCompilesToReference(CharSequence source,
-			final CharSequence expected, final Map<String, String> srcFolders)
-			throws IOException {
+			final Map<String, String> srcFolders) throws IOException {
 		final List<String> srcFiles = new ArrayList<String>();
 		final List<String> srcGenFiles = new ArrayList<String>();
 		final List<String> baseFiles = new ArrayList<String>();
@@ -45,14 +48,20 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 				String refBaseFolder = null;
 
 				for (Entry<String, String> tFolder : srcFolders.entrySet()) {
-					if (tFolder.getKey().equals("src")) {
+					if (tFolder.getKey().equals(MAN_SRC_FOLDER_KEY)) {
 						refSrcFolder = tFolder.getValue();
-					} else if (tFolder.getKey().equals("src-gen")) {
+					} else if (tFolder.getKey().equals(GEN_SRC_FOLDER_KEY)) {
 						refSrcGenFolder = tFolder.getValue();
-					} else if (tFolder.getKey().equals("base")) {
+					} else if (tFolder.getKey().equals(BASE_FOLDER_KEY)) {
 						refBaseFolder = tFolder.getValue();
 					}
 				}
+
+				if (refSrcFolder == null || refSrcGenFolder == null
+						|| refBaseFolder == null)
+					throw new RuntimeException(
+							"Unable to exetute ExtCompilationTestHelper.assertCompilesToReference because on of"
+									+ "refSrcFolder, refSrcGenFolder or refBaseFolder could not be determined.");
 
 				for (Entry<String, CharSequence> entry : generatedResources
 						.entrySet()) {
@@ -61,8 +70,8 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 
 					System.out.println(trimmed);
 
-					if (trimmed.startsWith("src/")) {
-						srcFiles.add(trimmed.substring(4));
+					if (trimmed.startsWith("src/main/java/")) {
+						srcFiles.add(trimmed.substring(14));
 					} else if (trimmed.startsWith("src-gen/")) {
 						srcGenFiles.add(trimmed.substring(8));
 					} else if (trimmed.indexOf("/") == -1) {
@@ -74,7 +83,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 
 				for (String srcFile : srcFiles) {
 					CharSequence generatedFileContent = generatedResources
-							.get("/myProject/src/" + srcFile);
+							.get("/myProject/src/main/java/" + srcFile);
 
 					File expectedFile = null;
 					String expectedFileContent = null;
@@ -150,7 +159,5 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 				called[0] = true;
 			}
 		});
-		Assert.assertTrue("Nothing was generated but the expectation was :\n"
-				+ expected, called[0]);
 	}
 }

@@ -34,17 +34,6 @@
       <plugin>
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>xtend-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>testCompile</goal>
-      		  <goal>xtend-test-install-debug-info</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>xtend-gen</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
 
       <plugin>

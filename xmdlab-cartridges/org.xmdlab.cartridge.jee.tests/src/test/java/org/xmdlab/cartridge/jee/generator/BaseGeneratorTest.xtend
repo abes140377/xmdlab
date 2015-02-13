@@ -41,12 +41,13 @@ class BaseGeneratorTest<T extends EObject> implements GeneratorTest<T> {
 	 */
 	def assertExistenceAndContent(String outlet, String fileName) {
 		val outletAndFileName = outlet + fileName
-		
+
 		assertTrue(fsa.textFiles.containsKey(outletAndFileName))
 
-		val content = FileHelper.readFile("src/test/resources/expected/"+ fileName)
+		val expectedContent = FileHelper.readFile("src/test/resources/expected/" + fileName)
 
-		assertEquals(
-			content, fsa.textFiles.get(outletAndFileName).toString)
+		val actualContent = fsa.textFiles.get(outletAndFileName).toString
+
+		assertEquals("Expected content \n" + expectedContent + "\n is not equal to \n" + actualContent, expectedContent, actualContent)
 	}
 }

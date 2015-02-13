@@ -10,11 +10,42 @@
   </parent>
 
   <artifactId>org.xmdlab.cartridge.puppet</artifactId>
-  <name>Xmdlab puppet site cartridge module [${project.artifactId}]</name>
-  <description>Xgen puppet site cartridge module [${project.artifactId}]</description>
+  <name>Xmdlab puppet cartridge module [${project.artifactId}]</name>
+  <description>Xgen puppet cartridge module [${project.artifactId}]</description>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.eclipse.xtext</groupId>
+        <artifactId>xtext-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <languages>
+            <language>
+              <setup>org.xmdlab.cartridge.generator.dsl.CartridgeDslStandaloneSetup</setup>
+              <outputConfigurations>
+                <outputConfiguration>
+                  <outputDirectory>src-gen</outputDirectory>
+                </outputConfiguration>
+              </outputConfigurations>
+            </language>
+          </languages>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.xmdlab.cartridge.generator</groupId>
+            <artifactId>org.xmdlab.cartridge.generator.dsl</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -27,7 +58,6 @@
             </goals>
             <configuration>
               <sources>
-                <source>src-gen-man</source>
                 <source>src-gen</source>
                 <source>xtend-gen</source>
               </sources>
@@ -35,7 +65,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
@@ -43,14 +73,20 @@
           <filesets>
             <fileset>
               <directory>src-gen</directory>
+              <excludes>
+                <exclude>.gitignore</exclude>
+              </excludes>
             </fileset>
             <fileset>
               <directory>xtend-gen</directory>
+              <excludes>
+                <exclude>.gitignore</exclude>
+              </excludes>
             </fileset>
           </filesets>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>xtend-maven-plugin</artifactId>
@@ -63,13 +99,14 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.xmdlab.cartridges</groupId>

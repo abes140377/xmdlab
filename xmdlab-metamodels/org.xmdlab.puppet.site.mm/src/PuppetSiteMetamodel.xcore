@@ -6,7 +6,14 @@ abstract class NamedElement {
 	String name
 }
 
+class MmSite extends NamedElement {
+	
+	contains MmNode[] nodes opposite site
+}
+
 class MmNode extends NamedElement {
+	
+	container MmSite site opposite nodes
 	
 	contains MmRole role opposite node
 }

@@ -27,7 +27,7 @@ class PuppetSimpleCartridgeGeneratorParserTest {
 
 	@Before
 	def void beforeClass() {
-		modelAsString = new Scanner(getClass.getResourceAsStream("/puppet/" + cartridgeName + ".cartridge"), GeneratorConstants::ENCODING).
+		modelAsString = new Scanner(getClass.getResourceAsStream("/" + cartridgeName + "/" + cartridgeName + ".cartridge"), GeneratorConstants::ENCODING).
 			useDelimiter("\\A").next();
 	}
 

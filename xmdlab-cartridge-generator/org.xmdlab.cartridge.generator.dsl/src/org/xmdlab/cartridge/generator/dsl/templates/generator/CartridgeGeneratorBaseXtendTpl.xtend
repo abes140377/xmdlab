@@ -27,7 +27,7 @@ class CartridgeGeneratorBaseXtendTpl {
 		import org.slf4j.Logger
 		import org.slf4j.LoggerFactory
 		import org.xmdlab.cartridge.common.generator.IGenerator
-		import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
+		import org.xmdlab.cartridge.«cartridgeName».conf.«cartridgeName.toFirstUpper»CartridgeProperties
 		«FOR m : metafacades»
 		import «basePackage».metafacade.«m.name.toFirstUpper»
 		«ENDFOR»

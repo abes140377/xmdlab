@@ -32,8 +32,6 @@ class JeeCartridgeGeneratorTest extends BaseGeneratorTest<DslModel> {
 
 		val MmApplication application = transformation.transform(dslModel.app)
 
-		applicationMetafacade.modelResource = application
-		
 		generator.doGenerate(application, fsa)
 
 		// LOG.info(fsa.textFiles.toString)

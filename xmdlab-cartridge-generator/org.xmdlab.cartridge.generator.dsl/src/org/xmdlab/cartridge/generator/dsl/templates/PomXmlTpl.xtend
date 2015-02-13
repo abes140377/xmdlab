@@ -33,6 +33,37 @@ class PomXmlTpl {
   <build>
     <plugins>
       <plugin>
+        <groupId>org.eclipse.xtext</groupId>
+        <artifactId>xtext-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <languages>
+            <language>
+              <setup>org.xmdlab.cartridge.generator.dsl.CartridgeDslStandaloneSetup</setup>
+              <outputConfigurations>
+                <outputConfiguration>
+                  <outputDirectory>src-gen</outputDirectory>
+                </outputConfiguration>
+              </outputConfigurations>
+            </language>
+          </languages>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.xmdlab.cartridge.generator</groupId>
+            <artifactId>org.xmdlab.cartridge.generator.dsl</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
@@ -44,7 +75,6 @@ class PomXmlTpl {
             </goals>
             <configuration>
               <sources>
-                <source>src-gen-man</source>
                 <source>src-gen</source>
                 <source>xtend-gen</source>
               </sources>
@@ -103,13 +133,13 @@ class PomXmlTpl {
 
     <dependency>
       <groupId>org.xmdlab.dsls</groupId>
-      <artifactId>org.xmdlab.dsl.application</artifactId>
+      <artifactId>«cartridgeDslModel»</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.xmdlab.mm</groupId>
-      <artifactId>org.xmdlab.«cartridgeName».application.mm</artifactId>
+      <artifactId>«cartridgeMetaModel»</artifactId>
       <version>${project.version}</version>
     </dependency>
 

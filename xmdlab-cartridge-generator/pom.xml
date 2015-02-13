@@ -26,9 +26,6 @@
         <plugin>
           <groupId>org.eclipse.xtend</groupId>
           <artifactId>xtend-maven-plugin</artifactId>
-          <configuration>
-            <outputDirectory>${basedir}/xtend-gen</outputDirectory>
-          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

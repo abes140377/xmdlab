@@ -11,8 +11,12 @@ import org.xmdlab.cartridge.generator.dsl.GeneratorConstants
 import java.io.File
 import com.google.common.io.Files
 import com.google.common.base.Charsets
+import static org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper.*
 import org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper
 
+/**
+ * 
+ */
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(CartridgeGeneratorInjectorProviderCustom))
 class JeeCartridgeGeneratorTest {
@@ -22,28 +26,33 @@ class JeeCartridgeGeneratorTest {
 	val modelName = 'jee'
 	var String modelAsString = null
 
+	/**
+	 * 
+	 */
 	@Before
 	def void before() {
-		val propertyFileContent = Files.toString(new File("resource/jee/" +"cartridge.conf"), Charsets.ISO_8859_1)
-		
+		val propertyFileContent = Files.toString(new File("resource/" + modelName + "/" + "cartridge.conf"),
+			Charsets.ISO_8859_1)
+
 		compilationTestHelper.copyToWorkspace("myProject/src/" + GeneratorConstants::CARTRIDGE_CONF_FILENAME,
 			propertyFileContent)
-		
-		modelAsString = Files.toString(new File("resource/jee/" + modelName + ".cartridge"), Charsets.ISO_8859_1)
+
+		modelAsString = Files.toString(new File("resource/" + modelName + "/" + modelName + ".cartridge"),
+			Charsets.ISO_8859_1)
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	def void testGeneratedCode() {
-		val String result = Files.toString(new File("resource/jee/" + modelName + "-generator-test-result.txt"), Charsets.ISO_8859_1)
-		
-		var srcFolders = newHashMap()
-		
 		val String basePath = new File('../..').absolutePath
 		
-		srcFolders.put("base", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee")
-		srcFolders.put("src", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src/main/java")
-		srcFolders.put("src-gen", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.jee/src-gen-man")	
-		
-		modelAsString.assertCompilesToReference(result, srcFolders)
+		var srcFolders = newHashMap()
+		srcFolders.put(BASE_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName)
+		srcFolders.put(MAN_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/src/main/java")
+		srcFolders.put(GEN_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/src-gen")
+
+		modelAsString.assertCompilesToReference(srcFolders)
 	}
 }

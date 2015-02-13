@@ -40,13 +40,6 @@
       <plugin>
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>xtend-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <!-- The unit tests do not have to be executed as plugin-test, there use the default maven surefire plugin and disable 
         the tycho plug-in -->

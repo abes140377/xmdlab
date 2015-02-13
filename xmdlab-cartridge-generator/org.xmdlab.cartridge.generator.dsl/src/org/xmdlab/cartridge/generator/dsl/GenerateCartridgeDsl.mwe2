@@ -4,17 +4,35 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/xmdlab/cartridge/generator/dsl/CartridgeDsl.xtext"
 var fileExtensions = "cartridge"
 var projectName = "org.xmdlab.cartridge.generator.dsl"
+
+var grammarURI = "platform:/resource/${projectName}/src/org/xmdlab/cartridge/generator/dsl/CartridgeDsl.xtext"
 var runtimeProject = "../${projectName}"
 var generateXtendStub = true
 var encoding = "UTF-8"
 
 Workflow {
 	bean = StandaloneSetup {
-		scanClassPath = true
-		platformUri = "${runtimeProject}/.."
+		// use an XtextResourceset throughout the process, which is able to resolve classpath:/ URIs.
+    	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
+    	
+    	// add mappings from platform:/resource to classpath:/
+    	uriMap = {
+    		from = "platform:/resource/org.eclipse.xtext.xbase/"
+    		to = "classpath:/"
+    	}
+    	uriMap = {
+    		from = "platform:/resource/org.eclipse.xtext.common.types/"
+    		to = "classpath:/"
+    	}
+    	
+    	// register current projects and its siblings for platform URI map, as they are not on the classpath.
+    	platformUri = "${runtimeProject}/.."
+    	
+//		scanClassPath = true
+//		platformUri = "${runtimeProject}/.."
+		
 		// The following two lines can be removed, if Xbase is not used.
 		// registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
 		// registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
@@ -44,13 +62,19 @@ Workflow {
 		projectNameUi = "${projectName}.ui"
 		encoding = encoding
 		language = auto-inject {
+			// make sure we use the resourceSet created during standalone setup.
+    		forcedResourceSet = theResourceSet
+    		
 			uri = grammarURI
 
 			// Java API to access grammar elements (required by several other fragments)
 			fragment = grammarAccess.GrammarAccessFragment auto-inject {}
 
 			// generates Java API for the generated EPackages
-			fragment = ecore.EMFGeneratorFragment auto-inject {}
+			//fragment = ecore.EMFGeneratorFragment auto-inject {}
+			fragment = ecore.EMFGeneratorFragment auto-inject {
+            	javaModelDirectory = "/${projectName}/src-gen"
+            }
 
 			// the old serialization component
 			// fragment = parseTreeConstructor.ParseTreeConstructorFragment auto-inject {}    
@@ -78,7 +102,7 @@ Workflow {
 
 			// old scoping and exporting API
 			//    		fragment = scoping.ImportURIScopingFragment auto-inject {}
-			fragment = exporting.SimpleNamesFragment auto-inject {}
+			// fragment = exporting.SimpleNamesFragment auto-inject {}
 
 			// scoping and exporting API
 			fragment = scoping.ImportNamespacesScopingFragment auto-inject {}

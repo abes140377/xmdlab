@@ -4,18 +4,17 @@
 package org.xmdlab.cartridge.generator.dsl.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
-import org.eclipse.xtext.generator.OutputConfigurationProvider;
-import org.xmdlab.cartridge.generator.dsl.generator.CartridgeOutputsConfigurationProvider;
-import org.xmdlab.cartridge.generator.dsl.generator.OutputConfigurationAwareFileSystemAccess;
+import org.eclipse.xtext.generator.IOutputConfigurationProvider;
+import org.xmdlab.cartridge.generator.dsl.io.CartridgeOutputsConfigurationProvider;
 
 import com.google.inject.Binder;
 
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class CartridgeDslUiModule extends org.xmdlab.cartridge.generator.dsl.ui.AbstractCartridgeDslUiModule {
-	
+public class CartridgeDslUiModule extends
+		org.xmdlab.cartridge.generator.dsl.ui.AbstractCartridgeDslUiModule {
+
 	public CartridgeDslUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
@@ -23,9 +22,9 @@ public class CartridgeDslUiModule extends org.xmdlab.cartridge.generator.dsl.ui.
 	@Override
 	public void configure(Binder binder) {
 		super.configure(binder);
-		binder.bind(OutputConfigurationProvider.class).to(
+		binder.bind(IOutputConfigurationProvider.class).to(
 				CartridgeOutputsConfigurationProvider.class);
-		binder.bind(JavaIoFileSystemAccess.class).to(
-				OutputConfigurationAwareFileSystemAccess.class);
+		// binder.bind(JavaIoFileSystemAccess.class).to(
+		// OutputConfigurationAwareFileSystemAccess.class);
 	}
 }
