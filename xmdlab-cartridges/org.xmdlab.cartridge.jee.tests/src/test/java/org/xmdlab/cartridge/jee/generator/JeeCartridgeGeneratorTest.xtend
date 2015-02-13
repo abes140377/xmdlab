@@ -34,7 +34,7 @@ class JeeCartridgeGeneratorTest extends BaseGeneratorTest<DslModel> {
 
 		applicationMetafacade.modelResource = application
 		
-		generator.doGenerate(fsa)
+		generator.doGenerate(application, fsa)
 
 		// LOG.info(fsa.textFiles.toString)
 

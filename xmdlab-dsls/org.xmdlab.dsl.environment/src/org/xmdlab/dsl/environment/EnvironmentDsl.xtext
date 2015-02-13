@@ -1,9 +1,0 @@
-grammar org.xmdlab.dsl.environment.EnvironmentDsl with org.eclipse.xtext.common.Terminals
-
-generate environmentDsl "http://www.xmdlab.org/dsl/environment/EnvironmentDsl"
-
-EnvironmentModel:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID '!';

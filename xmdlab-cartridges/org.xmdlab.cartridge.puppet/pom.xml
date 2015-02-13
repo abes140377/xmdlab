@@ -79,13 +79,13 @@
 
     <dependency>
       <groupId>org.xmdlab.dsls</groupId>
-      <artifactId>org.xmdlab.dsl.puppet</artifactId>
+      <artifactId>org.xmdlab.dsl.domain</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.xmdlab.mm</groupId>
-      <artifactId>org.xmdlab.jee.application.mm</artifactId>
+      <artifactId>org.xmdlab.puppet.site.mm</artifactId>
       <version>${project.version}</version>
     </dependency>
 

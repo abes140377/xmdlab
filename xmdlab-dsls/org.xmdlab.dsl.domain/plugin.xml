@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.xmdlab.org/dsl/domain/DomainDsl" 
+       class = "org.xmdlab.dsl.domain.domainDsl.DomainDslPackage"
+       genModel = "model/generated/DomainDsl.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>

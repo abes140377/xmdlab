@@ -1,0 +1,34 @@
+grammar org.xmdlab.dsl.domain.DomainDsl with org.eclipse.xtext.common.Terminals
+
+generate domainDsl "http://www.xmdlab.org/dsl/domain/DomainDsl"
+
+DslModel:
+	domain=DslDomain
+;
+
+DslDomain:
+	'Domain' name=QualifiedName '{'
+		(nodes+=DslNode)*
+	'}'
+;
+
+DslNode:
+	'Node' name=ID 'domain' '=' domain=QualifiedName '{'
+		role=DslRole
+	'}'
+;
+
+DslRole:
+	'Role' name=ID '{'
+		
+	'}'
+;
+
+QualifiedName:
+  ID (=>'.' ID)*;
+  
+Version:
+  ID (=>'.' ID) (=>'.' ID);
+  
+ForgeId:
+  ID => '-' ID;
