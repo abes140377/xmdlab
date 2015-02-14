@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+	<container qualifier="jbossas-embedded" default="true">
+		<configuration>
+			<property name="jbossHome">/Users/seba/Develop/wildfly-8.2.0.Final</property>
+			<property name="outputToConsole">true</property>
+		</configuration>
+	</container>
+	
+	<container qualifier="jbossas-remote">
+<!-- 		<configuration> -->
+<!-- 			<property name="jbossHome">/Users/seba/Develop/wildfly-8.2.0.Final</property> -->
+<!-- 			<property name="outputToConsole">true</property> -->
+<!-- 		</configuration> -->
+	</container>
+
+	<container qualifier="glassfish-embedded">
+		<configuration>
+			<property name="resourcesXml">
+                src/test/resources-glassfish-embedded/glassfish-resources.xml
+            </property>
+		</configuration>
+	</container>
+
+	<engine>
+		<property name="deploymentExportPath">build/deployments</property>
+	</engine>
+</arquillian>
