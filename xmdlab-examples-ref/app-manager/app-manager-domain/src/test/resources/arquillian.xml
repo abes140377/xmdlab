@@ -11,12 +11,8 @@
 			<property name="outputToConsole">true</property>
 		</configuration>
 	</container>
-	
+
 	<container qualifier="jbossas-remote">
-<!-- 		<configuration> -->
-<!-- 			<property name="jbossHome">/Users/seba/Develop/wildfly-8.2.0.Final</property> -->
-<!-- 			<property name="outputToConsole">true</property> -->
-<!-- 		</configuration> -->
 	</container>
 
 	<container qualifier="glassfish-embedded">
@@ -30,4 +26,20 @@
 	<engine>
 		<property name="deploymentExportPath">build/deployments</property>
 	</engine>
+
+	<!-- <extension qualifier="transaction"> -->
+	<!-- <property name="manager">java:jboss/UserTransaction</property> -->
+	<!-- </extension> -->
+
+	<extension qualifier="persistence">
+		<!-- <property name="defaultDataSource">java:jboss/datasources/ExampleDS</property> -->
+		<!-- <property name="defaultDataSource">java:jboss/datasources/ExampleDS</property> -->
+		<property name="defaultDataSource">jdbc/arquillian</property>
+		<property name="dumpData">true</property>
+	</extension>
+
+	<extension qualifier="persistence-dbunit">
+		<property name="datatypeFactory">org.dbunit.ext.h2.H2DataTypeFactory</property>
+		<property name="excludePoi">true</property>
+	</extension>
 </arquillian>

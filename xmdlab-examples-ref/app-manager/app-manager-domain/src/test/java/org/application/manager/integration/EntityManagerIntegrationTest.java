@@ -23,7 +23,6 @@ public class EntityManagerIntegrationTest {
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackage(DependencyInjectionIntegrationTest.class.getPackage())
 				.addPackage(TestEJB.class.getPackage())
 				.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -32,15 +31,15 @@ public class EntityManagerIntegrationTest {
 				.addAsWebInfResource("jbossas-ds.xml");
 		return war;
 	}
-	
-	@Resource
-    UserTransaction utx;
 
-    @PersistenceContext
-    EntityManager em;
-    
-    @Test
-    public void shouldInjectTheEntityManagerWithFactory() throws Exception {
-    	Assert.assertNotNull("Injected entity manager must not be null.", em);
-    }
+	@Resource
+	UserTransaction utx;
+
+	@PersistenceContext
+	EntityManager em;
+
+	@Test
+	public void shouldInjectTheEntityManagerWithFactory() throws Exception {
+		Assert.assertNotNull("Injected entity manager must not be null.", em);
+	}
 }
