@@ -1,0 +1,23 @@
+repositories {
+	mavenCentral()
+}
+
+allprojects {
+	group = "org.xmdlab.framework"
+	version = "0.1.0-SNAPSHOT"
+	
+    task hello << {task -> println "I'm $task.project.name" }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+	apply plugin: 'eclipse'
+    
+    repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
+		maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
+	}	
+}

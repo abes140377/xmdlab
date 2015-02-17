@@ -1,0 +1,67 @@
+// enable generation of querydsl query types
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+description = 'Xmdlab jee framework'
+
+ext.libraryVersions = [
+	javaee		: '7.0',
+	junit		: '4.11',
+	querydsl	: '2.6.0'
+]
+
+buildscript {
+  repositories {
+   jcenter()
+  }
+  dependencies {
+    classpath "com.ewerk.gradle.plugins:querydsl-plugin:1.0.3"
+  }
+}
+
+dependencies {
+	compile 'org.slf4j:slf4j-simple:1.7.7'
+	compile "javax:javaee-api:${libraryVersions.javaee}"
+	compile "com.mysema.querydsl:querydsl-jpa:$libraryVersions.querydsl"
+	
+	testCompile "junit:junit:${libraryVersions.junit}"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+
+// querydsl configuration
+querydsl {
+  jpa = true
+  querydslSourcesDir = 'build/querydsl/java'
+}
+
+sourceSets.main.java.srcDir 'build/querydsl/java'
+
+//uploadArchives {
+//	repositories.mavenDeployer {
+//		pom.artifactId = 'org.xmdlab.framework.jee'
+//		pom.groupId = 'org.xmdlab.framework'
+//		pom.version = '0.1.0-SNAPSHOT'
+//		
+//		configuration = configurations.deployerJars
+//		
+//		repository(url: "http://dzstuv193.dzbw.de:8080/nexus/content/repositories/releases/") {
+//			authentication(userName: nexusUser, password: nexusPassword)
+//		}
+//		repository(url: "http://dzstuv193.dzbw.de:8080/nexus/content/repositories/snapshots/") {
+//			authentication(userName: nexusUser, password: nexusPassword)
+//		}
+//	}
+//}

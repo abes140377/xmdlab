@@ -7,8 +7,10 @@ Running script: ${relativePath(buildFile)}\n"""
 
 // define common plugins, tasks and properties for all projects (including root) here
 allprojects {
-	apply plugin: 'eclipse-wtp'
 	apply plugin: 'eclipse'
+	
+	group = 'org.xmdlab.example.ref.appmanager'
+  	version = '0.1.0-SNAPSHOT'
 }
 
 subprojects {
@@ -17,9 +19,6 @@ subprojects {
 	
 	sourceCompatibility = 1.7  
 	targetCompatibility = 1.7
-	
-	group = 'org.xmdlab.example.ref.appmanager'
-	version = '1.0'
 	
 	repositories {
 		mavenLocal()
