@@ -4,16 +4,12 @@
         http://java.sun.com/xml/ns/persistence
         http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="test" transaction-type="JTA">
-    <!-- Use this or remove the persistence provider class name from your persistence.xml (so the default provider will be 
-      used). -->
-    <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
-    
-    <!-- <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source> -->
     <jta-data-source>jdbc/arquillian</jta-data-source>
 
     <class>org.application.manager.entity.Organisation</class>
     <class>org.application.manager.entity.Team</class>
     <class>org.application.manager.entity.User</class>
+    <class>org.application.manager.entity.EmailAddress</class>
 
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="create-drop" />

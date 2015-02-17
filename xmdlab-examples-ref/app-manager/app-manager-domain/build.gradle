@@ -32,8 +32,8 @@ ext.libraryVersions = [
 	arquillian              : '1.1.5.Final',
 	arquillianPersistence	: '1.0.0.Alpha7',
 	shrinkWrapResolverGradle: '2.1.0',
-	hibernateVersion		: '4.3.5.Final'
-	querydsl				: '2.6.0'
+	hibernateVersion		: '4.3.5.Final',
+	querydsl				: '3.6.0'
 ]
 
 configurations {
@@ -56,11 +56,10 @@ dependencies {
 
 	testRuntime "com.h2database:h2:1.4.177"
 
-	//apt "org.hibernate:hibernate-jpamodelgen:${libraryVersions.hibernateVersion}"
 	compile "com.mysema.querydsl:querydsl-jpa:$libraryVersions.querydsl"
 
 	// Spring data
-	compile 'org.springframework.data:spring-data-jpa:1.8.0.M1'
+	compile 'org.springframework.data:spring-data-jpa:1.7.2.RELEASE'
 
 	// arquillian persistence extension
 	testCompile "org.jboss.arquillian.extension:arquillian-persistence-api:${libraryVersions.arquillianPersistence}"
@@ -118,23 +117,6 @@ task glassfishEmbeddedTest(type: Test) {
 	systemProperty 'java.util.logging.config.file', "${projectDir}/src/test/resources-glassfish-embedded/logging.properties"
 	systemProperty 'derby.stream.error.file', '${projectDir}/build/derby.log'
 }
-
-// JPA Model Gen
-def generatedJavaSrcDir = "build/generated-sources/main/java"
-sourceSets.main.java.srcDirs += [generatedJavaSrcDir]
-
-task procJava(type: JavaCompile, group: "build", description: "Annotation processing") {
-	def aptDestDir = new File(project.projectDir, generatedJavaSrcDir)
-	source = project.sourceSets.main.java.srcDirs.findAll {
-		!it.equals(aptDestDir)
-	}
-
-	classpath = project.configurations.compile
-	options.compilerArgs.addAll "-proc:only", "-implicit:none",
-			"-processorpath", project.configurations.apt.asPath
-	destinationDir = aptDestDir
-}
-compileJava.dependsOn procJava
 
 sourceSets {
 	test {

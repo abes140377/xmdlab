@@ -9,6 +9,7 @@
 		<configuration>
 			<property name="jbossHome">${env.JBOSS_HOME}</property>
 			<property name="outputToConsole">true</property>
+			<property name="javaVmArguments">-Xmx512m -XX:MaxPermSize=128m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</property>
 		</configuration>
 	</container>
 

@@ -32,7 +32,7 @@ public class AppManagerDomainDeployment {
 						"org.springframework.data:spring-data-jpa:1.7.2.RELEASE")
 				.withTransitivity().asFile();
 		File[] querydslDependencies = Maven.resolver()
-				.resolve("com.mysema.querydsl:querydsl-jpa:2.6.0")
+				.resolve("com.mysema.querydsl:querydsl-jpa:3.6.0")
 				.withTransitivity().asFile();
 
 		WebArchive war = ShrinkWrap

@@ -6,7 +6,7 @@ description = 'Xmdlab jee framework'
 ext.libraryVersions = [
 	javaee		: '7.0',
 	junit		: '4.11',
-	querydsl	: '2.6.0'
+	querydsl	: '3.6.0'
 ]
 
 buildscript {
