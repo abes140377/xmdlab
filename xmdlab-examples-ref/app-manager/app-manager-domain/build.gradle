@@ -19,10 +19,12 @@ ext.libraryVersions = [
 	junit                   : '4.11',
 	arquillian              : '1.1.5.Final',
 	arquillianPersistence	: '1.0.0.Alpha7',
-	shrinkWrapResolverGradle: '2.1.0'
+	shrinkWrapResolverGradle: '2.1.0',
+	hibernateVersion		: '4.3.5.Final'
 ]
 
 configurations {
+	apt { description "for annotation processors" }
 	provided
 
 	glassfishEmbeddedTestRuntime { extendsFrom testRuntime }
@@ -38,6 +40,15 @@ dependencies {
 
 	testRuntime "com.h2database:h2:1.4.177"
 
+	apt "org.hibernate:hibernate-jpamodelgen:${libraryVersions.hibernateVersion}"
+
+	// Spring data
+	compile 'org.springframework.data:spring-data-jpa:1.8.0.M1'
+
+	// CDI Query
+	// compile 'com.ctp.cdi.query:cdi-query-api:1.0.0.Alpha5'
+	// compile 'com.ctp.cdi.query:cdi-query-impl:1.0.0.Alpha5'
+
 	// arquillian persistence extension
 	testCompile "org.jboss.arquillian.extension:arquillian-persistence-api:${libraryVersions.arquillianPersistence}"
 	testCompile "org.jboss.arquillian.extension:arquillian-persistence-core:${libraryVersions.arquillianPersistence}"
@@ -49,6 +60,7 @@ dependencies {
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${libraryVersions.arquillian}"
 
 	testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain:${libraryVersions.shrinkWrapResolverGradle}"
+	testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.0-alpha-2"
 
 	jbossEmbeddedTestRuntime "org.wildfly:wildfly-arquillian-container-managed:${libraryVersions.wildfly}"
 
@@ -85,6 +97,22 @@ task glassfishEmbeddedTest(type: Test) {
 	systemProperty 'java.util.logging.config.file', "${projectDir}/src/test/resources-glassfish-embedded/logging.properties"
 	systemProperty 'derby.stream.error.file', '${projectDir}/build/derby.log'
 }
+
+def generatedJavaSrcDir = "build/generated-sources/main/java"
+sourceSets.main.java.srcDirs += [generatedJavaSrcDir]
+
+task procJava(type: JavaCompile, group: "build", description: "Annotation processing") {
+	def aptDestDir = new File(project.projectDir, generatedJavaSrcDir)
+	source = project.sourceSets.main.java.srcDirs.findAll {
+		!it.equals(aptDestDir)
+	}
+
+	classpath = project.configurations.compile
+	options.compilerArgs.addAll "-proc:only", "-implicit:none",
+			"-processorpath", project.configurations.apt.asPath
+	destinationDir = aptDestDir
+}
+compileJava.dependsOn procJava
 
 sourceSets {
 	test {

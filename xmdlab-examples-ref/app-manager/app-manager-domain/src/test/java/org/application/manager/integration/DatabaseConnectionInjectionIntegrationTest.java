@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
 @PersistenceTest
-public class DatabaseConnectionInjectionTest {
+public class DatabaseConnectionInjectionIntegrationTest {
 
 	@PersistenceContext
 	EntityManager em;

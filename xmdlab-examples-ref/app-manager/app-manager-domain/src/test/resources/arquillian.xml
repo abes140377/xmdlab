@@ -7,7 +7,7 @@
 
 	<container qualifier="jbossas-embedded" default="true">
 		<configuration>
-			<property name="jbossHome">/Users/seba/Develop/wildfly-8.2.0.Final</property>
+			<property name="jbossHome">${env.JBOSS_HOME}</property>
 			<property name="outputToConsole">true</property>
 		</configuration>
 	</container>
