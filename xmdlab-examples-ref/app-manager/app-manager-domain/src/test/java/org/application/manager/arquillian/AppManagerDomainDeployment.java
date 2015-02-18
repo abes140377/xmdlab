@@ -23,28 +23,33 @@ import org.xmdlab.framework.jee.domain.AbstractEntity;
 public class AppManagerDomainDeployment {
 
 	public static WebArchive createWarDeployment() {
+		String slf4jVersion = System.getProperty("slf4jVersion", "1.7.7");
+		String springDataVersion = System.getProperty("springDataVersion",
+				"1.7.2.RELEASE");
+		String querydslVersion = System.getProperty("querydslVersion", "3.6.0");
+
 		File[] slf4jDependencies = Maven.resolver()
-				.resolve("org.slf4j:slf4j-simple:1.7.7").withoutTransitivity()
-				.asFile();
+				.resolve("org.slf4j:slf4j-simple:" + slf4jVersion)
+				.withoutTransitivity().asFile();
 		File[] springDataDependencies = Maven
 				.resolver()
 				.resolve(
-						"org.springframework.data:spring-data-jpa:1.7.2.RELEASE")
-				.withTransitivity().asFile();
+						"org.springframework.data:spring-data-jpa:"
+								+ springDataVersion).withTransitivity()
+				.asFile();
 		File[] querydslDependencies = Maven.resolver()
-				.resolve("com.mysema.querydsl:querydsl-jpa:3.6.0")
+				.resolve("com.mysema.querydsl:querydsl-jpa:" + querydslVersion)
 				.withTransitivity().asFile();
 
 		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
+
 				.addPackage(TestEJB.class.getPackage())
 				.addPackage(Organisation.class.getPackage())
 				.addPackage(CdiConfig.class.getPackage())
 				.addPackage(OrganisationRepository.class.getPackage())
 				.addPackage(AbstractEntity.class.getPackage())
-				// .addPackage(
-				// OrganisationRepositoryIntegrationTest.class
-				// .getPackage())
+
 				.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
 				// beans.xml must be in WEB-INF for war and in META-INF for jar

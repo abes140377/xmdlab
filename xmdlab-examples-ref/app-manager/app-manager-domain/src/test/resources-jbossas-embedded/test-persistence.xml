@@ -7,10 +7,11 @@
   <persistence-unit name="test">
     <jta-data-source>jdbc/arquillian</jta-data-source>
 
+    <class>org.xmdlab.framework.jee.domain.AbstractEntity</class>
     <class>org.application.manager.entity.Organisation</class>
     <class>org.application.manager.entity.Team</class>
     <class>org.application.manager.entity.User</class>
-<!--     <class>org.application.manager.entity.EmailAddress</class> -->
+    <class>org.application.manager.entity.EmailAddress</class>
 
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="create-drop" />

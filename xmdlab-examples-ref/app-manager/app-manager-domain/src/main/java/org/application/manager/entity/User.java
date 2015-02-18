@@ -22,10 +22,10 @@ public class User extends AbstractEntity {
 	private String lastname;
 
 	/** The username. */
-	@Column(name = "USERNAME", nullable = false)
+	@Column(name = "USERNAME", nullable = false, unique = true)
 	private String username;
-	
-	@Column(unique = true)
+
+	@Column(name = "EMAIL_ADDRESS")
 	private EmailAddress emailAddress;
 
 	/**
@@ -37,10 +37,12 @@ public class User extends AbstractEntity {
 	/**
 	 * Instantiates a new user.
 	 */
-	public User(String firstname, String lastname, String username) {
+	public User(String firstname, String lastname, String username,
+			EmailAddress emailAddress) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+		this.emailAddress = emailAddress;
 	}
 
 	public String getFirstname() {
@@ -66,20 +68,20 @@ public class User extends AbstractEntity {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-//	public EmailAddress getEmailAddress() {
-//		return emailAddress;
-//	}
-//
-//	public void setEmailAddress(EmailAddress emailAddress) {
-//		this.emailAddress = emailAddress;
-//	}
-//
-//	@Override
-//	public String toString() {
-//		return "User [firstname=" + firstname + ", lastname=" + lastname
-//				+ ", username=" + username + ", emailAddress=" + emailAddress
-//				+ "]";
-//	}
+
+	public EmailAddress getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(EmailAddress emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	@Override
+	public String toString() {
+		return "User [firstname=" + firstname + ", lastname=" + lastname
+				+ ", username=" + username + ", emailAddress=" + emailAddress
+				+ "]";
+	}
 
 }
