@@ -93,7 +93,7 @@ public class OrganisationRepositoryIntegrationTest {
 
 		assertThat(result, is(notNullValue()));
 		assertThat(result.isFirst(), is(false));
-		// assertThat(result.isLast(), is(false));
+		assertThat(result.isLast(), is(true));
 		// assertThat(result.getNumberOfElements(), is(1));
 	}
 

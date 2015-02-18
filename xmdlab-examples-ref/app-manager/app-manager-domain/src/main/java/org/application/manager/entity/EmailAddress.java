@@ -5,12 +5,10 @@ import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-//import org.junit.Assert;
-
 /**
  * A value object abstraction of an email address.
  * 
- * @author Oliver Gierke
+ * @author freund
  */
 @Embeddable
 public class EmailAddress {
@@ -24,12 +22,13 @@ public class EmailAddress {
 	/**
 	 * Creates a new {@link EmailAddress} from the given string source.
 	 * 
-	 * @param emailAddress must not be {@literal null} or empty.
+	 * @param emailAddress
+	 *            must not be {@literal null} or empty.
 	 */
 	public EmailAddress(String emailAddress) {
-		if(!isValid(emailAddress)) {
-			throw new RuntimeException("Invalid email address! " + emailAddress);
-		}
+		// if(!isValid(emailAddress)) {
+		// throw new RuntimeException("Invalid email address! " + emailAddress);
+		// }
 		this.value = emailAddress;
 	}
 
@@ -38,8 +37,8 @@ public class EmailAddress {
 	}
 
 	/**
-	 * Returns whether the given {@link String} is a valid {@link EmailAddress} which means you can safely instantiate the
-	 * class.
+	 * Returns whether the given {@link String} is a valid {@link EmailAddress}
+	 * which means you can safely instantiate the class.
 	 * 
 	 * @param candidate
 	 * @return
@@ -48,8 +47,9 @@ public class EmailAddress {
 		return candidate == null ? false : PATTERN.matcher(candidate).matches();
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -57,13 +57,13 @@ public class EmailAddress {
 		return value;
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
-
 		if (this == obj) {
 			return true;
 		}
@@ -73,11 +73,13 @@ public class EmailAddress {
 		}
 
 		EmailAddress that = (EmailAddress) obj;
+
 		return this.value.equals(that.value);
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

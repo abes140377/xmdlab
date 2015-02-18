@@ -6,6 +6,9 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Status;
 import javax.transaction.UserTransaction;
 
 import org.application.manager.arquillian.AppManagerDomainDeployment;
@@ -26,6 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.mysema.query.types.expr.BooleanExpression;
 
@@ -40,8 +44,12 @@ public class UserRepositoryIntegrationTest {
 
 	@Inject
 	UserRepository userRepository;
-	
-	@Inject UserTransaction utx;
+
+	@PersistenceContext
+	EntityManager em;
+
+	@Inject
+	UserTransaction utx;
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -61,54 +69,52 @@ public class UserRepositoryIntegrationTest {
 	 * 
 	 */
 	@Test
-	@Transactional
+	// @Transactional
 	public void canSaveUser() throws Exception {
 		User o = new User();
 		o.setFirstname("firstname");
 		o.setLastname("lastname");
 		o.setUsername("username");
-		o.setEmailAddress(new EmailAddress("test@irgendwo.de"));
+		// o.setEmailAddress(new EmailAddress("test@irgendwo.de"));
 
-//		utx.begin();
 		userRepository.save(o);
-		utx.commit();
-		
-//		Assert.assertNotNull(o.getId());
-//		Assert.assertNotNull(userRepository.getOne(o.getId()));
+
+		Assert.assertNotNull(o.getId());
+		Assert.assertNotNull(userRepository.getOne(o.getId()));
 	}
 
-//	@Test
-//	@UsingDataSet("datasets/users.yml")
-//	public void canFindAllAndCount() {
-//		List<User> users = userRepository.findAll();
-//
-//		Assert.assertEquals(2, users.size());
-//
-//		long count = userRepository.count();
-//
-//		Assert.assertEquals(2, count);
-//	}
+	@Test
+	@UsingDataSet("datasets/users.yml")
+	public void canFindAllAndCount() throws Exception {
+		List<User> users = userRepository.findAll();
 
-//	@Test
-//	@UsingDataSet("datasets/users.yml")
-//	public void canGetOne() {
-//		Long userId = -1L;
-//		User result = userRepository.getOne(userId);
-//
-//		Assert.assertEquals(userId, result.getId());
-//	}
-//
-//	@Test
-//	@UsingDataSet("datasets/users.yml")
-//	@Transactional(value = TransactionMode.ROLLBACK)
-//	public void accessesUserPageByPage() {
-//		Page<User> result = userRepository.findAll(new PageRequest(1, 1));
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.isFirst(), is(false));
-//		// assertThat(result.isLast(), is(false));
-//		// assertThat(result.getNumberOfElements(), is(1));
-//	}
+		Assert.assertEquals(2, users.size());
+
+		long count = userRepository.count();
+
+		Assert.assertEquals(2, count);
+	}
+
+	@Test
+	@UsingDataSet("datasets/users.yml")
+	public void canGetOne() {
+		Long userId = -1L;
+		User result = userRepository.getOne(userId);
+
+		Assert.assertEquals(userId, result.getId());
+	}
+
+	@Test
+	@UsingDataSet("datasets/users.yml")
+	@Transactional()
+	public void accessesUserPageByPage() {
+		Page<User> result = userRepository.findAll(new PageRequest(1, 1));
+
+		assertThat(result, is(notNullValue()));
+		assertThat(result.isFirst(), is(false));
+		assertThat(result.isLast(), is(true));
+		assertThat(result.getNumberOfElements(), is(1));
+	}
 
 //	@Test
 //	@UsingDataSet("datasets/users.yml")

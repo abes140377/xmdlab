@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long>,
 	 * 
 	 * @param emailAddress
 	 *            the {@link EmailAddress} to search for.
-	 * @since Step 2
+	 * @since 
 	 * @return
 	 */
-	User findByEmailAddress(EmailAddress emailAddress);
+//	User findByEmailAddress(EmailAddress emailAddress);
 }

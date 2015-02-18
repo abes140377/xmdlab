@@ -67,19 +67,19 @@ public class User extends AbstractEntity {
 		this.username = username;
 	}
 	
-	public EmailAddress getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(EmailAddress emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	@Override
-	public String toString() {
-		return "User [firstname=" + firstname + ", lastname=" + lastname
-				+ ", username=" + username + ", emailAddress=" + emailAddress
-				+ "]";
-	}
+//	public EmailAddress getEmailAddress() {
+//		return emailAddress;
+//	}
+//
+//	public void setEmailAddress(EmailAddress emailAddress) {
+//		this.emailAddress = emailAddress;
+//	}
+//
+//	@Override
+//	public String toString() {
+//		return "User [firstname=" + firstname + ", lastname=" + lastname
+//				+ ", username=" + username + ", emailAddress=" + emailAddress
+//				+ "]";
+//	}
 
 }
