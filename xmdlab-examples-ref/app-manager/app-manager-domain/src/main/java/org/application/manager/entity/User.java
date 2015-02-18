@@ -83,5 +83,5 @@ public class User extends AbstractEntity {
 				+ ", username=" + username + ", emailAddress=" + emailAddress
 				+ "]";
 	}
-
+	
 }

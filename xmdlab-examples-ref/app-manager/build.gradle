@@ -1,9 +1,9 @@
 // print some information of the build to stout
-println """\n
-Gradle-Build with version: $gradle.gradleVersion - http://www.gradle.org
-Gradle home: $gradle.gradleHomeDir
-Gradle user directory: $gradle.gradleUserHomeDir
-Running script: ${relativePath(buildFile)}\n"""
+println """
+	Gradle-Build with version: $gradle.gradleVersion - http://www.gradle.org
+	Gradle home: $gradle.gradleHomeDir
+	Gradle user directory: $gradle.gradleUserHomeDir
+	Running script: ${relativePath(buildFile)}\n"""
 
 // define common plugins, tasks and properties for all projects (including root) here
 allprojects {
@@ -22,6 +22,8 @@ subprojects {
 	
 	repositories {
 		mavenLocal()
-    	mavenCentral()
+		mavenCentral()
+		maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
+		maven { url 'http://repo.jfrog.org/artifactory/repo' }
 	}
 }

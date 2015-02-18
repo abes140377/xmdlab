@@ -16,14 +16,6 @@ buildscript {
   }
 }
 
-repositories {
-	mavenLocal()
-	mavenCentral()
-	maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
-	maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
-	maven { url 'http://repo.jfrog.org/artifactory/repo' }
-}
-
 ext.libraryVersions = [
 	slf4jVersion					: '1.7.7',
 	springDataVersion				: '1.7.2.RELEASE',
@@ -65,9 +57,6 @@ dependencies {
 	compile "org.springframework.data:spring-data-jpa:${libraryVersions.springDataVersion}"
 
 	// arquillian persistence extension
-	// testCompile "org.jboss.arquillian.extension:arquillian-persistence-api:${libraryVersions.arquillianPersistenceVersion}"
-	// testCompile "org.jboss.arquillian.extension:arquillian-persistence-core:${libraryVersions.arquillianPersistenceVersion}"
-	// testCompile "org.jboss.arquillian.extension:arquillian-persistence-spi:${libraryVersions.arquillianPersistenceVersion}"
 	testCompile "org.jboss.arquillian.extension:arquillian-persistence-dbunit:${libraryVersions.arquillianPersistenceVersion}"
 
 	// jboss arquilian / shrinkwrap
@@ -77,10 +66,13 @@ dependencies {
 	testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain:${libraryVersions.shrinkWrapResolverGradleVersion}"
 	testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.0-alpha-2"
 
+	// wildfly managed
 	jbossEmbeddedTestRuntime "org.wildfly:wildfly-arquillian-container-managed:${libraryVersions.wildflyVersion}"
 
+	// wildfly remote
 	jbossRemoteTestRuntime "org.wildfly:wildfly-arquillian-container-remote:${libraryVersions.wildflyVersion}"
 
+	// glassfish managed
 	glassfishEmbeddedTestRuntime "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.CR4"
 	glassfishEmbeddedTestRuntime "org.glassfish.main.extras:glassfish-embedded-all:${libraryVersions.glassfishVersion}"
 }
@@ -118,7 +110,7 @@ task glassfishEmbeddedTest(type: Test) {
 
 	systemProperty 'arquillian.launch', "glassfish-embedded"
 	systemProperty 'java.util.logging.config.file', "${projectDir}/src/test/resources-glassfish-embedded/logging.properties"
-	systemProperty 'derby.stream.error.file', '${projectDir}/build/derby.log'
+	systemProperty 'derby.stream.error.file', "${projectDir}/build/derby.log"
 }
 
 sourceSets {

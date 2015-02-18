@@ -1,6 +1,7 @@
 package org.application.manager.integration;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
@@ -8,30 +9,21 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Status;
 import javax.transaction.UserTransaction;
 
 import org.application.manager.arquillian.AppManagerDomainDeployment;
-import org.application.manager.entity.EmailAddress;
-import org.application.manager.entity.QUser;
 import org.application.manager.entity.User;
 import org.application.manager.repository.UserRepository;
-import org.hamcrest.Matchers;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.PersistenceTest;
 import org.jboss.arquillian.persistence.UsingDataSet;
-import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
-import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
-import com.mysema.query.types.expr.BooleanExpression;
 
 /**
  * 
@@ -53,7 +45,7 @@ public class UserRepositoryIntegrationTest {
 
 	@Deployment
 	public static WebArchive createDeployment() {
-		return AppManagerDomainDeployment.createWarDeployment();
+		return AppManagerDomainDeployment.createDomainRepositoryDeployment();
 	}
 
 	/**
@@ -106,7 +98,6 @@ public class UserRepositoryIntegrationTest {
 
 	@Test
 	@UsingDataSet("datasets/users.yml")
-	@Transactional()
 	public void accessesUserPageByPage() {
 		Page<User> result = userRepository.findAll(new PageRequest(1, 1));
 

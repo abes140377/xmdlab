@@ -29,7 +29,7 @@ public class EntityManagerIntegrationTest {
 	
 	@Deployment
 	public static WebArchive createDeployment() {
-		return AppManagerDomainDeployment.createWarDeployment();
+		return AppManagerDomainDeployment.createDomainRepositoryDeployment();
 	}
 
 	/**

@@ -26,7 +26,7 @@ public class DatabaseConnectionInjectionIntegrationTest {
 
 	@Deployment
 	public static WebArchive createDeployment() {
-		return AppManagerDomainDeployment.createWarDeployment();
+		return AppManagerDomainDeployment.createDomainRepositoryDeployment();
 	}
 
 	@Test
