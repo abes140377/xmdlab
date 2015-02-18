@@ -13,9 +13,9 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated JeeApplicationMm -->
       <package
-            uri="org.xmdlab.jee.application.mm"
+            uri="http://xmdlab.org/jee-application-mm"
             class="org.xmdlab.jee.application.mm.MmPackage"
-            genModel="src/JeeApplicationMetamodel.xcore"/>
+            genModel="model/JeeApplicationMm.xcore"/>
    </extension>
 
 </plugin>

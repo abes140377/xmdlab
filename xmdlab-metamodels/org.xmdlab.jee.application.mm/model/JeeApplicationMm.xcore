@@ -1,5 +1,5 @@
-@Ecore(nsPrefix="sc", nsURI="http://xmdlab.org/jee-application-mm")
-@GenModel(modelDirectory="./src-gen", importerID="org.eclipse.emf.importer.ecore", complianceLevel="5.0")
+@Ecore(nsPrefix="xmdlab", nsURI="http://xmdlab.org/jee-application-mm")
+//@GenModel(modelDirectory="./src-gen", importerID="org.eclipse.emf.importer.ecore", complianceLevel="5.0")
 package org.xmdlab.jee.application.mm
 
 abstract class NamedElement {

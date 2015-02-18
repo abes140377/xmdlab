@@ -25,7 +25,7 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>src-gen</directory>
+              <directory>target/xtext-temp/stubs</directory>
               <excludes>
                 <exclude>.gitignore</exclude>
               </excludes>
@@ -57,7 +57,7 @@
             </language>
           </languages>
           <sourceRoots>
-            <root>${basedir}/src</root>
+            <root>${basedir}/model</root>
           </sourceRoots>
         </configuration>
         <dependencies>

@@ -9,7 +9,9 @@ Bundle-Localization: plugin
 Export-Package: org.xmdlab.jee.application.mm,
  org.xmdlab.jee.application.mm.impl,
  org.xmdlab.jee.application.mm.util
-Require-Bundle: org.eclipse.emf.ecore,
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib
 Import-Package: org.apache.log4j
 Bundle-ActivationPolicy: lazy
