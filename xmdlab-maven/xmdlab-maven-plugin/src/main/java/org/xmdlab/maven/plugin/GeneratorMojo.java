@@ -109,7 +109,7 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 	 * Returns <code>model</code> file.
 	 */
 	protected String getModelFilePath() {
-		return project.getBasedir().getAbsolutePath() + model;
+		return project.getBasedir().getAbsolutePath() + File.separator + model;
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class GeneratorMojo extends AbstractGeneratorMojo {
 								+ "previously generated files");
 			}
 
-			// Execute Sculptor code generator
+			// Execute code generator
 			if (!executeGenerator()) {
 				throw new MojoExecutionException(
 						"Sculptor code generator failed");

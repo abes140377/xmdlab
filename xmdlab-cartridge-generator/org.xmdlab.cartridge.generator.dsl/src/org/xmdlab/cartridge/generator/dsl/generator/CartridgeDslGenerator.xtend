@@ -38,6 +38,7 @@ import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGenerator
 import org.xmdlab.cartridge.generator.dsl.templates.PomXmlTpl
 import static org.xmdlab.cartridge.generator.dsl.io.CartridgeOutputsConfigurationProvider.*
 import org.xmdlab.cartridge.generator.dsl.templates.test.CartridgeInjectorProviderTpl
+import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorRunnerTpl
 
 /**
  * Generates code from your model files on save.
@@ -59,6 +60,7 @@ class CartridgeDslGenerator implements IGenerator {
 	@Inject extension Provider<CartridgeGeneratorModuleTpl> cartridgeGeneratorModuleTpl
 	@Inject extension Provider<CartridgeGeneratorBaseXtendTpl> cartridgeGeneratorBaseXtendTpl
 	@Inject extension Provider<CartridgeGeneratorXtendTpl> cartridgeGeneratorXtendTpl
+	@Inject extension Provider<CartridgeGeneratorRunnerTpl> cartridgGeneratorRunnerTpl
 	@Inject extension Provider<CartridgeOutputConfigurationProviderTpl> cartridgeOutputConfigurationProviderTpl
 
 	@Inject extension Provider<CartridgePropertiesTpl> cartridgePropertiesTpl
@@ -74,6 +76,8 @@ class CartridgeDslGenerator implements IGenerator {
 
 	@Inject extension Provider<TemplateBaseTpl> templateBaseTpl
 	@Inject extension Provider<TemplateTpl> templateTpl
+	
+	
 	
 	// Test
 	@Inject extension Provider<CartridgeInjectorProviderTpl> cartridgeInjectorProviderTpl
@@ -105,6 +109,7 @@ class CartridgeDslGenerator implements IGenerator {
 
 		generateCartridgeGeneratorBaseXtend(dslCartridge, fsa)
 		generateCartridgeGeneratorXtend(dslCartridge, fsa)
+		generateCartridgeGeneratorRunner(dslCartridge, fsa)
 
 		//
 		generateCartridgeOutputConfigurationProvider(dslCartridge, fsa)
@@ -234,6 +239,18 @@ class CartridgeDslGenerator implements IGenerator {
 			"CartridgeGenerator.xtend"
 
 		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslCartridge))
+	}
+	
+	/**
+	 * 
+	 */
+	def generateCartridgeGeneratorRunner(DslCartridge dslCartridge, IFileSystemAccess fsa) {
+		val CartridgeGeneratorRunnerTpl tpl = cartridgGeneratorRunnerTpl.get
+
+		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
+			"GeneratorRunner.xtend"
+
+		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}
 
 	// =======================================================================================================================================

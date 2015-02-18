@@ -13,7 +13,7 @@ DslDomain:
 ;
 
 DslNode:
-	'Node' name=ID 'domain' '=' domain=QualifiedName '{'
+	'Node' name=ID '{'
 		role=DslRole
 	'}'
 ;

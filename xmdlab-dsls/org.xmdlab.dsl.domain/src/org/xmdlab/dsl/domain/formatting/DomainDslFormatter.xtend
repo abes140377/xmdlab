@@ -34,12 +34,12 @@ class DomainDslFormatter extends AbstractDeclarativeFormatter {
 		val n = g.getDslNodeAccess()
 		
 		// indentation between { } 
-		c.setIndentation(n.leftCurlyBracketKeyword_5, n.rightCurlyBracketKeyword_7)
+//		c.setIndentation(n.leftCurlyBracketKeyword_5, n.rightCurlyBracketKeyword_7)
 		
 		// newline after {
-		c.setLinewrap().after(n.leftCurlyBracketKeyword_5)
+//		c.setLinewrap().after(n.leftCurlyBracketKeyword_5)
 		
 		// two newlines after } 
-		c.setLinewrap(2).after(n.rightCurlyBracketKeyword_7)
+//		c.setLinewrap(2).after(n.rightCurlyBracketKeyword_7)
 	}
 }

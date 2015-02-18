@@ -10,8 +10,8 @@
   <artifactId>xmdlab-examples</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <!-- <module>xmdlab-example-jee</module> -->
-    <!-- <module>xmdlab-example-puppet</module> -->
+    <module>xmdlab-example-jee</module>
+    <module>xmdlab-example-puppet</module>
     <!-- <module>xmdlab-example-rails</module> -->
   </modules>
 </project>

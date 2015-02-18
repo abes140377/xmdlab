@@ -6,8 +6,11 @@
     <artifactId>xmdlab-example-jee</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
+  
   <artifactId>xmdlab-example-jee-model</artifactId>
-
+  <name>Xmdlab example jee model [${project.artifactId}]</name>
+  <description>Xmdlab example jee model [${project.artifactId}]</description>
+  
   <build>
     <plugins>
       <plugin>

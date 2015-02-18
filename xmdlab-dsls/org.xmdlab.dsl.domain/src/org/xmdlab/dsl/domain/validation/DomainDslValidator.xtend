@@ -28,12 +28,12 @@ class DomainDslValidator extends AbstractDomainDslValidator {
 				UNCAPITALIZED_NAME, dslNode.name)
 	}
 
-	@Check
-	def checkDslNodeDomain(DslNode dslNode) {
-		if (dslNode.domain.indexOf('') > 0)
-			warning("DslNode domain should be a domain name like e.g.: mydomain.com",
-				DomainDslPackage::eINSTANCE.dslNode_Domain, NO_DOMAIN_EXPRESSION, dslNode.domain)
-	}
+//	@Check
+//	def checkDslNodeDomain(DslNode dslNode) {
+//		if (dslNode.domain.indexOf('') > 0)
+//			warning("DslNode domain should be a domain name like e.g.: mydomain.com",
+//				DomainDslPackage::eINSTANCE.dslNode_Domain, NO_DOMAIN_EXPRESSION, dslNode.domain)
+//	}
 
 	@Check
 	def checkDslRoleNameStartsWithCapital(DslRole dslRole) {
