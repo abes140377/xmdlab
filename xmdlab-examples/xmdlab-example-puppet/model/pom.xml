@@ -1,43 +1,57 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.xmdlab.examples</groupId>
-		<artifactId>xmdlab-example-jee</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
-	</parent>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.xmdlab.examples</groupId>
+    <artifactId>xmdlab-example-jee</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
 
-	<artifactId>xmdlab-example-puppet-model</artifactId>
-	<name>Xmdlab example puppet model [${project.artifactId}]</name>
-	<description>Xmdlab example puppet model [${project.artifactId}]</description>
+  <artifactId>xmdlab-example-puppet-model</artifactId>
+  <name>Xmdlab example puppet model [${project.artifactId}]</name>
+  <description>Xmdlab example puppet model [${project.artifactId}]</description>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.xmdlab</groupId>
-				<artifactId>xmdlab-maven-plugin</artifactId>
-				<version>${project.version}</version>
-				<configuration>
-					<verbose>true</verbose>
-					<model>src/main/resources/xmdlab-example-puppet.puppet</model>
-					<cartridge>puppet</cartridge>
-				</configuration>
-				<executions>
-					<execution>
-						<id>code-generation</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.xmdlab.cartridges</groupId>
-						<artifactId>org.xmdlab.cartridge.puppet</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.xmdlab</groupId>
+        <artifactId>xmdlab-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <verbose>true</verbose>
+          <model>src/main/resources/xmdlab-example-puppet.puppet</model>
+          <cartridge>puppet</cartridge>
+        </configuration>
+        <executions>
+          <execution>
+            <id>code-generation</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.xmdlab.cartridges</groupId>
+            <artifactId>org.xmdlab.cartridge.puppet</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.xmdlab.cartridges</groupId>
+      <artifactId>org.xmdlab.cartridge.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.xmdlab.cartridges</groupId>
+      <artifactId>org.xmdlab.cartridge.puppet</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 </project>

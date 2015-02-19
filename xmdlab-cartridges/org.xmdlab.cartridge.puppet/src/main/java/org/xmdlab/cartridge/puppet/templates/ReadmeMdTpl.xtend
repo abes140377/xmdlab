@@ -4,10 +4,16 @@
  */
 package org.xmdlab.cartridge.puppet.templates
 
-class ReadmeMdTpl extends ReadmeMdTplBase {
+import com.google.inject.Inject
+import org.xmdlab.cartridge.puppet.metafacade.*
+import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
-	//	@Inject extension PuppetCartridgeProperties
-	override doGenerate() '''
+class ReadmeMdTpl extends ReadmeMdTplBase {
 	
+	@Inject extension PuppetCartridgeProperties
+	
+	override doGenerate() '''
+	«siteMetafacade.modelResource.name» Roles & Profiles Example
+	========================
 	'''
 }

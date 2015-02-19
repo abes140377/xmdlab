@@ -1,6 +1,5 @@
 @Ecore(nsPrefix="xmdlab", nsURI="http://xmdlab.org/puppet-site-mm")
-//@GenModel(modelDirectory="./src-gen", importerID="org.eclipse.emf.importer.ecore", complianceLevel="5.0")
-@GenModel(modelDirectory="./src-gen", forceOverwrite="true", complianceLevel="5.0")
+//@GenModel(modelDirectory="./src-gen", forceOverwrite="true", complianceLevel="5.0")
 package org.xmdlab.puppet.site.mm
 
 abstract class NamedElement {
@@ -8,13 +7,13 @@ abstract class NamedElement {
 }
 
 class MmSite extends NamedElement {
-	
-	String hostname
-	
 	contains MmNode[] nodes opposite site
 }
 
 class MmNode extends NamedElement {
+	
+	String hostname
+	String fqdn
 	
 	container MmSite site opposite nodes
 	

@@ -16,7 +16,10 @@ import org.xmdlab.puppet.site.mm.MmSite
 class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 
 	override doGenerate(MmSite mmSite, IFileSystemAccess fsa) {
-		throw new UnsupportedOperationException("Generated method stub PuppetCartridgeGenerator:doGenerate(..). Implement me!")
+		// compile templates
+		compileReadmeMd(fsa, mmSite)
+
+//		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
 	}
 	
 }
