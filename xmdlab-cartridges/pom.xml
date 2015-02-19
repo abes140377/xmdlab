@@ -17,9 +17,9 @@
   <modules>
     <module>org.xmdlab.cartridge.common</module>
     <module>org.xmdlab.cartridge.puppet</module>
-    <!-- <module>org.xmdlab.cartridge.puppet.tests</module> -->
+    <module>org.xmdlab.cartridge.puppet.tests</module>
     <module>org.xmdlab.cartridge.jee</module>
-	<!-- <module>org.xmdlab.cartridge.jee.tests</module> -->
+	<module>org.xmdlab.cartridge.jee.tests</module>
   </modules>
 
   <build>

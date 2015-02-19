@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xmdlab.examples</groupId>
-    <artifactId>xmdlab-example-jee</artifactId>
+    <artifactId>xmdlab-example-puppet</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
 
