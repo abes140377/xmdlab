@@ -49,7 +49,6 @@ openFile
       <feature id="org.eclipse.emf.sdk"/>
       <feature id="org.eclipse.xtext.sdk"/>
       <feature id="org.eclipse.emf.mwe2.runtime.sdk"/>
-      <feature id="org.eclipselabs.xtext.utils.unittesting.feature"/>
       <feature id="org.eclipse.emf.mapping"/>
       <feature id="org.eclipse.emf.codegen.ecore.ui"/>
       <feature id="org.eclipse.xtext.ui.source"/>

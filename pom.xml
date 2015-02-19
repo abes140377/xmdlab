@@ -112,10 +112,44 @@
         <module>xmdlab-metamodels</module>
         <module>xmdlab-cartridge-generator</module>
         <module>xmdlab-cartridges</module>
-        <!-- <module>xmdlab-features</module> -->
         <module>xmdlab-plugins</module>
+        <module>xmdlab-features</module>
         <module>xmdlab-maven</module>
-		<!-- <module>xmdlab-examples</module> -->
+        <module>xmdlab-examples</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>dsls</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>xmdlab-dsls</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>cartridges</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>xmdlab-dsls</module>
+        <module>xmdlab-metamodels</module>
+        <module>xmdlab-cartridge-generator</module>
+        <module>xmdlab-cartridges</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>examples</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>xmdlab-maven</module>
+        <module>xmdlab-examples</module>
       </modules>
     </profile>
 
@@ -331,11 +365,11 @@
             <target>${java-version}</target>
           </configuration>
         </plugin>
-        <!-- <plugin> -->
-        <!-- <groupId>org.apache.maven.plugins</groupId> -->
-        <!-- <artifactId>maven-enforcer-plugin</artifactId> -->
-        <!-- <version>1.3.1</version> -->
-        <!-- </plugin> -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>1.3.1</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -575,30 +609,30 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <!-- <plugin> -->
-      <!-- <groupId>org.apache.maven.plugins</groupId> -->
-      <!-- <artifactId>maven-enforcer-plugin</artifactId> -->
-      <!-- <executions> -->
-      <!-- <execution> -->
-      <!-- <id>ban-other-loggers</id> -->
-      <!-- <goals> -->
-      <!-- <goal>enforce</goal> -->
-      <!-- </goals> -->
-      <!-- <configuration> -->
-      <!-- <rules> -->
-      <!-- <bannedDependencies> -->
-      <!-- <searchTransitive>true</searchTransitive> -->
-      <!-- <excludes> -->
-      <!-- <exclude>log4j:log4j</exclude> -->
-      <!-- <exclude>commons-logging</exclude> -->
-      <!-- </excludes> -->
-      <!-- <message>Secondary logging frameworks are banned in preference to org.slf4j:*-over-slf4j</message> -->
-      <!-- </bannedDependencies> -->
-      <!-- </rules> -->
-      <!-- </configuration> -->
-      <!-- </execution> -->
-      <!-- </executions> -->
-      <!-- </plugin> -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ban-other-loggers</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <bannedDependencies>
+                  <searchTransitive>true</searchTransitive>
+                  <excludes>
+                    <exclude>log4j:log4j</exclude>
+                    <exclude>commons-logging</exclude>
+                  </excludes>
+                  <message>Secondary logging frameworks are banned in preference to org.slf4j:*-over-slf4j</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -612,6 +646,10 @@
           <exclusion>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
           </exclusion>
         </exclusions>
       </dependency>

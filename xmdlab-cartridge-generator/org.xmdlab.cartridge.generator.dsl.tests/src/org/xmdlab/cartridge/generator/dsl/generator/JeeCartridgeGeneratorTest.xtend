@@ -1,18 +1,18 @@
 package org.xmdlab.cartridge.generator.dsl.generator
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import com.google.inject.Inject
+import java.io.File
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.xmdlab.cartridge.generator.dsl.CartridgeGeneratorInjectorProviderCustom
-import org.xmdlab.cartridge.generator.dsl.GeneratorConstants
-import java.io.File
-import com.google.common.io.Files
-import com.google.common.base.Charsets
-import static org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper.*
 import org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper
+
+import static org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper.*
 
 /**
  * 
@@ -34,7 +34,7 @@ class JeeCartridgeGeneratorTest {
 		val propertyFileContent = Files.toString(new File("resource/" + modelName + "/" + "cartridge.conf"),
 			Charsets.ISO_8859_1)
 
-		compilationTestHelper.copyToWorkspace("myProject/src/" + GeneratorConstants::CARTRIDGE_CONF_FILENAME,
+		compilationTestHelper.copyToWorkspace("myProject/src/" + org.xmdlab.cartridge.generator.dsl.GeneratorConstants::CARTRIDGE_CONF_FILENAME,
 			propertyFileContent)
 
 		modelAsString = Files.toString(new File("resource/" + modelName + "/" + modelName + ".cartridge"),

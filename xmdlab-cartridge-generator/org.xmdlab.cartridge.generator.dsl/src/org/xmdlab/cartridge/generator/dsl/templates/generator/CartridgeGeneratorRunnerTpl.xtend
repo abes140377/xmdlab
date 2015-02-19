@@ -6,18 +6,11 @@ import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 
 import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
 
-import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
-import java.util.Comparator
-import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTemplate
-
 class CartridgeGeneratorRunnerTpl {
-	
+
 	@Inject extension GeneratorProperties generatorProperties
 
 	def generate(DslCartridge dslCartridge) '''
-		«val className = cartridgeName.toFirstUpper + "CartridgeGeneratorBase"»
-		«val templates = dslCartridge.templates»
-		«val metafacades = dslCartridge.metafacades»
 		«getGeneratedComment(class.name)»
 		package «basePackage».generator
 		
@@ -27,7 +20,8 @@ class CartridgeGeneratorRunnerTpl {
 		/**
 		 * 
 		 */
-		class «cartridgeName.toFirstUpper»GeneratorRunner extends GeneratorRunner<«cartridgeName.toFirstUpper»CartridgeGeneratorStandaloneSetup, «cartridgeName.toFirstUpper»CartridgeGeneratorWorkflow> {
+		class «cartridgeName.toFirstUpper»GeneratorRunner extends GeneratorRunner<«cartridgeName.toFirstUpper»CartridgeGeneratorStandaloneSetup, «cartridgeName.
+			toFirstUpper»CartridgeGeneratorWorkflow> {
 		
 			/**
 			 * 

@@ -12,6 +12,8 @@ import org.junit.runner.RunWith
 import org.xmdlab.cartridge.generator.dsl.CartridgeGeneratorInjectorProviderCustom
 import org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper
 
+import static org.xmdlab.cartridge.generator.dsl.util.ExtCompilationTestHelper.*
+
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(CartridgeGeneratorInjectorProviderCustom))
 class PuppetCartridgeGeneratorTest {
@@ -38,9 +40,10 @@ class PuppetCartridgeGeneratorTest {
 		val String basePath = new File('../..').absolutePath
 
 		var srcFolders = newHashMap()
-		srcFolders.put("base", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.puppet")
-		srcFolders.put("src", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.puppet/src/main/java")
-		srcFolders.put("src-gen", basePath + "/xmdlab-cartridges/org.xmdlab.cartridge.puppet/src-gen")
+		srcFolders.put(BASE_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName)
+		srcFolders.put(MAN_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/src/main/java")
+		srcFolders.put(GEN_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/src-gen")
+		srcFolders.put(GEN_TEST_SRC_FOLDER_KEY, basePath + "/xmdlab-cartridges/org.xmdlab.cartridge." + modelName + "/test-src-gen")
 
 		modelAsString.assertCompilesToReference(srcFolders)
 	}

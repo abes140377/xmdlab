@@ -113,6 +113,13 @@
       <artifactId>org.xmdlab.cartridge.common</artifactId>
       <version>${project.version}</version>
     </dependency>
+    
+    <dependency>
+      <groupId>org.xmdlab.cartridge.generator</groupId>
+      <artifactId>org.xmdlab.cartridge.generator.dsl</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.xmdlab.dsls</groupId>

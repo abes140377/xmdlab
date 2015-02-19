@@ -66,7 +66,7 @@ public class ExtCompilationTestHelper extends CompilationTestHelper {
 						|| refBaseFolder == null || refTestSrcGenFolder == null)
 					throw new RuntimeException(
 							"Unable to exetute ExtCompilationTestHelper.assertCompilesToReference because on of"
-									+ "refSrcFolder, refSrcGenFolder or refBaseFolder could not be determined.");
+									+ " refSrcFolder, refSrcGenFolder or refBaseFolder could not be determined.");
 
 				for (Entry<String, CharSequence> entry : generatedResources
 						.entrySet()) {

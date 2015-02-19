@@ -1,7 +1,9 @@
 package org.xmdlab.cartridge.generator.dsl.parser
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import com.google.inject.Inject
-import java.util.Scanner
+import java.io.File
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -12,7 +14,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.xmdlab.cartridge.generator.dsl.CartridgeGeneratorInjectorProviderCustom
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslModel
-import org.xmdlab.cartridge.generator.dsl.GeneratorConstants
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(CartridgeGeneratorInjectorProviderCustom))
@@ -27,8 +28,9 @@ class PuppetSimpleCartridgeGeneratorParserTest {
 
 	@Before
 	def void beforeClass() {
-		modelAsString = new Scanner(getClass.getResourceAsStream("/" + cartridgeName + "/" + cartridgeName + ".cartridge"), GeneratorConstants::ENCODING).
-			useDelimiter("\\A").next();
+		modelAsString = Files.toString(new File("resource/" + cartridgeName + "/" + cartridgeName + ".cartridge"), Charsets.UTF_8);
+		
+		Assert.assertNotNull(modelAsString)
 	}
 
 	/**
