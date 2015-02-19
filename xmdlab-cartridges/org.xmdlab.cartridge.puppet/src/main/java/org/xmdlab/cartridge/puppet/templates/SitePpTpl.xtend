@@ -8,22 +8,17 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.puppet.metafacade.*
 import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
-class ReadmeMdTpl extends ReadmeMdTplBase {
+class SitePpTpl extends SitePpTplBase {
 	
 	@Inject extension PuppetCartridgeProperties
 	
 	override doGenerate() '''
 	«val site = siteMetafacade.modelResource»
-	Roles & Profiles «site.domainName»
-	========================
-	
-	This site contains the definitions for the following nodes
-	
 	«FOR n : site.nodes»
-	*   «n.hostname»
+	node «n.hostname» {
+		# include role::wordpress
+	}
 	
-	    «n.doc»
-	    
 	«ENDFOR»
 	'''
 }

@@ -2,39 +2,39 @@
 //@GenModel(modelDirectory="./src-gen", forceOverwrite="true", complianceLevel="5.0")
 package org.xmdlab.puppet.site.mm
 
-abstract class NamedElement {
-	String name
-}
 
-class MmSite extends NamedElement {
+class MmSite {
+	String domainName
+	
 	contains MmNode[] nodes opposite site
 }
 
-class MmNode extends NamedElement {
-	
+class MmNode {
 	String hostname
 	String fqdn
+	
+	String doc
 	
 	container MmSite site opposite nodes
 	
 	contains MmRole role opposite node
 }
 
-class MmRole extends NamedElement {
-	
+class MmRole {
+		
 	container MmNode node opposite role
 	
 	contains MmProfile[] profiles opposite role
 }
 
-class MmProfile extends NamedElement {
+class MmProfile {
 	
 	container MmRole role opposite profiles
 	
 	contains MmModule modules opposite profile
 }
 
-class MmModule extends NamedElement {
+class MmModule {
 	
 	container MmProfile profile opposite modules
 }

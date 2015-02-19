@@ -18,6 +18,8 @@ class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 	override doGenerate(MmSite mmSite, IFileSystemAccess fsa) {
 		// compile templates
 		compileReadmeMd(fsa, mmSite)
+		compileVagrantfile(fsa, mmSite)
+		compileSitePp(fsa, mmSite)
 
 //		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
 	}

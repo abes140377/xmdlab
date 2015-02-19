@@ -1,6 +1,12 @@
 Domain femoplus.local {
 
+	"This is the jboss wildfly cluster node for the domain" 
 	Node appserver {
+
+	}
+	
+	"This is the apache webserver for the domain" 
+	Node webserver {
 
 	}
 }

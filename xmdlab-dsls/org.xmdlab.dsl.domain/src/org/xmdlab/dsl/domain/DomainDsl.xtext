@@ -13,6 +13,7 @@ DslDomain:
 ;
 
 DslNode:
+	(doc=STRING)?
 	'Node' name=ID '{'
 		role=DslRole
 	'}'

@@ -30,6 +30,8 @@ class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 		this.mmSite = mmSite
 		this.dslDomain = dslDomain
 		
+		domainName = dslDomain.name
+		
 		val List<DslNode> allDslNodes = EcoreUtil2::eAllOfType(dslDomain, typeof(DslNode))
 		nodes.addAll(allDslNodes.map[e|transform(e)])
 	}
@@ -40,5 +42,6 @@ class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 	def create FACTORY.createMmNode transform(DslNode dslNode) {
 		hostname = dslNode.name
 		fqdn = hostname + "." + dslDomain.name
+		doc = dslNode.doc
 	}
 }

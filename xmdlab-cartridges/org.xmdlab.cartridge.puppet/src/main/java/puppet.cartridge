@@ -22,6 +22,18 @@ Cartridge puppet {
 		}
 	}
 	
+	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = base {
+		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = base {
+		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
 	//Task test {
 	//	ModelElement type = profileMetafacade {
 	//		
