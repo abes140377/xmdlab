@@ -1,20 +1,4 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-// enable generation of querydsl query types
-apply plugin: "com.ewerk.gradle.plugins.querydsl"
-
 description = 'AppManager domain - contains domain model'
-
-buildscript {
-  repositories {
-  	mavenLocal()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.ewerk.gradle.plugins:querydsl-plugin:1.0.3'
-  }
-}
 
 ext.libraryVersions = [
 	slf4jVersion					: '1.7.7',
@@ -31,13 +15,29 @@ ext.libraryVersions = [
 ]
 
 configurations {
-	apt { description 'for annotation processors' }
 	provided
-
+	querydslapt
 	glassfishEmbeddedTestRuntime { extendsFrom testRuntime }
 	jbossEmbeddedTestRuntime { extendsFrom testRuntime, provided }
 	jbossRemoteTestRuntime { extendsFrom testRuntime }
 }
+
+sourceSets {
+	generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+	test {
+		resources { srcDir 'src/test/resources' }
+		resources { srcDir 'src/test/resources-jbossas-embedded' }
+
+		compileClasspath += main.output + configurations.provided + main.compileClasspath
+		runtimeClasspath += main.output + configurations.provided + main.compileClasspath + main.runtimeClasspath
+	}
+}
+
+sourceSets.main.java.srcDir 'src/main/generated'
 
 dependencies {
 	compile project(':xmdlab-framework-jee')
@@ -50,8 +50,11 @@ dependencies {
 
 	testRuntime "com.h2database:h2:1.4.177"
 
+	// querydsl
 	compile "com.mysema.querydsl:querydsl-core:${libraryVersions.querydslVersion}"
 	compile "com.mysema.querydsl:querydsl-jpa:${libraryVersions.querydslVersion}"
+	
+	querydslapt "com.mysema.querydsl:querydsl-apt:${libraryVersions.querydslVersion}"
 
 	// Spring data
 	compile "org.springframework.data:spring-data-jpa:${libraryVersions.springDataVersion}"
@@ -77,13 +80,31 @@ dependencies {
 	glassfishEmbeddedTestRuntime "org.glassfish.main.extras:glassfish-embedded-all:${libraryVersions.glassfishVersion}"
 }
 
-// querydsl configuration
-querydsl {
-  jpa = true
-  querydslSourcesDir = 'build/querydsl/java'
+// querydsl
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
 }
 
-sourceSets.main.java.srcDir 'build/querydsl/java'
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
 
 // jbossEmbeddedTest
 task jbossEmbeddedTest(type: Test)
@@ -111,16 +132,6 @@ task glassfishEmbeddedTest(type: Test) {
 	systemProperty 'arquillian.launch', "glassfish-embedded"
 	systemProperty 'java.util.logging.config.file', "${projectDir}/src/test/resources-glassfish-embedded/logging.properties"
 	systemProperty 'derby.stream.error.file', "${projectDir}/build/derby.log"
-}
-
-sourceSets {
-	test {
-		resources { srcDir 'src/test/resources' }
-		resources { srcDir 'src/test/resources-jbossas-embedded' }
-
-		compileClasspath += main.output + configurations.provided + main.compileClasspath
-		runtimeClasspath += main.output + configurations.provided + main.compileClasspath + main.runtimeClasspath
-	}
 }
 
 tasks.withType(Test).matching({ t-> t.name.endsWith('Test') } as Spec).each { t ->

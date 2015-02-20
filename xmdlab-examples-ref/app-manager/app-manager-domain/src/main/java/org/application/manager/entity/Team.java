@@ -7,13 +7,13 @@ import javax.persistence.Table;
 import org.xmdlab.framework.jee.domain.AbstractEntity;
 
 @Entity
-@Table(name = "TEAM")
+@Table(name = "team")
 public class Team extends AbstractEntity {
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "DESCRIPTION", nullable = true)
+	@Column(name = "description", nullable = true)
 	private String description;
 
 	/**

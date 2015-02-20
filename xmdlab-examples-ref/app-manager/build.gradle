@@ -7,8 +7,6 @@ println """
 
 // define common plugins, tasks and properties for all projects (including root) here
 allprojects {
-	apply plugin: 'eclipse'
-	
 	group = 'org.xmdlab.example.ref.appmanager'
   	version = '0.1.0-SNAPSHOT'
 }
@@ -16,6 +14,7 @@ allprojects {
 subprojects {
 	apply plugin: 'java'
 	apply plugin: 'maven'
+	apply plugin: 'eclipse'
 	
 	sourceCompatibility = 1.7  
 	targetCompatibility = 1.7

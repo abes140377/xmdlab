@@ -2,6 +2,7 @@ package org.application.manager.repository;
 
 import org.application.manager.entity.Organisation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 /**
  * 
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  */
 public interface OrganisationRepository extends
-		JpaRepository<Organisation, Long> {
+		JpaRepository<Organisation, Long>,
+		QueryDslPredicateExecutor<Organisation> {
 
 }

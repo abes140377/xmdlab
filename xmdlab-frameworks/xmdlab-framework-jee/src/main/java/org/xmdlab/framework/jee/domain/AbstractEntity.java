@@ -1,9 +1,15 @@
 package org.xmdlab.framework.jee.domain;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Version;
 
 /**
  * Base class to derive entity classes from.
@@ -17,6 +23,27 @@ public class AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	// @Column(name = "create_date", nullable = false)
+	// private Date createDate;
+	//
+	// @Column(name = "modification_date", nullable = false)
+	// private Date modificationDate;
+
+	@Version
+	private long version = 0;
+
+	// @PreUpdate
+	// public void preUpdate() {
+	// modificationDate = new Date();
+	// }
+	//
+	// @PrePersist
+	// public void prePersist() {
+	// Date now = new Date();
+	// createDate = now;
+	// modificationDate = now;
+	// }
+
 	/**
 	 * Returns the identifier of the entity.
 	 * 
@@ -24,6 +51,15 @@ public class AbstractEntity {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * This setter method should only be used by unit tests.
+	 * 
+	 * @param id
+	 */
+	protected void setId(Long id) {
+		this.id = id;
 	}
 
 	/*

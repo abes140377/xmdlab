@@ -1,4 +1,4 @@
-package org.application.manager.service;
+package org.application.manager.integration;
 
 import javax.inject.Inject;
 

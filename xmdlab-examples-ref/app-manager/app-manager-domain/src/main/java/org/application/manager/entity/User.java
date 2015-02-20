@@ -10,22 +10,22 @@ import org.xmdlab.framework.jee.domain.AbstractEntity;
  * The Class User.
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User extends AbstractEntity {
 
 	/** The firstname. */
-	@Column(name = "FIRSTNAME", nullable = true)
+	@Column(name = "firstname", nullable = true)
 	private String firstname;
 
 	/** The lastname. */
-	@Column(name = "LASTNAME", nullable = true)
+	@Column(name = "lastname", nullable = true)
 	private String lastname;
 
 	/** The username. */
-	@Column(name = "USERNAME", nullable = false, unique = true)
+	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-	@Column(name = "EMAIL_ADDRESS")
+	@Column(name = "email_address")
 	private EmailAddress emailAddress;
 
 	/**

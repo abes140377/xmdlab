@@ -5,14 +5,15 @@ repositories {
 allprojects {
 	group = "org.xmdlab.framework"
 	version = "0.1.0-SNAPSHOT"
-	
-    task hello << {task -> println "I'm $task.project.name" }
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
 	apply plugin: 'eclipse'
+	
+	sourceCompatibility = 1.7  
+	targetCompatibility = 1.7
     
     repositories {
 		mavenLocal()
