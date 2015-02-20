@@ -24,6 +24,10 @@ class CartridgeMetafacadeXtendTpl {
 		
 		interface «metafacade.name.toFirstUpper» extends Metafacade<«metafacade.modelElement»> {
 			«FOR facadeMethod : metafacade.facadeMethods»
+			
+			/**
+			 * 
+			 */
 			def «facadeMethod.type» «facadeMethod.name»()
 			«ENDFOR»
 		}

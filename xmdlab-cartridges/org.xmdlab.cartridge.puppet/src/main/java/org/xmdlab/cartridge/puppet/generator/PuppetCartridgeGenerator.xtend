@@ -6,6 +6,7 @@ package org.xmdlab.cartridge.puppet.generator
 
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xmdlab.puppet.site.mm.MmSite
+import org.xmdlab.puppet.site.mm.MmRole
 
 /**
  * The PuppetCartridgeGenerator
@@ -20,8 +21,15 @@ class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 		compileReadmeMd(fsa, mmSite)
 		compileVagrantfile(fsa, mmSite)
 		compileSitePp(fsa, mmSite)
-
-//		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
+		
+		// nodes
+		
+		// roles
+		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestInitPp(fsa, it)]
+	}
+	
+	override getRoleManifestPpOutputPattern(MmRole mmRole) {
+		return mmRole.name
 	}
 	
 }

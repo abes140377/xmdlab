@@ -14,6 +14,9 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	
 	override doGenerate() '''
 	«val site = siteMetafacade.modelResource»
+	
+	«compileProxyVars()»
+	
 	Vagrant.configure('2') do |config|
 	  «FOR n : site.nodes»
 	  
@@ -30,5 +33,12 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	  end
 	  «ENDFOR»	
 	end	
+	'''
+	
+	def compileProxyVars() '''
+		«IF siteMetafacade.requireProxyConf»
+		proxyUrl      = 'http://«proxyPort»:«proxyPort»'
+		noProxy       = 'localhost,127.0.0.1,10.129.0.0/16,.dzbw.de'
+		«ENDIF»
 	'''
 }

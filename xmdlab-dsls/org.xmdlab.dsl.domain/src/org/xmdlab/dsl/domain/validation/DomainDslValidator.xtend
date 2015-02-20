@@ -27,6 +27,13 @@ class DomainDslValidator extends AbstractDomainDslValidator {
 			warning("DslNode name should start with a lower case letter", DomainDslPackage::eINSTANCE.dslNode_Name,
 				UNCAPITALIZED_NAME, dslNode.name)
 	}
+	
+	@Check
+	def checkNodeHasARole(DslNode dslNode) {
+		if (dslNode.role == null)
+			warning("DslNode must have a role",
+				DomainDslPackage::eINSTANCE.dslNode_Role, NODE_HAS_NO_ROLE_EXPRESSION, dslNode.name)
+	}
 
 //	@Check
 //	def checkDslNodeDomain(DslNode dslNode) {

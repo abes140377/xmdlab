@@ -5,16 +5,35 @@ Cartridge puppet {
 				"The Vagrant VM Box to use when 'vagrant up'"
 			}
 		}
+		
+		PropertyGroup site {
+			Property proxyHost required = false {
+				"The proxy hostname or ip address required for connecting to the internet."
+			}
+			Property proxyPort required = false {
+				"The proxy port"
+			}
+		}
 	}
 	
 	Transformation input = org.xmdlab.dsl.domain.domainDsl.DslDomain output = org.xmdlab.puppet.site.mm.MmSite
 	
 	// model metafacade (root)
 	Metafacade siteMetafacade modelElement = org.xmdlab.puppet.site.mm.MmSite {
+		facadeMethode requireProxyConf type = "boolean"
+	}
+	
+	Metafacade nodeMetafacade modelElement = org.xmdlab.puppet.site.mm.MmNode {
+		
+	}
+	
+	Metafacade roleMetafacade modelElement = org.xmdlab.puppet.site.mm.MmRole {
 		
 	}
 		
 	Outlet base outputDirectory = '..' overwrite = false
+	Outlet roleManifests outputDirectory = '../role/manifests' overwrite = false
+	Outlet profileManifests outputDirectory = '../profile/manifests' overwrite = false
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {
 		ModelElement type = siteMetafacade {
@@ -30,6 +49,18 @@ Cartridge puppet {
 	
 	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = base {
 		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/RoleManifestInitPpTpl" outputPattern = "init.pp" outlet = roleManifests {
+		ModelElement type = roleMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/RoleManifestPpTpl" outlet = roleManifests {
+		ModelElement type = roleMetafacade {
 			
 		}
 	}

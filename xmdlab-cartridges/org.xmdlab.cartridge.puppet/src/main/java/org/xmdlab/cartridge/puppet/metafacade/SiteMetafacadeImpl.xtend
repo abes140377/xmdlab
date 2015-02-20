@@ -5,8 +5,26 @@
 package org.xmdlab.cartridge.puppet.metafacade
 
 import com.google.inject.Singleton
+import com.google.inject.Inject
+import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
 @Singleton
 class SiteMetafacadeImpl extends SiteMetafacadeBase {
+	
+	@Inject extension PuppetCartridgeProperties
+	
+	/**
+	 * 
+	 */
+	override requireProxyConf() {
+		var boolean result = false
+		if(!System.getProperty("http_proxy").nullOrEmpty) {
+			result = true
+		} else if(!proxyHost.nullOrEmpty) {
+			result = true
+		}
+		
+		return result
+	}
 
 }

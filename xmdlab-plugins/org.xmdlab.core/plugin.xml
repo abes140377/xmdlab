@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<!--Warning: Do not use the whole nature’s id as a value for the id attribute. Instead, use only the part that comes after the plugin id -->
+	<extension
+       id="nature.xmdlabNature"
+       name="Xmdlab Generator Nature"
+       point="org.eclipse.core.resources.natures">
+		<runtime>
+			<run
+            	class="org.xmdlab.core.nature.XmdlabNature">
+       		</run>
+    	</runtime>
+    	<builder id="org.xmdlab.builder.generatorBuilder"/>
+ 	</extension>
+ 	<extension point="org.eclipse.ui.ide.projectNatureImages">
+      <image 
+      	icon="icons/cog_8.png" 
+      	id="nature.xmdlabNature.img" 
+      	natureId="nature.xmdlabNature" />
+	</extension>
+	<extension
+    	id="org.xmdlab.builder.generatorBuilder"
+        point="org.eclipse.core.resources.builders">
+    	<builder>
+        	<run 
+        		class="org.xmdlab.core.builder.XmdlabGeneratorBuilder">
+         	</run>
+      	</builder>
+   	</extension>
+   	<extension point="org.eclipse.ui.commands">
+    	<command 
+    		defaultHandler="org.xmdlab.core.command.RemoveNature"
+    		id="org.xmdlab.nature.removeNature" 
+    		name="Remove Xmdlab Nature">
+    	</command>
+     <command
+           defaultHandler="org.xmdlab.core.command.AddNature"
+           id="org.xmdlab.nature.addNature"
+           name="Add Xmdlab Nature">
+     </command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+    	<menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+        	<command 
+        		commandId="org.xmdlab.nature.removeNature" 
+        		style="push">
+        	</command>
+         <command
+               commandId="org.xmdlab.nature.addNature"
+               style="push">
+         </command>
+   		</menuContribution>
+	</extension>
+</plugin>

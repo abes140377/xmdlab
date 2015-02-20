@@ -70,4 +70,12 @@ class GeneratorProperties {
 	def String getCartridgeMetaModel() {
 		return getPropertyValue("cartridge.metaModel")
 	}
+	
+	def String getProxyHost() {
+		return getPropertyValue("site.proxyHost")
+	}
+	
+	def String getProxyPort() {
+		return getPropertyValue("site.proxyPort")
+	}
 }

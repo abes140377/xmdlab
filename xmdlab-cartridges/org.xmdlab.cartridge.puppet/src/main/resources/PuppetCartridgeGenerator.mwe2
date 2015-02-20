@@ -1,4 +1,4 @@
-module org.xmdlab.cartridge.jee.JeeCartridgeGenerator
+module org.xmdlab.cartridge.puppet.PuppetCartridgeGenerator
 
 import org.eclipse.emf.mwe.utils.*
 

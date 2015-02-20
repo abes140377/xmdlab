@@ -1,0 +1,64 @@
+package org.xmdlab.core.command;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.runtime.CoreException;
+import org.xmdlab.core.builder.XmdlabGeneratorBuilder;
+import org.xmdlab.core.nature.XmdlabNature;
+import org.xmdlab.core.util.PluginUtil;
+
+public class RemoveNature extends AbstractHandler implements IHandler {
+
+	/**
+	 * 
+	 */
+	@Override
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
+		final IProject project = PluginUtil.getProject(event);
+
+		if (project != null) {
+			try {
+				final IProjectDescription description = project
+						.getDescription();
+
+				//
+				final List<ICommand> commands = new ArrayList<ICommand>();
+				commands.addAll(Arrays.asList(description.getBuildSpec()));
+
+				for (final ICommand buildSpec : description.getBuildSpec()) {
+					if (XmdlabGeneratorBuilder.BUILDER_ID.equals(buildSpec
+							.getBuilderName())) {
+						// remove builder
+						commands.remove(buildSpec);
+					}
+				}
+
+				description.setBuildSpec(commands.toArray(new ICommand[commands
+						.size()]));
+
+				//
+				List<String> natureIds = new ArrayList<String>(
+						Arrays.asList(description.getNatureIds()));
+				natureIds.remove(XmdlabNature.NATURE_ID);
+				description.setNatureIds(natureIds.toArray(new String[natureIds
+						.size()]));
+
+				project.setDescription(description, null);
+			} catch (final CoreException e) {
+				// TODO could not read/write project description
+				e.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+}

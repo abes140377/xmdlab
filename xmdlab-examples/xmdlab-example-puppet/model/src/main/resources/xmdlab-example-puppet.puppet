@@ -2,11 +2,15 @@ Domain femoplus.local {
 
 	"This is the jboss wildfly cluster node for the domain" 
 	Node appserver {
-
+		Role jboss8 {
+		
+		}
 	}
 	
 	"This is the apache webserver for the domain" 
 	Node webserver {
-
+		Role wordpress {
+		
+		}
 	}
 }
