@@ -1,8 +1,8 @@
 node appserver {
-	# include role::wordpress
+	include jboss8
 }
 
 node webserver {
-	# include role::wordpress
+	include wordpress
 }
 
