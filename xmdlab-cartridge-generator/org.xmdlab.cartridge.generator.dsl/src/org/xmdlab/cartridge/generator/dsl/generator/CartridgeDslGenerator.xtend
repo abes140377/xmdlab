@@ -39,6 +39,7 @@ import org.xmdlab.cartridge.generator.dsl.templates.PomXmlTpl
 import static org.xmdlab.cartridge.generator.dsl.io.CartridgeOutputsConfigurationProvider.*
 import org.xmdlab.cartridge.generator.dsl.templates.test.CartridgeInjectorProviderTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorRunnerTpl
+import org.xmdlab.cartridge.generator.dsl.templates.conf.ReferenceConfTpl
 
 /**
  * Generates code from your model files on save.
@@ -64,6 +65,7 @@ class CartridgeDslGenerator implements IGenerator {
 	@Inject extension Provider<CartridgeOutputConfigurationProviderTpl> cartridgeOutputConfigurationProviderTpl
 
 	@Inject extension Provider<CartridgePropertiesTpl> cartridgePropertiesTpl
+	@Inject extension Provider<ReferenceConfTpl> referenceConfTpl
 
 	@Inject extension Provider<PomXmlTpl> pomXmlTpl
 	@Inject extension Provider<CartridgeTransformationXtendTpl> cartridgeTransformationXtendTpl
@@ -94,6 +96,7 @@ class CartridgeDslGenerator implements IGenerator {
 
 		//
 		generateCartridgeProperties(dslCartridge, fsa)
+		generateReferenceConf(dslCartridge, fsa)
 
 		//
 		val DslTransformation dslTransformation = dslCartridge.transformation
@@ -254,7 +257,7 @@ class CartridgeDslGenerator implements IGenerator {
 	}
 
 	// =======================================================================================================================================
-	// Namespace
+	// conf
 	/**
 	 * 
 	 */
@@ -263,6 +266,17 @@ class CartridgeDslGenerator implements IGenerator {
 
 		val fileName = javaToFsPath(basePackage) + "/conf/" + cartridgeName.toFirstUpper +
 			"CartridgeProperties.xtend"
+
+		fsa.generateFile(fileName, tpl.generate(dslCartridge))
+	}
+	
+	/**
+	 * 
+	 */
+	def generateReferenceConf(DslCartridge dslCartridge, IFileSystemAccess fsa) {
+		val ReferenceConfTpl tpl = referenceConfTpl.get
+
+		val fileName = "reference.conf" 
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}

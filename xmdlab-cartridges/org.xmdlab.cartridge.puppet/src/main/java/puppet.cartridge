@@ -7,7 +7,7 @@ Cartridge puppet {
 			Property proxyPort required = false default = "8080" {
 				"The proxy port"
 			}
-			Property nonProxyHosts required = false default = "localhost,127.0.0.1" {
+			Property nonProxyHosts required = false default = "localhost|127.0.0.1" {
 				"Comma separated list of host. E.g.: localhost,127.0.0.1,192.168.178.0/16,.domain.com"
 			}
 		}
