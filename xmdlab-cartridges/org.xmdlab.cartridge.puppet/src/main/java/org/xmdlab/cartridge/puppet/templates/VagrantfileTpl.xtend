@@ -5,7 +5,6 @@
 package org.xmdlab.cartridge.puppet.templates
 
 import com.google.inject.Inject
-import org.xmdlab.cartridge.puppet.metafacade.*
 import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
 class VagrantfileTpl extends VagrantfileTplBase {
@@ -14,15 +13,15 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	
 	override doGenerate() '''
 	«val site = siteMetafacade.modelResource»
-	
 	«compileProxyVars()»
 	
 	Vagrant.configure('2') do |config|
+	  «compileProxyConf()»
 	  «FOR n : site.nodes»
 	  
 	  config.vm.define "«n.hostname»" do |«n.hostname»|
-	    «n.hostname».vm.box = "precise32"
-	    «n.hostname».vm.box_url = "http://files.vagrantup.com/precise32.box"
+	    «n.hostname».vm.box = "«vmBox»"
+	    «n.hostname».vm.box_url = "«vmBoxUrl»"
 	    «n.hostname».vm.network :forwarded_port, guest: 80, host: 8080
 	    «n.hostname».vm.provision :puppet do |puppet|
 	      puppet.manifests_path = "manifests"
@@ -38,7 +37,13 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	def compileProxyVars() '''
 		«IF siteMetafacade.requireProxyConf»
 		proxyUrl      = 'http://«proxyPort»:«proxyPort»'
-		noProxy       = 'localhost,127.0.0.1,10.129.0.0/16,.dzbw.de'
+		noProxy       = '«nonProxyHosts»'
+		«ENDIF»
+	'''
+	
+	def compileProxyConf() '''
+		«IF siteMetafacade.requireProxyConf»
+		# TODO Implement org.xmdlab.cartridge.puppet.templates.VagrantfileTpl:compileProxyConf
 		«ENDIF»
 	'''
 }

@@ -16,7 +16,7 @@ class SitePpTpl extends SitePpTplBase {
 	«val site = siteMetafacade.modelResource»
 	«FOR n : site.nodes»
 	node «n.hostname» {
-		# include role::wordpress
+		include «n.role.name»
 	}
 	
 	«ENDFOR»

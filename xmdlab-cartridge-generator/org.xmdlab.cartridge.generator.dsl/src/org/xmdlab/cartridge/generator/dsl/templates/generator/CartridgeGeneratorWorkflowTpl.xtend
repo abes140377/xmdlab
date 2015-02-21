@@ -41,20 +41,17 @@ class CartridgeGeneratorWorkflowTpl {
 	 */
 	class «cartridgeName.toFirstUpper»CartridgeGeneratorWorkflow extends CartridgeGeneratorWorkflow {
 	
-		private Logger LOGGER = LoggerFactory.getLogger(«cartridgeName.toFirstUpper»CartridgeGeneratorWorkflow)
+		private final static Logger LOG = LoggerFactory.getLogger(«cartridgeName.toFirstUpper»CartridgeGeneratorWorkflow)
 	
-		@Inject
-		var Injector injector
+		@Inject Injector injector
 	
-		@Inject
-		ParseHelper<«dslCartridge.getDslModelClassSimpleName»> parser
-	
+		@Inject ParseHelper<«dslCartridge.getDslModelClassSimpleName»> parser
+		
 		/**
 		 * 
 		 */
-		override boolean run(String modelURI) {
-			LOGGER.info(parser.toString)
-			val «dslCartridge.getDslModelClassSimpleName» «dslCartridge.getDslModelClassSimpleName.toFirstLower» = parser.parse(Files.toString(new File(modelURI), Charsets.ISO_8859_1))
+		override boolean run(String modelPath) {
+			val «dslCartridge.getDslModelClassSimpleName» «dslCartridge.getDslModelClassSimpleName.toFirstLower» = parser.parse(Files.toString(new File(modelPath), Charsets.ISO_8859_1))
 	
 			val «dslCartridge.transformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» = «dslCartridge.getDslModelClassSimpleName.toFirstLower».eAllContents.filter(«dslCartridge.transformationInputClassSimpleName»).head
 	
@@ -68,7 +65,7 @@ class CartridgeGeneratorWorkflowTpl {
 				}
 			}
 	
-			LOGGER.error("Executing workflow failed")
+			LOG.error("Executing workflow failed")
 	
 			return false
 		}
@@ -90,7 +87,7 @@ class CartridgeGeneratorWorkflowTpl {
 		 * 
 		 */
 		protected def «dslCartridge.getTransformationOutputClassSimpleName» transformModel(«dslCartridge.getTransformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower») {
-			LOGGER.info("Transforming «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» " + «dslCartridge.getTransformationInputClassSimpleName.toFirstLower».name)
+			LOG.info("Transforming «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» " + «dslCartridge.getTransformationInputClassSimpleName.toFirstLower».name)
 	
 			// run transformation
 			val «cartridgeName.toFirstUpper»CartridgeTransformation transformation = injector.getInstance(«cartridgeName.toFirstUpper»CartridgeTransformation)

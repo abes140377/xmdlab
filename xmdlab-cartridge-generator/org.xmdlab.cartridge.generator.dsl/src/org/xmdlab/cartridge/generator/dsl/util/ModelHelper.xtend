@@ -190,6 +190,19 @@ class ModelHelper {
 			throw new UnsupportedOperationException('Implement me!')
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	def static boolean asBoolean(BoolLiteral boolLiteral) {
+		if (boolLiteral instanceof TrueLiteral) {
+			return true
+		} else if (boolLiteral instanceof FalseLiteral) {
+			return false
+		} else {
+			throw new UnsupportedOperationException('Implement me!')
+		}
+	}
 
 	/**
 	 * 

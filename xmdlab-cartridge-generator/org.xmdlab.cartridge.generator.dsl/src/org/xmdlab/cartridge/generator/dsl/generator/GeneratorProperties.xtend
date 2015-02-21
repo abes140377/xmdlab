@@ -8,20 +8,29 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import java.io.IOException
 import com.google.inject.Singleton
+import org.apache.log4j.Logger
 
 @Singleton
 class GeneratorProperties {
+	final private static Logger log = Logger.getLogger(CartridgeDslGenerator)
+	
 	var Config _conf
 	var URI modelUri
 
-	//	var URI _modelUri;
 	def String getPropertyValue(String key) {
 		getConf().getString(key)
 	}
 
 	def Config getConf() {
 		if (_conf == null || _conf.entrySet().size() == 0) {
-			_conf = ConfigFactory.parseFile(getConfigFile())
+			val Config conf1 = ConfigFactory.load()
+			val Config conf2 = ConfigFactory.parseFile(getConfigFile())
+			
+			_conf = conf1.withFallback(conf2)
+
+			_conf.entrySet.forEach [
+				log.info(it.key + " = " + it.value.render)
+			]
 		}
 
 		return _conf
@@ -31,7 +40,7 @@ class GeneratorProperties {
 		var String result = null
 
 		val URI confUri = modelUri.trimSegments(1).appendSegment(GeneratorConstants::CARTRIDGE_CONF_FILENAME)
-		
+
 		if (confUri.isFile()) {
 			result = confUri.toFileString()
 		} else if (confUri.isPlatformResource()) {
@@ -62,20 +71,12 @@ class GeneratorProperties {
 	def String getCartridgeName() {
 		return getPropertyValue("cartridge.name")
 	}
-	
+
 	def String getCartridgeDslModel() {
 		return getPropertyValue("cartridge.dslModel")
 	}
-	
+
 	def String getCartridgeMetaModel() {
 		return getPropertyValue("cartridge.metaModel")
-	}
-	
-	def String getProxyHost() {
-		return getPropertyValue("site.proxyHost")
-	}
-	
-	def String getProxyPort() {
-		return getPropertyValue("site.proxyPort")
 	}
 }

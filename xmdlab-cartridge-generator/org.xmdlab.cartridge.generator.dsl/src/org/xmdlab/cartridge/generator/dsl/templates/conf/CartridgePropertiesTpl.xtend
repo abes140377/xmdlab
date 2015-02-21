@@ -6,6 +6,8 @@ import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 
 import static extension org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
+import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.BoolLiteral
+import org.xmdlab.cartridge.generator.dsl.util.ModelHelper
 
 /**
  * 
@@ -13,6 +15,7 @@ import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 class CartridgePropertiesTpl {
 
 	@Inject extension GeneratorProperties generatorProperties
+	@Inject extension ModelHelper modelHelper
 
 	/**
 	 * 
@@ -27,12 +30,12 @@ class CartridgePropertiesTpl {
 		«getClassComment(class.name)»
 		@Singleton
 		class «cartridgeName.toFirstUpper»CartridgeProperties extends CartridgeProperties {
-		
 			«FOR pgMap : dslCartridge.propertyGroupMap.entrySet»
+			
 			// Properties for group «pgMap.key»
 			«FOR p : pgMap.value»
 			def String get«p.name.toFirstUpper»() {
-				return config.getString("«pgMap.key».«p.name»")
+				return config.getString("«pgMap.key + "." + p.name»")
 			}
 			«ENDFOR»
 			«ENDFOR»

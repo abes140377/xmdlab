@@ -47,7 +47,7 @@ import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGenerator
  */
 class CartridgeDslGenerator implements IGenerator {
 
-	final private static Logger log = Logger.getLogger(CartridgeDslGenerator);
+	final private static Logger log = Logger.getLogger(CartridgeDslGenerator)
 
 	@Inject extension GeneratorProperties generatorProperties
 

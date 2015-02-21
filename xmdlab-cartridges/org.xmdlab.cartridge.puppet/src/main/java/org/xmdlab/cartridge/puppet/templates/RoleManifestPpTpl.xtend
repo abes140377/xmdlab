@@ -13,6 +13,11 @@ class RoleManifestPpTpl extends RoleManifestPpTplBase {
 	@Inject extension PuppetCartridgeProperties
 	
 	override doGenerate() '''
+	class role::wordpress inherits role {
+	  include profile::db
+	  include profile::db::php
+	  include profile::wordpress
+	}
 	
 	'''
 }

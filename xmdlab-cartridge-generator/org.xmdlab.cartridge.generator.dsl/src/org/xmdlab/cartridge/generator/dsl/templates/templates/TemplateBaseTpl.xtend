@@ -10,7 +10,6 @@ class TemplateBaseTpl {
 
 	@Inject extension GeneratorProperties generatorProperties
 	
-
 	def generate(DslTemplate dslTemplate) '''
 		«getGeneratedComment(class.name)»
 		package «basePackage».«getTemplateSubpackageFromPath(dslTemplate)»
@@ -18,20 +17,26 @@ class TemplateBaseTpl {
 		import com.google.inject.Inject
 		import «basePackage».metafacade.«dslTemplate.modelElement.type.name.toFirstUpper»
 		import org.xmdlab.cartridge.common.template.Template
-		
-		«val tmp = "'''"»
-		«val open = "«"»
-		«val close = "»"»
+
+		/**
+		 *
+		 */
 		abstract class «getTemplateNameFromPath(dslTemplate)»Base implements Template {
 			
 			@Inject extension «dslTemplate.modelElement.type.name.toFirstUpper» «dslTemplate.modelElement.type.name»
 		
-			override generate() «tmp»
-				«open»doGenerate()«close»
-			«tmp»
+			/**
+		 	 *
+		 	 */
+			override generate() {
+				doGenerate()
+			}
 		
 			def String doGenerate()
 			
+			/**
+		 	 *
+		 	 */
 			def get«dslTemplate.modelElement.type.name.toFirstUpper»() {
 				return «dslTemplate.modelElement.type.name»
 			}

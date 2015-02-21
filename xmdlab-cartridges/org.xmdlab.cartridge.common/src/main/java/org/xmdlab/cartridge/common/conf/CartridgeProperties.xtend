@@ -1,43 +1,39 @@
 package org.xmdlab.cartridge.common.conf
 
-import org.xmdlab.cartridge.common.conf.ICartridgeProperties
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class CartridgeProperties implements ICartridgeProperties {
-	
+
 	private Logger LOG = LoggerFactory.getLogger(CartridgeProperties);
-	
-	protected Config config;
-	
-	new(Config config) {
-		this.config = config
 
-		LOG.info("Typsafe configuration loaded: " + config)
+	var Config config
 
-		// This verifies that the Config is sane and has our
-		// reference config. Importantly, we specify the "simple-lib"
-		// path so we only validate settings that belong to this
-		// library. Otherwise, we might throw mistaken errors about
-		// settings we know nothing about.
-		config.checkValid(ConfigFactory.defaultReference(), "simple-lib")
-	}
-	
-	// This uses the standard default Config, if none is provided,
-	// which simplifies apps willing to use the defaults
+	/**
+	 * 
+	 */
 	new() {
-		this(ConfigFactory.load())
+		// Load cartridge.conf from generator module classpath
+		val Config cartridgeConfig = ConfigFactory.load("cartridge")
+
+		// Load reference.conf from cartridge classpath
+		val Config referenceConfig = ConfigFactory.load()
+
+		// merge configs. This allows ovverride of default values from reference.conf with cartridge.conf values from generator module 
+		config = cartridgeConfig.withFallback(referenceConfig)
+
+		if (LOG.isDebugEnabled) {
+			LOG.debug("Configuration loaded and merged:")
+			config.entrySet.forEach [
+				LOG.debug(it.key + " - " + it.value.render)
+			]
+		}
 	}
-	
-	// this is the amazing functionality provided by simple-lib	
-	def void printSetting(String path) {
-		LOG.info("The setting '" + path + "' is: " + config.getString(path))
-	}
-	
+
 	override Config getConfig() {
 		config
 	}
-	
+
 }

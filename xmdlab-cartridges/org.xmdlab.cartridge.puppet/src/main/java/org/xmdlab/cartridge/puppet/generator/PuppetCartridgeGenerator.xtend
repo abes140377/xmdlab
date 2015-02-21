@@ -26,10 +26,12 @@ class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 		
 		// roles
 		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestInitPp(fsa, it)]
+		
+		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestPp(fsa, it)]
 	}
 	
 	override getRoleManifestPpOutputPattern(MmRole mmRole) {
-		return mmRole.name
+		return mmRole.name + ".pp"
 	}
 	
 }

@@ -17,14 +17,7 @@ class SiteMetafacadeImpl extends SiteMetafacadeBase {
 	 * 
 	 */
 	override requireProxyConf() {
-		var boolean result = false
-		if(!System.getProperty("http_proxy").nullOrEmpty) {
-			result = true
-		} else if(!proxyHost.nullOrEmpty) {
-			result = true
-		}
-		
-		return result
+		!proxyHost.nullOrEmpty
 	}
 
 }

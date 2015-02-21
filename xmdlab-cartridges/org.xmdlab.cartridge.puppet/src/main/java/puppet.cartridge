@@ -1,17 +1,22 @@
 Cartridge puppet {
 	Properties {
-		PropertyGroup vagrant {
-			Property vmBox required = true default = "teamserver-precise64" {
-				"The Vagrant VM Box to use when 'vagrant up'"
-			}
-		}
-		
 		PropertyGroup site {
 			Property proxyHost required = false {
 				"The proxy hostname or ip address required for connecting to the internet."
 			}
-			Property proxyPort required = false {
+			Property proxyPort required = false default = "8080" {
 				"The proxy port"
+			}
+			Property nonProxyHosts required = false default = "localhost,127.0.0.1" {
+				"Comma separated list of host. E.g.: localhost,127.0.0.1,192.168.178.0/16,.domain.com"
+			}
+		}
+		PropertyGroup vagrant {
+			Property vmBox required = true default = "precise64" {
+				"The Vagrant VM Box to use when 'vagrant up'"
+			}
+			Property vmBoxUrl required = true default = "http://files.vagrantup.com/precise64.box" {
+				"The Vagrant VM Box to use when 'vagrant up'"
 			}
 		}
 	}
