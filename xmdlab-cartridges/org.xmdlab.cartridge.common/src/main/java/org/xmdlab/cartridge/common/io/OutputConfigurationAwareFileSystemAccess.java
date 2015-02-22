@@ -46,10 +46,14 @@ public class OutputConfigurationAwareFileSystemAccess extends
 	 */
 	public void generateFile(String fileName, String outputName,
 			CharSequence contents, boolean override) throws RuntimeIOException {
-
 		OutputConfiguration outputConfig = getOutputConfig(outputName);
 		File file = getFile(fileName, outputName);
 		if (!createFolder(file.getParentFile(), outputConfig)) {
+			LOG.info("Skip generate file "
+					+ file
+					+ " because parent dir doesn not exist and output configuration "
+					+ outputName
+					+ " is not configured to create the parent directory automaticaly.");
 			return; // folder does not exist
 		}
 
@@ -95,7 +99,8 @@ public class OutputConfigurationAwareFileSystemAccess extends
 			return; // folder does not exist
 		}
 
-		if (!file.exists() || outputConfig.isOverrideExistingResources() || override) {
+		if (!file.exists() || outputConfig.isOverrideExistingResources()
+				|| override) {
 			LOG.info("Generate file: " + file);
 			try {
 				OutputStream out = new BufferedOutputStream(

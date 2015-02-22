@@ -14,7 +14,6 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	override doGenerate() '''
 	# -*- mode: ruby -*-
 	# # vi: set ft=ruby :
-	
 	«compileProxyVars()»
 	
 	Vagrant.require_version ">= 1.6.0"
@@ -34,16 +33,17 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	  servers.each do |servers|
 	    config.vm.define servers["name"] do |srv|
 	      srv.vm.box = servers["box"]
+	      srv.vm.box_url = servers["boxUrl"]
 	      srv.vm.network "private_network", ip: servers["ip"]
 	      srv.vm.provider :virtualbox do |vb|
 	        vb.name = servers["name"]
 	        vb.memory = servers["ram"]
 	      end
-	      srv.vm.provision :puppet do |puppet|
-	      	puppet.manifests_path = "manifests"
-	      	puppet.manifest_file  = "site.pp"
-	      	puppet.module_path    = "modules"
-	      end
+	      #srv.vm.provision :puppet do |puppet|
+	      #	puppet.manifests_path = "manifests"
+	      #	puppet.manifest_file  = "site.pp"
+	      #	puppet.module_path    = "modules"
+	      #end
 	    end
 	  end
 	end	

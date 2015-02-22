@@ -85,7 +85,11 @@ class CartridgeGeneratorBaseXtendTpl {
 			}
 		
 			«IF isNotSet(t.outputPattern)»
+			/**
+			 *
+			 */
 			def String get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern(«getMetafacadeModelElementSimpleClassName(t.modelElement.type)» «getMetafacadeModelElementSimpleClassName(t.modelElement.type).toFirstLower»)
+			
 			«ENDIF»
 			«ENDFOR»
 		}

@@ -13,6 +13,7 @@ class ProfileManifestBasePpTpl extends ProfileManifestBasePpTplBase {
 	@Inject extension PuppetCartridgeProperties
 	
 	override doGenerate() '''
-	
+	class profile::base {
+	}
 	'''
 }

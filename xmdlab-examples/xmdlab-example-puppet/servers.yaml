@@ -1,9 +1,11 @@
 ---
 - name: appserver
   box: precise64
+  boxUrl: http://files.vagrantup.com/precise64.box
   ram: 512
-  ip: 192.168.178.101
+  ip: 192.168.1.100
 - name: bloghost
   box: precise64
+  boxUrl: http://files.vagrantup.com/precise64.box
   ram: 512
-  ip: 192.168.178.102
+  ip: 192.168.1.101

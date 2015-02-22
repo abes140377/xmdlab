@@ -10,7 +10,6 @@ import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 class CartridgeOutputConfigurationProviderTpl {
 
 	@Inject extension GeneratorProperties generatorProperties
-//	@Inject extension ModelHelper modelHelper
 
 	val prefix = "OUTPUTCONFIG_"
 
@@ -35,10 +34,13 @@ class CartridgeOutputConfigurationProviderTpl {
 				«FOR o : dslCartridge.outlets»
 				//
 				var OutputConfiguration «o.name»Output = new OutputConfiguration(«prefix»«camelCaseToUnderscore(o.name)»);
-				«o.name»Output.setDescription("«o.name» output configuraton");
-				«o.name»Output.setOutputDirectory("«o.outputDirectory»");
-				«o.name»Output.setOverrideExistingResources(«o.overwrite.asString»);
-
+				«o.name»Output.setDescription = "«o.name» output configuraton"
+				«o.name»Output.setOutputDirectory = "«o.outputDirectory»"
+				«o.name»Output.setOverrideExistingResources = «o.overwrite.asString»
+				«o.name»Output.setCreateOutputDirectory = «o.createOutputDirectory.asString»
+				«o.name»Output.setCleanUpDerivedResources = «o.cleanUpDerivedResources.asString»
+				«o.name»Output.setDerivedProperty = «o.setDerivedProperty.asString»
+				
 				outputs.put(«prefix»«camelCaseToUnderscore(o.name)», «o.name»Output);
 				«ENDFOR»
 		

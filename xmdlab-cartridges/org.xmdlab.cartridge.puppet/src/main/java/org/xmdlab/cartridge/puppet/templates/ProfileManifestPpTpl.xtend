@@ -5,21 +5,20 @@
 package org.xmdlab.cartridge.puppet.templates
 
 import com.google.inject.Inject
+import org.xmdlab.cartridge.puppet.metafacade.*
 import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
-class ServersYamlTpl extends ServersYamlTplBase {
-
+class ProfileManifestPpTpl extends ProfileManifestPpTplBase {
+	
 	@Inject extension PuppetCartridgeProperties
-
+	
 	override doGenerate() '''
-		«val site = siteMetafacade.modelResource»
-		---
-		«FOR n : site.nodes»
-		- name: «n.hostname»
-		  box: «vmBox»
-		  boxUrl: «vmBoxUrl»
-		  ram: «vmBoxRam»
-		  ip: «n.ip»
-		«ENDFOR»	
+	«val profile = profileMetafacade.modelResource»
+	class profile::«profile.name» {
+	  notify { '«profile.name»_test': 
+		withpath => true,
+		name     => "notify from «profile.name»",
+	  }
+	}
 	'''
 }

@@ -182,6 +182,9 @@ class ModelHelper {
 	 * 
 	 */
 	def static String asString(BoolLiteral boolLiteral) {
+		if(boolLiteral == null) {
+			return 'false'
+		}
 		if (boolLiteral instanceof TrueLiteral) {
 			return 'true'
 		} else if (boolLiteral instanceof FalseLiteral) {

@@ -27,19 +27,19 @@ class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 		// nodes
 		
 		// roles
-		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestInitPp(fsa, it)]
-		
+		compileRoleManifestInitPp(fsa, mmSite)
 		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestPp(fsa, it)]
 		
 		// profiles
-		mmSite.eAllContents.filter(MmProfile).forEach[compileProfileManifestBasePp(fsa, it)]
+		compileProfileManifestBasePp(fsa, mmSite)
+		mmSite.eAllContents.filter(MmProfile).forEach[compileProfileManifestPp(fsa, it)]
 	}
 	
 	override getRoleManifestPpOutputPattern(MmRole mmRole) {
 		return mmRole.name + ".pp"
 	}
 	
-	override getProfileManifestBasePpOutputPattern(MmProfile mmProfile) {
+	override getProfileManifestPpOutputPattern(MmProfile mmProfile) {
 		return mmProfile.name.replaceAll("::", "/") + ".pp"
 	}
 	
