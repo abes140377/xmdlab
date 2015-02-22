@@ -15,6 +15,7 @@ class MmSite {
 class MmNode {
 	String hostname
 	String fqdn
+	String ip
 	
 	String doc
 	

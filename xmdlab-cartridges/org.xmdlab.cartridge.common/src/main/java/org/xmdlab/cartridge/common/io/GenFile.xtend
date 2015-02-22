@@ -34,8 +34,6 @@ public class GenFile {
      * 
      */
     def public void generateFile(String fileName, String outputConfig, CharSequence contents, boolean overrideExisting) {
-        //Assert.isNotNull(fsa, "Need to set IFileSystemAccess first");
-        val exists = fileExists(fsa, outputConfig, fileName)
         fsa.generateFile(fileName, outputConfig, contents, overrideExisting);
     }
     

@@ -9,7 +9,6 @@ import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 class CartridgeGeneratorWorkflowTpl {
 
 	@Inject extension GeneratorProperties generatorProperties
-//	@Inject extension ModelHelper
 	
 	def generate(DslCartridge dslCartridge) '''
 	«StringHelper.getGeneratedComment(class.name)»
@@ -51,6 +50,9 @@ class CartridgeGeneratorWorkflowTpl {
 		 * 
 		 */
 		override boolean run(String modelPath) {
+			val modelFile = new File(modelPath)
+			LOG.info("Running Generator Workflow with model from path " + modelFile.absolutePath + " Content is:\n" + Files.toString(new File(modelPath), Charsets.ISO_8859_1));
+	
 			val «dslCartridge.getDslModelClassSimpleName» «dslCartridge.getDslModelClassSimpleName.toFirstLower» = parser.parse(Files.toString(new File(modelPath), Charsets.ISO_8859_1))
 	
 			if (validate(«dslCartridge.getDslModelClassSimpleName.toFirstLower»)) {

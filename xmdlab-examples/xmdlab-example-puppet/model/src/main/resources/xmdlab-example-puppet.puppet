@@ -1,14 +1,14 @@
 Domain femoplus.local {
 
 	"This is the jboss wildfly cluster node for the domain" 
-	Node appserver {
+	Node appserver ip = "192.168.178.101" {
 		Role jboss8 {
 		
 		}
 	}
 	
 	"This is the apache webserver for the domain" 
-	Node bloghost {
+	Node bloghost ip = "192.168.178.102" {
 		Role blog {
 			Profile db
 			Profile db::php

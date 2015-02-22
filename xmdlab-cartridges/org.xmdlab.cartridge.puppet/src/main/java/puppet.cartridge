@@ -18,6 +18,9 @@ Cartridge puppet {
 			Property vmBoxUrl required = true default = "http://files.vagrantup.com/precise64.box" {
 				"The Vagrant VM Box to use when 'vagrant up'"
 			}
+			Property vmBoxRam required = true default = "512" {
+				"The amount of RAM for a box"
+			}
 		}
 	}
 	
@@ -51,6 +54,12 @@ Cartridge puppet {
 	}
 	
 	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = base overwrite = true {
+		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/ServersYamlTpl" outputPattern = "servers.yaml" outlet = base overwrite = true {
 		ModelElement type = siteMetafacade {
 			
 		}

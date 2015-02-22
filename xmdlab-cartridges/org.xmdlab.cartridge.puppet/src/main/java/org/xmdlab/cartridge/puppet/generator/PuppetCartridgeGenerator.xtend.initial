@@ -6,6 +6,7 @@ package org.xmdlab.cartridge.puppet.generator
 
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xmdlab.puppet.site.mm.MmSite
+import org.xmdlab.puppet.site.mm.MmNode
 import org.xmdlab.puppet.site.mm.MmRole
 import org.xmdlab.puppet.site.mm.MmProfile
 
@@ -18,29 +19,13 @@ import org.xmdlab.puppet.site.mm.MmProfile
 class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 
 	override doGenerate(MmSite mmSite, IFileSystemAccess fsa) {
-		// compile templates
-		compileReadmeMd(fsa, mmSite)
-		compileVagrantfile(fsa, mmSite)
-		compileServersYaml(fsa, mmSite)
-		compileSitePp(fsa, mmSite)
-		
-		// nodes
-		
-		// roles
-		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestInitPp(fsa, it)]
-		
-		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestPp(fsa, it)]
-		
-		// profiles
-		mmSite.eAllContents.filter(MmProfile).forEach[compileProfileManifestBasePp(fsa, it)]
+		throw new UnsupportedOperationException("Generated method stub PuppetCartridgeGenerator:doGenerate(..). Implement me!")
 	}
 	
-	override getRoleManifestPpOutputPattern(MmRole mmRole) {
-		return mmRole.name + ".pp"
+	override String getRoleManifestPpOutputPattern(MmRole mmRole) {
+		throw new UnsupportedOperationException("Generated method stub PuppetCartridgeGenerator:getRoleManifestPpOutputPattern(..). Implement me!")
 	}
-	
-	override getProfileManifestBasePpOutputPattern(MmProfile mmProfile) {
-		return mmProfile.name.replaceAll("::", "/") + ".pp"
+	override String getProfileManifestBasePpOutputPattern(MmProfile mmProfile) {
+		throw new UnsupportedOperationException("Generated method stub PuppetCartridgeGenerator:getProfileManifestBasePpOutputPattern(..). Implement me!")
 	}
-	
 }

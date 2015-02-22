@@ -1,6 +1,6 @@
 grammar org.xmdlab.dsl.domain.DomainDsl with org.eclipse.xtext.common.Terminals
 
-generate domainDsl "http://www.xmdlab.org/dsl/domain/DomainDsl"
+generate domainDsl 'http://www.xmdlab.org/dsl/domain/DomainDsl'
 
 DslModel:
 	domain=DslDomain
@@ -14,7 +14,7 @@ DslDomain:
 
 DslNode:
 	(doc=STRING)?
-	'Node' name=ID '{'
+	'Node' name=ID 'ip' '=' ip=STRING '{'
 		role=DslRole
 	'}'
 ;
@@ -29,6 +29,10 @@ DslProfile:
 	'Profile' name=QualifiedPuppetName '{'
 		
 	'}'
+;
+
+IPRule:
+	ID => '.' ID '.' ID '.' ID
 ;
 
 QualifiedName:

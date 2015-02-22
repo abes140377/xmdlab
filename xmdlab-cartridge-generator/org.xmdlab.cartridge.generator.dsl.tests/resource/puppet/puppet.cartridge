@@ -1,7 +1,21 @@
 Cartridge puppet {
 	Properties {
+		PropertyGroup site {
+			Property proxyHost required = false {
+				"The proxy hostname or ip address required for connecting to the internet."
+			}
+			Property proxyPort required = false default = "8080" {
+				"The proxy port"
+			}
+			Property nonProxyHosts required = false default = "localhost|127.0.0.1" {
+				"Comma separated list of host. E.g.: localhost,127.0.0.1,192.168.178.0/16,.domain.com"
+			}
+		}
 		PropertyGroup vagrant {
-			Property vmBox required = true default = "teamserver-precise64" {
+			Property vmBox required = true default = "precise64" {
+				"The Vagrant VM Box to use when 'vagrant up'"
+			}
+			Property vmBoxUrl required = true default = "http://files.vagrantup.com/precise64.box" {
 				"The Vagrant VM Box to use when 'vagrant up'"
 			}
 		}
@@ -11,13 +25,57 @@ Cartridge puppet {
 	
 	// model metafacade (root)
 	Metafacade siteMetafacade modelElement = org.xmdlab.puppet.site.mm.MmSite {
+		facadeMethode requireProxyConf type = "boolean"
+	}
+	
+	Metafacade nodeMetafacade modelElement = org.xmdlab.puppet.site.mm.MmNode {
+		
+	}
+	
+	Metafacade roleMetafacade modelElement = org.xmdlab.puppet.site.mm.MmRole {
+		
+	}
+	
+	Metafacade profileMetafacade modelElement = org.xmdlab.puppet.site.mm.MmProfile {
 		
 	}
 		
-	Outlet base outputDirectory = '..' overwrite = false
+	Outlet base outputDirectory 			= '..' overwrite = false
+	Outlet roleManifests outputDirectory 	= '../modules/role/manifests' overwrite = false
+	Outlet profileManifests outputDirectory = '../modules/profile/manifests' overwrite = false
 	
-	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {
+	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base overwrite = true {
 		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = base overwrite = true {
+		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = base overwrite = true {
+		ModelElement type = siteMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/RoleManifestInitPpTpl" outputPattern = "init.pp" outlet = roleManifests {
+		ModelElement type = roleMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/RoleManifestPpTpl" outlet = roleManifests overwrite = true {
+		ModelElement type = roleMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/ProfileManifestBasePpTpl" outlet = profileManifests {
+		ModelElement type = profileMetafacade {
 			
 		}
 	}

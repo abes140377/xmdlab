@@ -12,25 +12,40 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	@Inject extension PuppetCartridgeProperties
 	
 	override doGenerate() '''
-	«val site = siteMetafacade.modelResource»
+	# -*- mode: ruby -*-
+	# # vi: set ft=ruby :
+	
 	«compileProxyVars()»
 	
-	Vagrant.configure('2') do |config|
+	Vagrant.require_version ">= 1.6.0"
+	VAGRANTFILE_API_VERSION = "2"
+	
+	# Require YAML module
+	require 'yaml'
+	 
+	# Read YAML file with box details
+	servers = YAML.load_file('servers.yaml')
+	
+	# Create boxes
+	Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	  «compileProxyConf()»
-	  «FOR n : site.nodes»
 	  
-	  config.vm.define "«n.hostname»" do |«n.hostname»|
-	    «n.hostname».vm.box = "«vmBox»"
-	    «n.hostname».vm.box_url = "«vmBoxUrl»"
-	    «n.hostname».vm.network :forwarded_port, guest: 80, host: 8080
-	    «n.hostname».vm.provision :puppet do |puppet|
-	      puppet.manifests_path = "manifests"
-	      puppet.manifest_file  = "site.pp"
-	      puppet.module_path    = "modules"
+	  # Iterate through entries in YAML file
+	  servers.each do |servers|
+	    config.vm.define servers["name"] do |srv|
+	      srv.vm.box = servers["box"]
+	      srv.vm.network "private_network", ip: servers["ip"]
+	      srv.vm.provider :virtualbox do |vb|
+	        vb.name = servers["name"]
+	        vb.memory = servers["ram"]
+	      end
+	      srv.vm.provision :puppet do |puppet|
+	      	puppet.manifests_path = "manifests"
+	      	puppet.manifest_file  = "site.pp"
+	      	puppet.module_path    = "modules"
+	      end
 	    end
-	    config.vm.provision :shell, :inline => 'echo Visit http://«n.hostname»:8080/...'
 	  end
-	  «ENDFOR»	
 	end	
 	'''
 	

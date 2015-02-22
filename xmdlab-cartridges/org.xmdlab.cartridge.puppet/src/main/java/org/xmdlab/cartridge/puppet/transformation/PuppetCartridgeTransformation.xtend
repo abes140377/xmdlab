@@ -46,6 +46,7 @@ class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 		
 		hostname = dslNode.name
 		fqdn = hostname + "." + dslDomain.name
+		ip = dslNode.ip
 		doc = dslNode.doc
 		
 		role = transform(dslNode.role)
