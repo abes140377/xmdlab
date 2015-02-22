@@ -8,9 +8,11 @@ Domain femoplus.local {
 	}
 	
 	"This is the apache webserver for the domain" 
-	Node webserver {
-		Role wordpress {
-		
+	Node bloghost {
+		Role blog {
+			Profile db
+			Profile db::php
+			Profile wordpress
 		}
 	}
 }

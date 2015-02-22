@@ -21,7 +21,7 @@ class CartridgeGeneratorModuleTpl {
 		import org.eclipse.xtext.service.AbstractGenericModule;
 		import org.xmdlab.cartridge.common.conf.CartridgeProperties;
 		import org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider;
-		import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt;
+		import org.xmdlab.cartridge.common.io.OutputConfigurationAwareFileSystemAccess;
 		import «basePackage».conf.«modelNameFirstUpper»CartridgeProperties;
 		import «basePackage».generator.«modelNameFirstUpper»CartridgeGenerator;
 		import «basePackage».io.«modelNameFirstUpper»CartridgeOutputConfigurationProvider;
@@ -50,7 +50,7 @@ class CartridgeGeneratorModuleTpl {
 			}
 			
 			public Class<? extends JavaIoFileSystemAccess> bindJavaIoFileSystemAccess() {
-				return JavaIoFileSystemAccessExt.class;
+				return OutputConfigurationAwareFileSystemAccess.class;
 			}
 			
 			«FOR metafacade : dslCartridge.metafacades»

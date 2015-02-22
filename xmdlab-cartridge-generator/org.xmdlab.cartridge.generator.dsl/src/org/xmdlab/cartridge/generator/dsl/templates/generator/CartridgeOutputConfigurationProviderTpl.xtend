@@ -21,7 +21,7 @@ class CartridgeOutputConfigurationProviderTpl {
 		
 		import java.util.Map
 		import org.eclipse.xtext.generator.OutputConfiguration
-		import org.xmdlab.cartridge.common.generator.DefaultOutputConfigurationProvider
+		import org.xmdlab.cartridge.common.io.DefaultOutputConfigurationProvider
 		
 		«getClassComment(className, "Configuration of output locations and settings for code generation.")»
 		public class «className» extends DefaultOutputConfigurationProvider {

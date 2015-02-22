@@ -14,8 +14,6 @@ import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorI
  */
 abstract class CartridgeGeneratorWorkflow {
 
-	//val private Logger LOGGER = LoggerFactory.getLogger(CartridgeGeneratorWorkflow)
-
 	def boolean run(String modelURI)
 
 	/**

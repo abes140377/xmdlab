@@ -1,10 +1,10 @@
-package org.xmdlab.cartridge.common.generator
+package org.xmdlab.cartridge.common.io
 
 import java.util.Map
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.OutputConfiguration
 
-class DefaultOutputConfigurationProvider implements IOutputConfigurationProvider {
+class DefaultOutputConfigurationProvider implements org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider {
 
 	Map<String, OutputConfiguration> outputs = newHashMap();
 

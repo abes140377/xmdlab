@@ -29,7 +29,7 @@ class CartridgeGeneratorWorkflowTpl {
 	import org.xmdlab.cartridge.common.context.XmdlabGeneratorIssue.XmdlabGeneratorIssueImpl
 	import org.xmdlab.cartridge.common.generator.CartridgeGeneratorWorkflow
 	import org.xmdlab.cartridge.common.generator.IGenerator
-	import org.xmdlab.cartridge.common.generator.JavaIoFileSystemAccessExt
+	import org.xmdlab.cartridge.common.io.OutputConfigurationAwareFileSystemAccess
 	import «basePackage».io.«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider
 	import «basePackage».transformation.«cartridgeName.toFirstUpper»CartridgeTransformation
 	import «dslCartridge.getTransformationInputClassName»
@@ -53,17 +53,20 @@ class CartridgeGeneratorWorkflowTpl {
 		override boolean run(String modelPath) {
 			val «dslCartridge.getDslModelClassSimpleName» «dslCartridge.getDslModelClassSimpleName.toFirstLower» = parser.parse(Files.toString(new File(modelPath), Charsets.ISO_8859_1))
 	
-			val «dslCartridge.transformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» = «dslCartridge.getDslModelClassSimpleName.toFirstLower».eAllContents.filter(«dslCartridge.transformationInputClassSimpleName»).head
-	
-			if (validate(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower»)) {
-	
+			if (validate(«dslCartridge.getDslModelClassSimpleName.toFirstLower»)) {
+				val «dslCartridge.transformationInputClassSimpleName» «dslCartridge.getTransformationInputClassSimpleName.toFirstLower» = «dslCartridge.getDslModelClassSimpleName.toFirstLower».eAllContents.filter(«dslCartridge.transformationInputClassSimpleName»).head
 				val «dslCartridge.getTransformationOutputClassSimpleName.toFirstLower» = transformModel(«dslCartridge.getTransformationInputClassSimpleName.toFirstLower»)
 	
 				if («dslCartridge.getTransformationOutputClassSimpleName.toFirstLower» != null) {
 					generateCode(«dslCartridge.getTransformationOutputClassSimpleName.toFirstLower»)
 					return true
 				}
-			}
+			} else {
+			LOG.error("Unable to validate model from path " + modelPath)
+			XmdlabGeneratorContext.getIssues.forEach[
+				LOG.error(it.message, it.throwable)
+			]
+		}
 	
 			LOG.error("Executing workflow failed")
 	
@@ -76,7 +79,7 @@ class CartridgeGeneratorWorkflowTpl {
 		protected def void generateCode(«dslCartridge.getTransformationOutputClassSimpleName» «dslCartridge.getTransformationOutputClassSimpleName.toFirstLower») {
 			val «cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider outputConfigurationProvider = injector.getInstance(
 				«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider)
-			val JavaIoFileSystemAccess fsa = injector.getInstance(JavaIoFileSystemAccessExt)
+			val JavaIoFileSystemAccess fsa = injector.getInstance(OutputConfigurationAwareFileSystemAccess)
 			fsa.outputConfigurations = outputConfigurationProvider.outputConfigurations
 			val IGenerator<«dslCartridge.getTransformationOutputClassSimpleName»> generator = injector.getInstance(«cartridgeName.toFirstUpper»CartridgeGenerator)
 	

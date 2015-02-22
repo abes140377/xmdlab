@@ -54,7 +54,6 @@ class CartridgeOutputsConfigurationProvider implements IOutputConfigurationProvi
 
 		outputs.add(readonlyOutput)
 
-		//println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" + generatorProperties.cartridgeName)
 		//
 		var OutputConfiguration testGeneratedOutput = new OutputConfiguration(TEST_GEN_OUTPUT)
 		testGeneratedOutput.setDescription("Folder for manualy written souce files")

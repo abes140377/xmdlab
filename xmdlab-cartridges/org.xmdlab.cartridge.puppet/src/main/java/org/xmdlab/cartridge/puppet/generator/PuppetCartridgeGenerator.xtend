@@ -7,6 +7,7 @@ package org.xmdlab.cartridge.puppet.generator
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xmdlab.puppet.site.mm.MmSite
 import org.xmdlab.puppet.site.mm.MmRole
+import org.xmdlab.puppet.site.mm.MmProfile
 
 /**
  * The PuppetCartridgeGenerator
@@ -28,10 +29,17 @@ class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestInitPp(fsa, it)]
 		
 		mmSite.eAllContents.filter(MmRole).forEach[compileRoleManifestPp(fsa, it)]
+		
+		// profiles
+		mmSite.eAllContents.filter(MmProfile).forEach[compileProfileManifestBasePp(fsa, it)]
 	}
 	
 	override getRoleManifestPpOutputPattern(MmRole mmRole) {
 		return mmRole.name + ".pp"
+	}
+	
+	override getProfileManifestBasePpOutputPattern(MmProfile mmProfile) {
+		return mmProfile.name.replaceAll("::", "/") + ".pp"
 	}
 	
 }

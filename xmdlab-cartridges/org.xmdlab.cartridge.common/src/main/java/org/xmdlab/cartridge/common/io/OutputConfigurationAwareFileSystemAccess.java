@@ -1,4 +1,4 @@
-package org.xmdlab.cartridge.generator.dsl.io;
+package org.xmdlab.cartridge.common.io;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -7,12 +7,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.util.RuntimeIOException;
+import org.xmdlab.cartridge.common.context.XmdlabGeneratorContext;
 
+import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
 
 /**
@@ -23,8 +28,13 @@ import com.google.common.io.ByteStreams;
 public class OutputConfigurationAwareFileSystemAccess extends
 		JavaIoFileSystemAccess {
 
-	final private static Logger log = Logger
+	final private static Logger LOG = Logger
 			.getLogger(OutputConfigurationAwareFileSystemAccess.class);
+	
+	@Inject
+	org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider outputConfigurationProvider;
+
+	private Map<String, OutputConfiguration> outputConfigurations;
 
 	/**
 	 * 
@@ -32,14 +42,14 @@ public class OutputConfigurationAwareFileSystemAccess extends
 	@Override
 	public void generateFile(String fileName, String outputName,
 			CharSequence contents) throws RuntimeIOException {
-		OutputConfiguration outputConfig = getOutputConfig(outputName);
+		OutputConfiguration outputConfig = getOutputConfigurationForKey(outputName);
 		File file = getFile(fileName, outputName);
 		if (!createFolder(file.getParentFile(), outputConfig)) {
 			return; // folder does not exist
 		}
 
 		if (!file.exists() || outputConfig.isOverrideExistingResources()) {
-			log.info("Generate file: " + file);
+			LOG.info("Generate file: " + file);
 			try {
 				String encoding = getEncoding(getURI(fileName, outputName));
 				OutputStreamWriter writer = new OutputStreamWriter(
@@ -52,12 +62,13 @@ public class OutputConfigurationAwareFileSystemAccess extends
 					}
 				} finally {
 					writer.close();
+					XmdlabGeneratorContext.addGeneratedFile(file);
 				}
 			} catch (IOException e) {
 				throw new RuntimeIOException(e);
 			}
 		} else {
-			log.info("SKIPPED Generate file: " + file);
+			LOG.info("SKIPPED Generate file: " + file);
 		}
 	}
 
@@ -67,14 +78,14 @@ public class OutputConfigurationAwareFileSystemAccess extends
 	@Override
 	public void generateFile(String fileName, String outputName,
 			InputStream content) throws RuntimeIOException {
-		OutputConfiguration outputConfig = getOutputConfig(outputName);
+		OutputConfiguration outputConfig = getOutputConfigurationForKey(outputName);
 		File file = getFile(fileName, outputName);
 		if (!createFolder(file.getParentFile(), outputConfig)) {
 			return; // folder does not exist
 		}
 
 		if (!file.exists() || outputConfig.isOverrideExistingResources()) {
-			log.info("Generate file: " + file);
+			LOG.info("Generate file: " + file);
 			try {
 				OutputStream out = new BufferedOutputStream(
 						new FileOutputStream(file));
@@ -85,13 +96,14 @@ public class OutputConfigurationAwareFileSystemAccess extends
 						out.close();
 					} finally {
 						content.close();
+						XmdlabGeneratorContext.addGeneratedFile(file);
 					}
 				}
 			} catch (IOException e) {
 				throw new RuntimeIOException(e);
 			}
 		} else {
-			log.info("SKIPPED Generate file: " + file);
+			LOG.info("SKIPPED Generate file: " + file);
 		}
 	}
 
@@ -104,10 +116,21 @@ public class OutputConfigurationAwareFileSystemAccess extends
 	protected boolean createFolder(File parent, OutputConfiguration outputConfig) {
 		if (parent != null && !parent.exists()
 				&& outputConfig.isCreateOutputDirectory() && !parent.mkdirs()) {
-			log.error("Could not create directory " + parent);
+			LOG.error("Could not create directory " + parent);
 			throw new RuntimeIOException("Could not create directory " + parent);
 		}
 		return parent != null && parent.exists();
 	}
 
+	protected OutputConfiguration getOutputConfigurationForKey(String key) {
+		if (outputConfigurations == null) {
+			outputConfigurations = Maps.newHashMap();
+			for (Map.Entry<String, OutputConfiguration> entry : outputConfigurationProvider
+					.getOutputConfigurations().entrySet()) {
+				// outputConfigurations.put(out.getName(), out);
+				outputConfigurations.put(entry.getKey(), entry.getValue());
+			}
+		}
+		return outputConfigurations.get(key);
+	}
 }

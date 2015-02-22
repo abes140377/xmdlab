@@ -7,7 +7,7 @@ This site contains the definitions for the following nodes
 
     This is the jboss wildfly cluster node for the domain
     
-*   webserver
+*   bloghost
 
     This is the apache webserver for the domain
     

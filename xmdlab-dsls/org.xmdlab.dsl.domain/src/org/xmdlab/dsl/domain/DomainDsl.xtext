@@ -21,12 +21,21 @@ DslNode:
 
 DslRole:
 	'Role' name=ID '{'
+		(profile+=DslProfile)*
+	'}'
+;
+
+DslProfile:
+	'Profile' name=QualifiedPuppetName '{'
 		
 	'}'
 ;
 
 QualifiedName:
   ID (=>'.' ID)*;
+
+QualifiedPuppetName:
+  ID (=>'::' ID)*;
   
 Version:
   ID (=>'.' ID) (=>'.' ID);

@@ -13,6 +13,7 @@ import org.xmdlab.dsl.domain.domainDsl.DslNode
 import org.xmdlab.puppet.site.mm.MmFactory
 import org.xmdlab.puppet.site.mm.MmSite
 import org.xmdlab.dsl.domain.domainDsl.DslRole
+import org.xmdlab.dsl.domain.domainDsl.DslProfile
 
 class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 	val static final Logger LOG = LoggerFactory.getLogger(PuppetCartridgeTransformation)
@@ -41,7 +42,7 @@ class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 	 * 
 	 */
 	def create FACTORY.createMmNode transform(DslNode dslNode) {
-		LOG.info("transform dsl node: " + dslNode.name + " to metamodel")
+		LOG.info("transform dsl node: " + dslNode.name + " to metamodel node")
 		
 		hostname = dslNode.name
 		fqdn = hostname + "." + dslDomain.name
@@ -54,8 +55,20 @@ class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 	 * 
 	 */
 	def create FACTORY.createMmRole transform(DslRole dslRole) {
-//		LOG.info("transform dsl role: " + dslRole.name + " to metamodel")
+		LOG.info("transform dsl role: " + dslRole.name + " to metamodel role")
 		
 		name = dslRole.name
+		
+		val List<DslProfile> allDslProfiles = EcoreUtil2::eAllOfType(dslRole, typeof(DslProfile))
+		profiles.addAll(allDslProfiles.map[e|transform(e)])
+	}
+	
+	/**
+	 * 
+	 */
+	def create FACTORY.createMmProfile transform(DslProfile dslProfile) {
+		LOG.info("transform dsl profile: " + dslProfile.name + " to metamodel profile")
+		
+		name = dslProfile.name
 	}
 }

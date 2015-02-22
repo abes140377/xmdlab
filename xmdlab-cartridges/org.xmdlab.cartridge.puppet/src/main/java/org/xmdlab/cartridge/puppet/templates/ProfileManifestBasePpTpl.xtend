@@ -8,17 +8,11 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.puppet.metafacade.*
 import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
-class RoleManifestPpTpl extends RoleManifestPpTplBase {
+class ProfileManifestBasePpTpl extends ProfileManifestBasePpTplBase {
 	
 	@Inject extension PuppetCartridgeProperties
 	
 	override doGenerate() '''
-	«val role = roleMetafacade.modelResource»
-	class role::«role.name» inherits role {
-	  «FOR p : role.profiles»
-	  include profile::«p.name»
-	  «ENDFOR»
-	}
 	
 	'''
 }
