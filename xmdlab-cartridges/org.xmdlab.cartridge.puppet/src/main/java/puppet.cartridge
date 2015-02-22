@@ -50,13 +50,13 @@ Cartridge puppet {
 		}
 	}
 	
-	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = base {
+	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = base overwrite = true {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
-	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = base {
+	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = base overwrite = true {
 		ModelElement type = siteMetafacade {
 			
 		}
@@ -68,7 +68,7 @@ Cartridge puppet {
 		}
 	}
 	
-	Template path = "templates/RoleManifestPpTpl" outlet = roleManifests {
+	Template path = "templates/RoleManifestPpTpl" outlet = roleManifests overwrite = true {
 		ModelElement type = roleMetafacade {
 			
 		}

@@ -30,25 +30,31 @@ public class OutputConfigurationAwareFileSystemAccess extends
 
 	final private static Logger LOG = Logger
 			.getLogger(OutputConfigurationAwareFileSystemAccess.class);
-	
+
 	@Inject
 	org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider outputConfigurationProvider;
 
-	private Map<String, OutputConfiguration> outputConfigurations;
+	private Map<String, OutputConfiguration> outputs;
 
 	/**
 	 * 
+	 * @param fileName
+	 * @param outputName
+	 * @param contents
+	 * @param override
+	 * @throws RuntimeIOException
 	 */
-	@Override
 	public void generateFile(String fileName, String outputName,
-			CharSequence contents) throws RuntimeIOException {
-		OutputConfiguration outputConfig = getOutputConfigurationForKey(outputName);
+			CharSequence contents, boolean override) throws RuntimeIOException {
+
+		OutputConfiguration outputConfig = getOutputConfig(outputName);
 		File file = getFile(fileName, outputName);
 		if (!createFolder(file.getParentFile(), outputConfig)) {
 			return; // folder does not exist
 		}
 
-		if (!file.exists() || outputConfig.isOverrideExistingResources()) {
+		if (!file.exists() || outputConfig.isOverrideExistingResources()
+				|| override) {
 			LOG.info("Generate file: " + file);
 			try {
 				String encoding = getEncoding(getURI(fileName, outputName));
@@ -77,14 +83,19 @@ public class OutputConfigurationAwareFileSystemAccess extends
 	 */
 	@Override
 	public void generateFile(String fileName, String outputName,
-			InputStream content) throws RuntimeIOException {
-		OutputConfiguration outputConfig = getOutputConfigurationForKey(outputName);
+			CharSequence contents) throws RuntimeIOException {
+		generateFile(fileName, outputName, contents, false);
+	}
+
+	public void generateFile(String fileName, String outputName,
+			InputStream content, boolean override) throws RuntimeIOException {
+		OutputConfiguration outputConfig = getOutputConfig(outputName);
 		File file = getFile(fileName, outputName);
 		if (!createFolder(file.getParentFile(), outputConfig)) {
 			return; // folder does not exist
 		}
 
-		if (!file.exists() || outputConfig.isOverrideExistingResources()) {
+		if (!file.exists() || outputConfig.isOverrideExistingResources() || override) {
 			LOG.info("Generate file: " + file);
 			try {
 				OutputStream out = new BufferedOutputStream(
@@ -109,6 +120,15 @@ public class OutputConfigurationAwareFileSystemAccess extends
 
 	/**
 	 * 
+	 */
+	@Override
+	public void generateFile(String fileName, String outputName,
+			InputStream content) throws RuntimeIOException {
+		generateFile(fileName, outputName, content, false);
+	}
+
+	/**
+	 * 
 	 * @param parent
 	 * @param outputConfig
 	 * @return
@@ -122,15 +142,23 @@ public class OutputConfigurationAwareFileSystemAccess extends
 		return parent != null && parent.exists();
 	}
 
-	protected OutputConfiguration getOutputConfigurationForKey(String key) {
-		if (outputConfigurations == null) {
-			outputConfigurations = Maps.newHashMap();
+	@Override
+	protected OutputConfiguration getOutputConfig(String outputName) {
+		if (outputs == null) {
+			outputs = Maps.newHashMap();
 			for (Map.Entry<String, OutputConfiguration> entry : outputConfigurationProvider
 					.getOutputConfigurations().entrySet()) {
-				// outputConfigurations.put(out.getName(), out);
-				outputConfigurations.put(entry.getKey(), entry.getValue());
+				outputs.put(entry.getKey(), entry.getValue());
 			}
 		}
-		return outputConfigurations.get(key);
+		return outputs.get(outputName);
+	}
+
+	/**
+	 * @since 2.1
+	 */
+	@Override
+	public Map<String, OutputConfiguration> getOutputConfigurations() {
+		return outputs;
 	}
 }

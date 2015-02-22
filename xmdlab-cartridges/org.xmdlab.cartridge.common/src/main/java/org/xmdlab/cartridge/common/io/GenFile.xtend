@@ -1,28 +1,61 @@
 package org.xmdlab.cartridge.common.io
 
+import com.google.common.collect.Maps
 import com.google.inject.Inject
+import java.io.File
+import java.util.Map
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.OutputConfiguration
+import org.xmdlab.cartridge.common.generator.IOutputConfigurationProvider
 
 public class GenFile {
 	
-	@Inject OutputConfigurationAwareFileSystemAccess fsa;
+	@Inject OutputConfigurationAwareFileSystemAccess fsa
+	@Inject IOutputConfigurationProvider outputConfigurationProvider
 	
-	@Inject IFileSystemAccessUtil fsaUtil;
+	private Map<String, OutputConfiguration> outputConfigurations;
+	
+	def public void generateFile(String fileName, CharSequence contents, boolean overrideExisting) {
+		generateFile(fileName, OutputConfigurationAwareFileSystemAccess.DEFAULT_OUTPUT, contents, false)
+	}
 	
 	/**
 	 * 
 	 */
 	def public void generateFile(String fileName, CharSequence contents) {
-        //Assert.isNotNull(fsa, "Need to set IFileSystemAccess first");
-        val exists = fsaUtil.fileExists(fsa, OutputConfigurationAwareFileSystemAccess.DEFAULT_OUTPUT, fileName)
-        fsa.generateFile(fileName, OutputConfigurationAwareFileSystemAccess.DEFAULT_OUTPUT, contents);
+        generateFile(fileName, OutputConfigurationAwareFileSystemAccess.DEFAULT_OUTPUT, contents, false)
+    }
+    
+    def public void generateFile(String fileName, String outputConfig, CharSequence contents) {
+    	generateFile(fileName, outputConfig, contents, false)
     }
     
     /**
      * 
      */
-    def public void generateFile(String fileName, String outputConfig, CharSequence contents) {
+    def public void generateFile(String fileName, String outputConfig, CharSequence contents, boolean overrideExisting) {
         //Assert.isNotNull(fsa, "Need to set IFileSystemAccess first");
-        val exists = fsaUtil.fileExists(fsa, outputConfig, fileName)
-        fsa.generateFile(fileName, outputConfig, contents);
+        val exists = fileExists(fsa, outputConfig, fileName)
+        fsa.generateFile(fileName, outputConfig, contents, overrideExisting);
     }
+    
+    def boolean fileExists(IFileSystemAccess fsa,
+			String outputConfigurationName, String path) {
+		val String fullPath = getOutputConfiguration(outputConfigurationName)
+				.getOutputDirectory() + "/" + path;
+		val File f = new File(fullPath);
+		return f.exists() && f.isFile();
+	}
+	
+	def OutputConfiguration getOutputConfiguration(String key) {
+		if (outputConfigurations == null) {
+			outputConfigurations = Maps.newHashMap();
+			for (Map.Entry<String, OutputConfiguration> entry : outputConfigurationProvider
+					.getOutputConfigurations().entrySet()) {
+				// outputConfigurations.put(out.getName(), out);
+				outputConfigurations.put(entry.getKey(), entry.getValue());
+			}
+		}
+		return outputConfigurations.get(key);
+	}
 }

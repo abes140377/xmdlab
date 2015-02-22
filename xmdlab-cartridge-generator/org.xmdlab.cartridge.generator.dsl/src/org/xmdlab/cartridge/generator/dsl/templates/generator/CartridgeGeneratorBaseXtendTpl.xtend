@@ -43,6 +43,7 @@ class CartridgeGeneratorBaseXtendTpl {
 		«ENDFOR»
 		
 		import static «basePackage».io.«cartridgeName.toFirstUpper»CartridgeOutputConfigurationProvider.*
+		import org.xmdlab.cartridge.common.io.GenFile
 		
 		«getClassComment(className)»
 		abstract class «className» implements IGenerator<«getTransformationOutputClassSimpleName(dslCartridge)»> {
@@ -58,6 +59,8 @@ class CartridgeGeneratorBaseXtendTpl {
 			«FOR t : templates»				
 				@Inject Provider<«getTemplateNameFromPath(t).toFirstUpper»> «getTemplateNameFromPath(t).toFirstLower»
 			«ENDFOR»
+			
+			@Inject GenFile genFile
 		
 			«FOR t : templates»
 			/**
@@ -75,9 +78,9 @@ class CartridgeGeneratorBaseXtendTpl {
 				«t.modelElement.type.name».modelResource = «getMetafacadeModelElementSimpleClassName(t.modelElement.type).toFirstLower»
 				
 				«IF t.outlet.isSet»
-					fsa.generateFile(fileName, «getOutletConstantName(t)», tpl.generate())
+					genFile.generateFile(fileName, «getOutletConstantName(t)», tpl.generate(), «t.overwrite.asBoolean»)
 				«ELSE»
-					fsa.generateFile(fileName, tpl.generate())
+					genFile.generateFile(fileName, tpl.generate(), «t.overwrite.asBoolean»)
 				«ENDIF»
 			}
 		
