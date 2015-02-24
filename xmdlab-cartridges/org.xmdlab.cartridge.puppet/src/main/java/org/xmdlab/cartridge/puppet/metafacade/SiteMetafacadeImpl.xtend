@@ -19,5 +19,12 @@ class SiteMetafacadeImpl extends SiteMetafacadeBase {
 	override requireProxyConf() {
 		!proxyHost.nullOrEmpty
 	}
+	
+	/**
+	 * 
+	 */
+	override requireCachierConf() {
+		!useCachier.nullOrEmpty
+	}
 
 }

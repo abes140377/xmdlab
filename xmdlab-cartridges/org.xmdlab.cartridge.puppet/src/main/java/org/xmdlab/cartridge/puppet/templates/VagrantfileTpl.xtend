@@ -28,22 +28,26 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	# Create boxes
 	Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	  «compileProxyConf()»
-	  
+	  «compileCachierConf()»
+	  «compileBootstrapSh()»
 	  # Iterate through entries in YAML file
 	  servers.each do |servers|
+	  	# configure machine
 	    config.vm.define servers["name"] do |srv|
 	      srv.vm.box = servers["box"]
 	      srv.vm.box_url = servers["boxUrl"]
+	      srv.vm.hostname = servers["name"]
 	      srv.vm.network "private_network", ip: servers["ip"]
 	      srv.vm.provider :virtualbox do |vb|
 	        vb.name = servers["name"]
 	        vb.memory = servers["ram"]
 	      end
-	      #srv.vm.provision :puppet do |puppet|
-	      #	puppet.manifests_path = "manifests"
-	      #	puppet.manifest_file  = "site.pp"
-	      #	puppet.module_path    = "modules"
-	      #end
+	      # configure uppet provisioning
+	      srv.vm.provision :puppet do |puppet|
+	        puppet.manifests_path = "manifests"
+	        puppet.manifest_file  = "site.pp"
+	        puppet.module_path    = "modules"
+	      end
 	    end
 	  end
 	end	
@@ -51,14 +55,47 @@ class VagrantfileTpl extends VagrantfileTplBase {
 	
 	def compileProxyVars() '''
 		«IF siteMetafacade.requireProxyConf»
-		proxyUrl      = 'http://«proxyPort»:«proxyPort»'
+		proxyUrl      = 'http://«proxyHost»:«proxyPort»'
 		noProxy       = '«nonProxyHosts»'
 		«ENDIF»
 	'''
 	
 	def compileProxyConf() '''
 		«IF siteMetafacade.requireProxyConf»
-		# TODO Implement org.xmdlab.cartridge.puppet.templates.VagrantfileTpl:compileProxyConf
+		# Vagrant proxy settings
+		# Run: 'vagrant plugin install vagrant-proxyconf' before use
+		# With it you can specify the Apt proxy globally in $HOME/.vagrant.d/Vagrantfile without the need to configure every single machine.
+		if Vagrant.has_plugin?("vagrant-proxyconf")
+		  config.proxy.http     = proxyUrl
+		  config.proxy.https    = proxyUrl
+		  config.proxy.no_proxy = noProxy
+		  
+		  # VM proxy settings (wget, curl, yum, etc.). This configuration will be written to /etc/profile.d/proxy.sh on the guest.
+		  config.env_proxy.http     = proxyUrl
+		  config.env_proxy.https    = proxyUrl
+		  config.env_proxy.no_proxy = noProxy
+		end
 		«ENDIF»
+	'''
+	
+	def compileCachierConf() '''
+		«IF siteMetafacade.requireCachierConf»
+		# caching apt
+		if Vagrant.has_plugin?("vagrant-cachier")
+		  config.cache.scope = :box
+		end
+		«ENDIF»
+	'''
+	
+	def compileBootstrapSh() '''
+		# any additional provision commands can be placed here to run after
+		# default provision from above
+		if File.exists?("shell/local-bootstrap.sh")
+		  config.vm.provision "shell" do |s|
+		    s.path = "shell/local-bootstrap.sh"
+		    # example passing parameter to bootstrap script
+		    #s.args = "Hello World!"
+		  end
+		end
 	'''
 }

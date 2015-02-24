@@ -36,11 +36,11 @@ class PuppetCartridgeGenerator extends PuppetCartridgeGeneratorBase {
 	}
 	
 	override getRoleManifestPpOutputPattern(MmRole mmRole) {
-		return mmRole.name + ".pp"
+		return "modules/role/manifests/" + mmRole.name + ".pp"
 	}
 	
 	override getProfileManifestPpOutputPattern(MmProfile mmProfile) {
-		return mmProfile.name.replaceAll("::", "/") + ".pp"
+		return "modules/profile/manifests/" + mmProfile.name.replaceAll("::", "/") + ".pp"
 	}
 	
 }

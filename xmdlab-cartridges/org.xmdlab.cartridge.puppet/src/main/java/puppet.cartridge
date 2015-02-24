@@ -21,6 +21,10 @@ Cartridge puppet {
 			Property vmBoxRam required = true default = "512" {
 				"The amount of RAM for a box"
 			}
+			
+			Property useCachier required = false default = "false" {
+				"Set to true to use vagrant-cachier plugin for caching apt packages between box startup"
+			}
 		}
 	}
 	
@@ -29,6 +33,7 @@ Cartridge puppet {
 	// model metafacade (root)
 	Metafacade siteMetafacade modelElement = org.xmdlab.puppet.site.mm.MmSite {
 		facadeMethode requireProxyConf type = "boolean"
+		facadeMethode requireCachierConf type = "boolean"
 	}
 	
 	Metafacade nodeMetafacade modelElement = org.xmdlab.puppet.site.mm.MmNode {
@@ -43,8 +48,8 @@ Cartridge puppet {
 		
 	}
 		
-	Outlet base outputDirectory 			= '..' overwrite = false createOutputDirectory = true
-	Outlet roleManifests outputDirectory 	= '../modules/role/manifests' overwrite = false createOutputDirectory = true
+	Outlet base outputDirectory 			= '..' 			overwrite = false createOutputDirectory = true
+	Outlet site outputDirectory 			= '../site'		overwrite = false createOutputDirectory = true
 	Outlet profileManifests outputDirectory = '../modules/profile/manifests' overwrite = false createOutputDirectory = true
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base overwrite = true {
@@ -53,53 +58,55 @@ Cartridge puppet {
 		}
 	}
 	
-	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = base overwrite = true {
+	Template path = "templates/VagrantfileTpl" outputPattern = "Vagrantfile" outlet = site overwrite = true {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
-	Template path = "templates/ServersYamlTpl" outputPattern = "servers.yaml" outlet = base overwrite = true {
+	Template path = "templates/ServersYamlTpl" outputPattern = "servers.yaml" outlet = site overwrite = true {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
-	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = base overwrite = true {
+	Template path = "templates/SitePpTpl" outputPattern = "manifests/site.pp" outlet = site overwrite = true {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
 	// Role
-	Template path = "templates/RoleManifestInitPpTpl" outputPattern = "init.pp" outlet = roleManifests {
+	Template path = "templates/RoleManifestInitPpTpl" outputPattern = "modules/role/manifests/init.pp" outlet = site {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
-	Template path = "templates/RoleManifestPpTpl" outlet = roleManifests overwrite = true {
+	Template path = "templates/RoleManifestPpTpl" outlet = site overwrite = true {
 		ModelElement type = roleMetafacade {
 			
 		}
 	}
 	
 	// Profile
-	Template path = "templates/ProfileManifestBasePpTpl" outputPattern = "base.pp" outlet = profileManifests {
+	Template path = "templates/ProfileManifestBasePpTpl" outputPattern = "modules/profile/manifests/base.pp" outlet = site {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
-	Template path = "templates/ProfileManifestPpTpl" outlet = profileManifests {
+	Template path = "templates/ProfileManifestPpTpl" outlet = site {
 		ModelElement type = profileMetafacade {
 			
 		}
 	}
 	
-	//Task test {
-	//	ModelElement type = profileMetafacade {
-	//		
-	//	}
-	//}
+	// Resource path = "resources/local-bootstrap.sh" outputPattern = "shell/local-bootstrap.sh" outlet = site
+	
+	// Task test {
+	//	 ModelElement type = profileMetafacade {
+	//	 	
+	//	 }
+	// }
 }
