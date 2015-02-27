@@ -3,7 +3,7 @@ package org.xmdlab.cartridge.generator.dsl.templates.templates
 import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTemplate
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
-import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+import static org.xmdlab.util.StringHelper.*
 import static org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 
 class TemplateTpl {

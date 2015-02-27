@@ -9,6 +9,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Ignore;
 import org.xmdlab.framework.jee.domain.AbstractEntity;
+import org.xmdlab.framework.jee.repository.Repository;
 import org.xmdlab.framework.jee.service.AbstractService;
 
 /**
@@ -30,6 +31,7 @@ public class AppManagerServiceDeployment {
 				// add framework packages
 				.addPackage(AbstractEntity.class.getPackage())
 				.addPackage(AbstractService.class.getPackage())
+				.addPackage(Repository.class.getPackage())
 
 				// add module packages
 				.addPackage("org.application.manager.entity")

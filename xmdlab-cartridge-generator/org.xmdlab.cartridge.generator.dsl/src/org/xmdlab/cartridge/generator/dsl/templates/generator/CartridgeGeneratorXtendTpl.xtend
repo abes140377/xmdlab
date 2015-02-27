@@ -3,7 +3,7 @@ package org.xmdlab.cartridge.generator.dsl.templates.generator
 import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
-import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+import static org.xmdlab.util.StringHelper.*
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 
 class CartridgeGeneratorXtendTpl {
@@ -29,7 +29,7 @@ class CartridgeGeneratorXtendTpl {
 			}
 			
 			«FOR t : dslCartridge.templates»
-			«IF isNotSet(t.outputPattern)»
+			«IF t.outputPattern.nullOrEmpty»
 			override String get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern(«getMetafacadeModelElementSimpleClassName(t.modelElement.type)» «getMetafacadeModelElementSimpleClassName(t.modelElement.type).toFirstLower») {
 				throw new UnsupportedOperationException("Generated method stub «className»:get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern(..). Implement me!")
 			}

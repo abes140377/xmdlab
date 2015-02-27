@@ -22,7 +22,8 @@ Require-Bundle: org.xmdlab.3rdparty,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
  org.objectweb.asm;resolution:=optional,
- org.apache.log4j
+ org.apache.log4j,
+ org.xmdlab.util;bundle-version="0.1.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.xmdlab.cartridge.generator.dsl,

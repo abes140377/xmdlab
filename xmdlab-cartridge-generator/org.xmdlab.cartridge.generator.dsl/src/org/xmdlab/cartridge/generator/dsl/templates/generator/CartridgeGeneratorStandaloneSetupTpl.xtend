@@ -3,7 +3,7 @@ package org.xmdlab.cartridge.generator.dsl.templates.generator
 import com.google.inject.Inject
 
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
-import org.xmdlab.cartridge.generator.dsl.util.StringHelper
+import static org.xmdlab.util.StringHelper.*
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 
@@ -15,7 +15,7 @@ class CartridgeGeneratorStandaloneSetupTpl {
 		«val modelName = dslCartridge.name»
 		«val modelNameFirstUpper = modelName.toFirstUpper»
 		«val className = modelNameFirstUpper + "CartridgeGeneratorStandaloneSetup"»
-		«StringHelper.getGeneratedComment(class.name)»
+		«getGeneratedComment(class.name)»
 		package «basePackage»;
 		
 		import org.eclipse.xtext.util.Modules2;
@@ -23,7 +23,7 @@ class CartridgeGeneratorStandaloneSetupTpl {
 		import com.google.inject.Guice;
 		import com.google.inject.Injector;
 		
-		«StringHelper::getClassComment(className)»
+		«getClassComment(className)»
 		public class «modelNameFirstUpper»CartridgeGeneratorStandaloneSetup extends «getStandaloneSetupClass(dslCartridge)» {
 		
 			public static void doSetup() {

@@ -7,7 +7,7 @@ package org.xmdlab.cartridge.jee.generator
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xmdlab.jee.application.mm.MmApplication
 import org.xmdlab.jee.application.mm.MmEntity
-import static extension org.xmdlab.cartridge.common.util.StringHelper.*
+import static extension org.xmdlab.util.StringHelper.*
 
 /**
  * The JeeCartridgeGenerator
@@ -33,7 +33,7 @@ class JeeCartridgeGenerator extends JeeCartridgeGeneratorBase {
 	 * 
 	 */
 	override getEntityOutputPattern(MmEntity mmEntity) {
-		return mmEntity.package.toPath + "/" + mmEntity.name + ".java"
+		return mmEntity.package.javaPackageToFsPath + "/" + mmEntity.name + ".java"
 	}
 
 }

@@ -3,7 +3,7 @@ package org.xmdlab.cartridge.generator.dsl.templates.generator
 import com.google.inject.Inject
 
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
-import org.xmdlab.cartridge.generator.dsl.util.StringHelper
+import static org.xmdlab.util.StringHelper.*
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 
 class CartridgeGeneratorModuleTpl {
@@ -14,7 +14,7 @@ class CartridgeGeneratorModuleTpl {
 		«val modelName = dslCartridge.name»
 		«val modelNameFirstUpper = modelName.toFirstUpper»
 		«val className = modelNameFirstUpper + "CartridgeGeneratorModule"»
-		«StringHelper.getGeneratedComment(class.name)»
+		«getGeneratedComment(class.name)»
 		package «basePackage»;
 		
 		import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
@@ -29,7 +29,7 @@ class CartridgeGeneratorModuleTpl {
 		
 		import com.google.inject.Binder;
 		
-		«StringHelper::getClassComment(className)»
+		«getClassComment(className)»
 		public class «className» extends AbstractGenericModule {
 		
 			@Override

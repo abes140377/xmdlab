@@ -4,9 +4,7 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 
-import static extension org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
-import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.BoolLiteral
 import org.xmdlab.cartridge.generator.dsl.util.ModelHelper
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslProperty
 

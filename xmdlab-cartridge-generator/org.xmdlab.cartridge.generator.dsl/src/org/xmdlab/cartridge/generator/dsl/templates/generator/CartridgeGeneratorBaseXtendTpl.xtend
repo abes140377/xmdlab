@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 
-import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+import static org.xmdlab.util.StringHelper.*
 
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 import java.util.Comparator
@@ -69,7 +69,7 @@ class CartridgeGeneratorBaseXtendTpl {
 			def compile«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»(IFileSystemAccess fsa, «getMetafacadeModelElementSimpleClassName(t.modelElement.type)» «getMetafacadeModelElementSimpleClassName(t.modelElement.type).toFirstLower») {
 				val «getTemplateNameFromPath(t).toFirstUpper» tpl = «getTemplateNameFromPath(t).toFirstLower».get
 				
-				«IF isSet(t.outputPattern)»
+				«IF !t.outputPattern.nullOrEmpty»
 					val String fileName = "«t.outputPattern»"
 				«ELSE»
 					val String fileName = get«getTemplateNameFromPathWithoutSuffix(t).toFirstUpper»OutputPattern(«getMetafacadeModelElementSimpleClassName(t.modelElement.type).toFirstLower»)
@@ -84,7 +84,7 @@ class CartridgeGeneratorBaseXtendTpl {
 				«ENDIF»
 			}
 		
-			«IF isNotSet(t.outputPattern)»
+			«IF t.outputPattern.nullOrEmpty»
 			/**
 			 *
 			 */

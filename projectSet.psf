@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.egit.core.GitProvider">
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples-ref/app-manager"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples-ref/app-manager/domain"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,devtools/eclipse-ide"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,devtools/eclipse-mirror"/>
+<project reference="1.0,https://github.com/purpleidea/oh-my-vagrant,master,."/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-plugins/org.xmdlab.3rdparty"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.common"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator/org.xmdlab.cartridge.generator.dsl"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator/org.xmdlab.cartridge.generator.dsl.tests"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator/org.xmdlab.cartridge.generator.dsl.ui"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.jee"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.jee.tests"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.puppet"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.puppet.tests"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.application"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.application.ui"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.domain"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.domain.ui"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-features/org.xmdlab.feature"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-metamodels/org.xmdlab.jee.application.mm"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-metamodels/org.xmdlab.puppet.site.mm"/>
+<project reference="1.0,https://github.com/sculptor/sculptor.git,develop,."/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples-ref/app-manager/service"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,."/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-jee"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-jee/model"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-puppet"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-puppet/model"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-features"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks/xmdlab-framework-jee"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-maven"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-maven/xmdlab-maven-plugin"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-metamodels"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-plugins"/>
+</provider>
+</psf>

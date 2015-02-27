@@ -31,7 +31,7 @@ import org.xmdlab.cartridge.generator.dsl.templates.transformation.CartridgeTran
 import org.xmdlab.cartridge.generator.dsl.templates.transformation.CartridgeTransformationXtendTpl
 
 import static org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
-import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+import static org.xmdlab.util.StringHelper.*
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTask
 import org.xmdlab.cartridge.generator.dsl.templates.task.TaskClassTpl
 import org.xmdlab.cartridge.generator.dsl.templates.generator.CartridgeGeneratorWorkflowTpl
@@ -155,7 +155,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateTaskClass(DslTask dslTask, IFileSystemAccess fsa) {
 		val TaskClassTpl tpl = taskClassTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/task/" + dslTask.name.toFirstUpper + "Task.xtend"
+		val fileName = javaPackageToFsPath(basePackage) + "/task/" + dslTask.name.toFirstUpper + "Task.xtend"
 
 		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslTask))
 	}
@@ -167,7 +167,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeGeneratorWorkflow(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeGeneratorWorkflowTpl tpl = cartridgeGeneratorWorkflowTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
 			"CartridgeGeneratorWorkflow.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -179,7 +179,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateMwe2CartridgeGenerator(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgGeneratorMwe2Tpl tpl = cartridgGeneratorMwe2Tpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
 			"CartridgeGenerator.mwe2"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -191,7 +191,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeGeneratorStandaloneSetup(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeGeneratorStandaloneSetupTpl tpl = cartridgeGeneratorStandaloneSetupTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/" + cartridgeName.toFirstUpper +
 			"CartridgeGeneratorStandaloneSetup.java"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -203,7 +203,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeGeneratorModule(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeGeneratorModuleTpl tpl = cartridgeGeneratorModuleTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/" + cartridgeName.toFirstUpper + "CartridgeGeneratorModule.java"
+		val fileName = javaPackageToFsPath(basePackage) + "/" + cartridgeName.toFirstUpper + "CartridgeGeneratorModule.java"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
 	}
@@ -214,7 +214,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeGeneratorBaseXtend(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeGeneratorBaseXtendTpl tpl = cartridgeGeneratorBaseXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
 			"CartridgeGeneratorBase.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -226,7 +226,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeOutputConfigurationProvider(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeOutputConfigurationProviderTpl tpl = cartridgeOutputConfigurationProviderTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/io/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/io/" + cartridgeName.toFirstUpper +
 			"CartridgeOutputConfigurationProvider.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -238,7 +238,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeGeneratorXtend(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeGeneratorXtendTpl tpl = cartridgeGeneratorXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
 			"CartridgeGenerator.xtend"
 
 		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslCartridge))
@@ -250,7 +250,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeGeneratorRunner(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeGeneratorRunnerTpl tpl = cartridgGeneratorRunnerTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/generator/" + cartridgeName.toFirstUpper +
 			"GeneratorRunner.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -264,7 +264,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeProperties(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgePropertiesTpl tpl = cartridgePropertiesTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/conf/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/conf/" + cartridgeName.toFirstUpper +
 			"CartridgeProperties.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslCartridge))
@@ -289,7 +289,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeTransformationComponent(DslTransformation dslTransformation, IFileSystemAccess fsa) {
 		val CartridgeTransformationComponentTpl tpl = cartridgeTransformationComponentTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
 			"CartridgeTransformationComponent.java"
 
 		fsa.generateFile(fileName, tpl.generate(dslTransformation))
@@ -301,7 +301,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeTransformationXtend(DslTransformation dslTransformation, IFileSystemAccess fsa) {
 		val CartridgeTransformationXtendTpl tpl = cartridgeTransformationXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
 			"CartridgeTransformation.xtend"
 
 		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslTransformation))
@@ -313,7 +313,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeTransformationBaseXtend(DslTransformation dslTransformation, IFileSystemAccess fsa) {
 		val CartridgeTransformationBaseXtendTpl tpl = cartridgeTransformationBaseXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
+		val fileName = javaPackageToFsPath(basePackage) + "/transformation/" + cartridgeName.toFirstUpper +
 			"CartridgeTransformationBase.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslTransformation))
@@ -327,7 +327,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeMetafacadeXtend(DslMetafacade dslMetafacade, IFileSystemAccess fsa) {
 		val CartridgeMetafacadeXtendTpl tpl = metafacadeXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + ".xtend"
+		val fileName = javaPackageToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + ".xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslMetafacade))
 	}
@@ -338,7 +338,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeMetafacadeBaseXtend(DslMetafacade dslMetafacade, IFileSystemAccess fsa) {
 		val CartridgeMetafacadeBaseXtendTpl tpl = cartridgeMetafacadeBaseXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + "Base.xtend"
+		val fileName = javaPackageToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + "Base.xtend"
 
 		fsa.generateFile(fileName, tpl.generate(dslMetafacade))
 	}
@@ -349,7 +349,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeMetafacadeImplXtend(DslMetafacade dslMetafacade, IFileSystemAccess fsa) {
 		val CartridgeMetafacadeImplXtendTpl tpl = cartridgeMetafacadeImplXtendTpl.get
 
-		val fileName = javaToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + "Impl.xtend"
+		val fileName = javaPackageToFsPath(basePackage) + "/metafacade/" + dslMetafacade.name.toFirstUpper + "Impl.xtend"
 
 		fsa.generateFile(fileName, GEN_MAN_OUTPUT, tpl.generate(dslMetafacade))
 	}
@@ -363,9 +363,9 @@ class CartridgeDslGenerator implements IGenerator {
 		val TemplateBaseTpl templateBaseTpl = templateBaseTpl.get
 		val TemplateTpl templateTpl = templateTpl.get
 
-		val fileNameTemplateBase = javaToFsPath(basePackage) + "/" + getTemplateSubpackageFromPath(template) + "/" +
+		val fileNameTemplateBase = javaPackageToFsPath(basePackage) + "/" + getTemplateSubpackageFromPath(template) + "/" +
 			getTemplateNameFromPath(template).toFirstUpper + "Base.xtend"
-		val fileNameTemplate = javaToFsPath(basePackage) + "/" + getTemplateSubpackageFromPath(template) + "/" +
+		val fileNameTemplate = javaPackageToFsPath(basePackage) + "/" + getTemplateSubpackageFromPath(template) + "/" +
 			getTemplateNameFromPath(template).toFirstUpper + ".xtend"
 
 		fsa.generateFile(fileNameTemplateBase, templateBaseTpl.generate(template))
@@ -381,7 +381,7 @@ class CartridgeDslGenerator implements IGenerator {
 	def generateCartridgeInjectorProvider(DslCartridge dslCartridge, IFileSystemAccess fsa) {
 		val CartridgeInjectorProviderTpl tpl = cartridgeInjectorProviderTpl.get
 		
-		val fileName = javaToFsPath(basePackage) + "/" + dslCartridge.name.toFirstUpper + "CartridgeInjectorProvider.java"
+		val fileName = javaPackageToFsPath(basePackage) + "/" + dslCartridge.name.toFirstUpper + "CartridgeInjectorProvider.java"
 		
 		fsa.generateFile(fileName, TEST_GEN_OUTPUT, tpl.generate(dslCartridge))
 	}

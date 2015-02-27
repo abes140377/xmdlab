@@ -4,8 +4,7 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTransformation
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
-import static extension org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
-//import org.xmdlab.cartridge.generator.dsl.util.ModelHelper
+import static org.xmdlab.util.StringHelper.*
 
 class CartridgeTransformationComponentTpl {
 	

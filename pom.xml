@@ -108,11 +108,11 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
+        <module>xmdlab-plugins</module>
         <module>xmdlab-dsls</module>
         <module>xmdlab-metamodels</module>
         <module>xmdlab-cartridge-generator</module>
         <module>xmdlab-cartridges</module>
-        <module>xmdlab-plugins</module>
         <module>xmdlab-features</module>
         <module>xmdlab-maven</module>
         <module>xmdlab-examples</module>

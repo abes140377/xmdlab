@@ -9,8 +9,7 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
  * @author freund
  *
  */
-public interface OrganisationRepository extends
-		JpaRepository<Organisation, Long>,
-		QueryDslPredicateExecutor<Organisation> {
+public interface OrganisationRepository<T extends Organisation> extends
+		JpaRepository<T, Long>, QueryDslPredicateExecutor<T> {
 
 }

@@ -3,8 +3,7 @@ package org.xmdlab.cartridge.generator.dsl.templates.generator
 import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
-import org.xmdlab.cartridge.generator.dsl.util.StringHelper
-//import static org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
+import static org.xmdlab.util.StringHelper.*
 
 class CartridgGeneratorMwe2Tpl {
 	
@@ -12,7 +11,7 @@ class CartridgGeneratorMwe2Tpl {
 //	@Inject extension ModelHelper modelHelper
 	
 	def generate(DslCartridge dslCartridge) '''
-		«StringHelper.getGeneratedComment(class.name)»
+		«getGeneratedComment(class.name)»
 		module «basePackage».generator.«cartridgeName.toFirstUpper»CartridgeGenerator
 
 		import org.eclipse.emf.mwe.utils.*

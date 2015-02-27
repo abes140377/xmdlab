@@ -12,6 +12,8 @@ import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslTemplate
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.FalseLiteral
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.TrueLiteral
 
+import static extension org.xmdlab.util.StringHelper.*
+
 class ModelHelper {
 	
 	/**
@@ -131,7 +133,7 @@ class ModelHelper {
 	 * 
 	 */
 	def static String getOutletConstantName(DslTemplate template) {
-		return 'OUTPUTCONFIG_' + StringHelper.camelCaseToUnderscore(template.outlet.name)
+		return 'OUTPUTCONFIG_' + template.outlet.name.camelCaseToUnderscore.toUpperCase
 	}
 
 	/**

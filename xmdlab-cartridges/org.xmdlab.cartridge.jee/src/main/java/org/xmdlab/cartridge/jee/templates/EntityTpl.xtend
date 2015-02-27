@@ -5,11 +5,10 @@
 package org.xmdlab.cartridge.jee.templates
 
 import com.google.inject.Inject
-import org.xmdlab.cartridge.common.util.StringHelper
 import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
 import org.xmdlab.jee.application.mm.MmEntity
 
-import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+import static extension org.xmdlab.util.StringHelper.*
 
 class EntityTpl extends EntityTplBase {
 
@@ -139,7 +138,7 @@ class EntityTpl extends EntityTplBase {
 	 */
 	def compileAnnotations(MmEntity entity) '''
 		@Entity
-		@Table(name = "«StringHelper.camelCaseToUnderscore(entity.name)»")
+		@Table(name = "«entity.name.camelCaseToUnderscore»")
 	'''
 	
 	/**

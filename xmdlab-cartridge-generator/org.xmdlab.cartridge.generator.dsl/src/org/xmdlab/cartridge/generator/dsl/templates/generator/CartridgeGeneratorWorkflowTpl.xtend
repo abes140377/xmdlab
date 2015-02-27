@@ -3,7 +3,7 @@ package org.xmdlab.cartridge.generator.dsl.templates.generator
 import com.google.inject.Inject
 import org.xmdlab.cartridge.generator.dsl.generator.GeneratorProperties
 import org.xmdlab.cartridge.generator.dsl.cartridgeDsl.DslCartridge
-import org.xmdlab.cartridge.generator.dsl.util.StringHelper
+import static org.xmdlab.util.StringHelper.*
 import static extension org.xmdlab.cartridge.generator.dsl.util.ModelHelper.*
 
 class CartridgeGeneratorWorkflowTpl {
@@ -11,7 +11,7 @@ class CartridgeGeneratorWorkflowTpl {
 	@Inject extension GeneratorProperties generatorProperties
 	
 	def generate(DslCartridge dslCartridge) '''
-	«StringHelper.getGeneratedComment(class.name)»
+	«getGeneratedComment(class.name)»
 	package «basePackage».generator
 
 	import com.google.common.base.Charsets

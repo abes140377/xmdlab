@@ -39,6 +39,11 @@
         </configuration>
         <dependencies>
           <dependency>
+            <groupId>org.xmdlab.plugins</groupId>
+            <artifactId>org.xmdlab.util</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
             <groupId>org.xmdlab.cartridge.generator</groupId>
             <artifactId>org.xmdlab.cartridge.generator.dsl</artifactId>
             <version>${project.version}</version>
@@ -109,6 +114,11 @@
   </build>
 
   <dependencies>
+    <dependency>
+      <groupId>org.xmdlab.plugins</groupId>
+      <artifactId>org.xmdlab.util</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.xmdlab.cartridges</groupId>
       <artifactId>org.xmdlab.cartridge.common</artifactId>
