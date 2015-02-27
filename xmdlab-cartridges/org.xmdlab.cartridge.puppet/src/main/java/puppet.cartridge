@@ -48,9 +48,9 @@ Cartridge puppet {
 		
 	}
 		
-	Outlet base outputDirectory 			= '..' 			overwrite = false createOutputDirectory = true
-	Outlet site outputDirectory 			= '../site'		overwrite = false createOutputDirectory = true
-	Outlet profileManifests outputDirectory = '../modules/profile/manifests' overwrite = false createOutputDirectory = true
+	Outlet base outputDirectory 			= '..' 								overwrite = false createOutputDirectory = true
+	Outlet site outputDirectory 			= '../site'							overwrite = false createOutputDirectory = true
+	Outlet profileManifests outputDirectory = '../modules/profile/manifests' 	overwrite = false createOutputDirectory = true
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base overwrite = true {
 		ModelElement type = siteMetafacade {

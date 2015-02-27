@@ -4,13 +4,176 @@
  */
 package org.xmdlab.cartridge.jee.templates
 
+import com.google.inject.Inject
+import org.xmdlab.cartridge.common.util.StringHelper
+import org.xmdlab.cartridge.jee.conf.JeeCartridgeProperties
+import org.xmdlab.jee.application.mm.MmEntity
+
+import static org.xmdlab.cartridge.generator.dsl.util.StringHelper.*
+
 class EntityTpl extends EntityTplBase {
 
-	//	@Inject extension JeeCartridgeProperties
+	@Inject extension JeeCartridgeProperties
+
+	/**
+	 * 
+	 */
 	override doGenerate() '''
 		«val entity = entityMetafacade.modelResource»
-		public class «entity.name» {
+		«getGeneratedComment(class.name)»
+		package «entity.package»
+		
+		import javax.persistence.Column;
+		import javax.persistence.Entity;
+		import javax.persistence.Table;
+		
+		import org.xmdlab.framework.jee.domain.AbstractEntity;
+		
+		«getClassComment(class.name)»
+		«compileAnnotations(entity)»
+		public class «entity.name» extends AbstractEntity {
 			
+			/**
+			 * Default constructor
+			 */
+			public Organisation() { }
+			
+			«compileConstructorRequired(entity)»
+			
+			«compileConstructorAll(entity)»
+			
+			«compileGetterSetter(entity)»
+			
+			«compileToString(entity)»
+			
+			«compileEntityBuilder(entity)»
 		}
+	'''
+	
+	/**
+	 * 
+	 */
+	def compileToString(MmEntity entity) '''
+		@Override
+		public String toString() {
+			return "«entity.name» [id=" + getId()
+				«FOR a : entity.attributes»
+				+ ", «a.name»=" + «a.name»
+				«ENDFOR»
+				+ "]";
+		}
+	'''
+	
+	/**
+	 * 
+	 */
+	def compileGetterSetter(MmEntity entity) '''
+		«FOR a : entity.attributes»
+		public «a.type» get«a.name.toFirstUpper»() {
+			return «a.name»;
+		}
+
+		public void set«a.name.toFirstUpper»(«a.type» «a.name») {
+			this.«a.name» = «a.name»;
+		}
+		«ENDFOR»
+	'''
+	
+	/**
+	 * 
+	 */
+	def compileConstructorRequired(MmEntity entity) '''
+	«val requiredAttributes = entity.attributes.filter[a | a.required]»
+	«IF requiredAttributes.size > 0»
+	/**
+	 * 
+	«FOR a : requiredAttributes»
+	«IF a.required»
+	 * @param «a.name»
+	 «ENDIF»
+	«ENDFOR»
+	 */
+	public «entity.name.toFirstUpper»(«compileParameters(entity, true)») {
+		«FOR a : entity.attributes»
+		«IF a.required»
+		this.«a.name» = «a.name»;
+		«ENDIF»
+		«ENDFOR»
+	}
+	«ELSE»
+		// no required constructor
+	«ENDIF»
+	'''
+	
+	/**
+	 * 
+	 */
+	def compileParameters(MmEntity entity, boolean onlyRequired) {
+		var StringBuffer buffer = new StringBuffer();
+		for(a : entity.attributes) {
+			if(onlyRequired) {
+				if(a.required) {
+					buffer.append(a.type + " " + a.name + ", ")
+				}	
+			} else {
+				buffer.append(a.type + " " + a.name + ", ")
+			}
+		}
+		var String s = buffer.toString
+		if(s.length >= 2) {
+			return s.substring(0, s.length -2)			
+		} else {
+			return ""
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	def compileConstructorAll(MmEntity entity) {
+		
+	}
+
+	/**
+	 * 
+	 */
+	def compileAnnotations(MmEntity entity) '''
+		@Entity
+		@Table(name = "«StringHelper.camelCaseToUnderscore(entity.name)»")
+	'''
+	
+	/**
+	 * 
+	 */
+	def compileEntityBuilder(MmEntity entity) '''
+	/**
+	 * A Builder class used to create new «entity.name» objects.
+	 */
+	public static class Builder {
+		«entity.name» built;
+
+		/**
+		 * Creates a new Builder instance.
+		 «FOR a : entity.attributes»
+		 * @param «a.name» «a.doc»
+		 «ENDFOR»
+		 */
+		Builder(«compileParameters(entity, false)») {
+			built = new «entity.name»();
+			«FOR a : entity.attributes»
+			built.«a.name» = «a.name»;
+			«ENDFOR»
+		}
+		
+		
+		
+		/**
+		 * Builds the new «entity.name» object.
+		 * @return  The created «entity.name» object.
+		 */
+		public «entity.name» build() {
+			return built;
+		}
+	}
 	'''
 }

@@ -54,16 +54,17 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	 */
 	def create FACTORY.createMmModule transform(DslModule dslModule) {
 		LOG.info("transform dslModule: " + dslModule)
-		basePackage = dslModule.basePackage
+		
+		it.application = mmAppplication
+		
+		it.basePackage = mmAppplication.basePackage + "." + dslModule.name
+		it.doc = dslModule.doc
+		it.name = dslModule.name
+		it.hint = dslModule.hint
 
-		//		val List<DslModule> allDslModules = EcoreUtil2::eAllOfType(dslApplication, typeof(DslModule))
-		application = mmAppplication
-		doc = dslModule.doc
-		name = dslModule.name
-		hint = dslModule.hint
-		basePackage = dslModule.basePackage
-		domainObjects.addAll(dslModule.domainObjects.map[e|transformSimpleDomainObject(e)])
-		services.addAll(dslModule.services.map[e|transform(e)])
+		it.domainObjects.addAll(dslModule.domainObjects.map[e|transformSimpleDomainObject(e)])
+
+		it.services.addAll(dslModule.services.map[e|transform(e)])
 	}
 
 	/**
@@ -95,9 +96,14 @@ class JeeCartridgeTransformation extends JeeCartridgeTransformationBase {
 	 */
 	def dispatch create FACTORY.createMmEntity transformSimpleDomainObject(DslEntity domainObject) {
 		LOG.info("transformSimpleDomainObject domainObject: " + domainObject)
+		
 		module = (domainObject.eContainer as DslModule).transform
+		
 		name = domainObject.name
-		^package = domainObject.^package
+		
+		val tSubPackage = if (!domainObject.^package.isNullOrEmpty) '.' + domainObject.^package else ''
+		
+		^package = module.basePackage + tSubPackage
 
 		attributes.addAll(domainObject.attributes.map[e|transform(e)])
 	}

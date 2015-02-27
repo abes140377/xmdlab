@@ -1,9 +1,10 @@
 description = 'Xmdlab jee framework'
 
 ext.libraryVersions = [
-	javaee		: '7.0',
-	junit		: '4.11',
-	querydsl	: '3.6.0'
+	javaee				: '7.0',
+	junit				: '4.11',
+	querydsl			: '3.6.0',
+	springDataVersion	: '1.7.2.RELEASE',
 ]
 
 sourceSets {
@@ -22,6 +23,7 @@ dependencies {
 	compile 'org.slf4j:slf4j-simple:1.7.7'
 	compile "javax:javaee-api:${libraryVersions.javaee}"
 	compile "com.mysema.querydsl:querydsl-jpa:$libraryVersions.querydsl"
+	compile "org.springframework.data:spring-data-jpa:${libraryVersions.springDataVersion}"
 	
 	querydslapt "com.mysema.querydsl:querydsl-apt:$libraryVersions.querydsl"
 	

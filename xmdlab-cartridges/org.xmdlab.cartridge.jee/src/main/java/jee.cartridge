@@ -18,8 +18,9 @@ Cartridge jee {
 		
 	}
 	
-	Outlet base outputDirectory = '..' overwrite = false
-	Outlet coreGeneratedSrc outputDirectory = '../core/src-gen' overwrite = true
+	Outlet base 		outputDirectory = '..' 					overwrite = false
+	Outlet domain		outputDirectory = '../domain'		 	overwrite = true
+	Outlet domainSrcGen	outputDirectory = '../domain/src-gen' 	overwrite = true createOutputDirectory = true
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base {
 		ModelElement type = applicationMetafacade {
@@ -27,15 +28,22 @@ Cartridge jee {
 		}
 	}
 	
-	Template path = "templates/EntityTpl" outlet = coreGeneratedSrc {
+	Template path = "templates/BuildGradleRootTpl" outputPattern = "build.gradle" outlet = base {
+		ModelElement type = applicationMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/SettingsGradleTpl" outputPattern = "settings.gradle" outlet = base {
+		ModelElement type = applicationMetafacade {
+			
+		}
+	}
+	
+	Template path = "templates/EntityTpl" outlet = domainSrcGen {
 		ModelElement type = entityMetafacade {
 			
 		}
 	}
 	
-	//Task test {
-	//	ModelElement type = profileMetafacade {
-	//		
-	//	}
-	//}
 }

@@ -17,7 +17,12 @@ import javax.persistence.Version;
  * @author freund
  */
 @MappedSuperclass
-public class AbstractEntity {
+public class AbstractEntity implements java.io.Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

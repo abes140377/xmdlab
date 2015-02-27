@@ -7,6 +7,7 @@ package org.xmdlab.cartridge.jee.generator
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xmdlab.jee.application.mm.MmApplication
 import org.xmdlab.jee.application.mm.MmEntity
+import static extension org.xmdlab.cartridge.common.util.StringHelper.*
 
 /**
  * The JeeCartridgeGenerator
@@ -16,16 +17,23 @@ import org.xmdlab.jee.application.mm.MmEntity
  */
 class JeeCartridgeGenerator extends JeeCartridgeGeneratorBase {
 
+	/**
+	 * 
+	 */	
 	override doGenerate(MmApplication mmApplication, IFileSystemAccess fsa) {
-
 		// compile templates
 		compileReadmeMd(fsa, mmApplication)
+		compileSettingsGradle(fsa, mmApplication)
+		compileBuildGradleRoot(fsa, mmApplication)
 
 		mmApplication.eAllContents.filter(MmEntity).forEach[compileEntity(fsa, it)]
 	}
 	
+	/** 
+	 * 
+	 */
 	override getEntityOutputPattern(MmEntity mmEntity) {
-		return mmEntity.package + "." + mmEntity.name + ".java"
+		return mmEntity.package.toPath + "/" + mmEntity.name + ".java"
 	}
 
 }

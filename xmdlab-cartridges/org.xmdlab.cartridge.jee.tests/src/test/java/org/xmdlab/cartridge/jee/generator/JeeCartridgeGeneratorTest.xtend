@@ -40,6 +40,6 @@ class JeeCartridgeGeneratorTest extends BaseGeneratorTest<DslModel> {
 		assertEquals(3, fsa.textFiles.size)
 
 		// check generated files
-		assertExistenceAndContent(OUTPUTCONFIG_CORE_GENERATED_SRC, "Organisation.java")
+		assertExistenceAndContent(OUTPUTCONFIG_DOMAIN_SRC_GEN, "Organisation.java")
 	}
 }

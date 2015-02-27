@@ -1,14 +1,18 @@
-Application application-manager {
+Application application_manager {
 
     basePackage=org.application.manager
     
-    Entity Organisation {
-    	String name;
-        String description;
-	}
-	
-	Entity Team {
-    	String name;
-        String description;
-	}
+    Module organisation {
+    
+    	Entity Organisation {
+	    	String name;
+	        String description;
+		}
+		
+		Entity Team {
+	    	String name;
+	        String description;
+		}
+		
+    }
 }
