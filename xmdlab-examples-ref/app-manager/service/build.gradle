@@ -19,6 +19,7 @@ sourceSets {
 
 dependencies {
 	compile project(':domain')
+	compile project(':xmdlab-framework-jee')
 	
 	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"

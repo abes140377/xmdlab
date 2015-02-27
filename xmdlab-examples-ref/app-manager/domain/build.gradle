@@ -1,19 +1,5 @@
 description = 'AppManager domain - contains domain model'
 
-//ext.libraryVersions = [
-//	slf4jVersion					: '1.7.7',
-//	springDataVersion				: '1.7.2.RELEASE',
-//	javaeeVersion                  	: '7.0',
-//	wildflyVersion                 	: '8.2.0.Final',
-//	glassfishVersion				: '4.0',
-//	junitVersion                   	: '4.11',
-//	arquillianVersion              	: '1.1.5.Final',
-//	arquillianPersistenceVersion	: '1.0.0.Alpha7',
-//	shrinkWrapResolverGradleVersion	: '2.1.0',
-//	hibernateVersion				: '4.3.5.Final',
-//	querydslVersion					: '3.6.0',
-//]
-
 configurations {
 	provided
 	querydslapt

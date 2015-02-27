@@ -26,19 +26,15 @@ public interface Service<E> {
 	
 	public void deleteAll();
 	
-	public void deleteAll(E entity);
+	public E findOne(Long id);
 	
-	public void deleteAll(Long id);
+	public E findOne(Predicate predicate);
 	
-	public void findOne(Long id);
+	public E getOne(Long id);
 	
-	public void findOne(Predicate predicate);
+	public E save(E entity);
 	
-	public void getOne(Long id);
+	public E saveAndFlush(E entity);
 	
-	public void save(E entity);
-	
-	public void saveAndFlush(E entity);
-	
-	public void exists(Long id);
+	public boolean exists(Long id);
 }

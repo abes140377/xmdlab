@@ -79,11 +79,10 @@ public class OrganisationRepositoryIntegrationTest {
 	@Test
 	@UsingDataSet("datasets/organisations.yml")
 	public void canGetOne() {
-		throw new UnsupportedOperationException("Fix me!");
-//		Long organisationId = -1L;
-//		Organisation result = organisationRepository.getOne(organisationId);
-//
-//		Assert.assertEquals(organisationId, result.getId());
+		Long organisationId = -1L;
+		Organisation result = organisationRepository.getOne(organisationId);
+
+		Assert.assertEquals(organisationId, result.getId());
 	}
 
 	@Test

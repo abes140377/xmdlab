@@ -2,16 +2,12 @@ package org.application.manager.arquillian;
 
 import java.io.File;
 
-import org.application.manager.cdi.CdiConfig;
-import org.application.manager.entity.Organisation;
-import org.application.manager.repository.OrganisationRepository;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Ignore;
-import org.xmdlab.framework.jee.domain.AbstractEntity;
 
 /**
  * 
@@ -30,7 +26,8 @@ public class AppManagerDomainDeployment {
 				.create(WebArchive.class, "test.war")
 
 				// add framework packages
-				.addPackage(AbstractEntity.class.getPackage())
+				.addPackage("org.xmdlab.framework.jee.domain")
+				.addPackage("org.xmdlab.framework.jee.repository")
 
 				// add module packages
 				.addPackage("org.application.manager.entity")

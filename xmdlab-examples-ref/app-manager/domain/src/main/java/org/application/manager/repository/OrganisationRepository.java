@@ -1,15 +1,13 @@
 package org.application.manager.repository;
 
 import org.application.manager.entity.Organisation;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.xmdlab.framework.jee.repository.Repository;
 
 /**
  * 
- * @author freund
+ * @author freundS
  *
  */
-public interface OrganisationRepository<T extends Organisation> extends
-		JpaRepository<T, Long>, QueryDslPredicateExecutor<T> {
+public interface OrganisationRepository extends Repository<Organisation> {
 
 }
