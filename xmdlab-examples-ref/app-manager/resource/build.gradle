@@ -1,53 +1,43 @@
-description = 'AppManager domain - contains domain model'
+description = 'AppManager resource - contains resources'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'com.bmuschko:gradle-cargo-plugin:2.0.3'
+	}
+}
+
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.cargo'
 
 configurations {
 	provided
-	querydslapt
 	glassfishEmbeddedTestRuntime { extendsFrom testRuntime }
 	jbossEmbeddedTestRuntime { extendsFrom testRuntime, provided }
 	jbossRemoteTestRuntime { extendsFrom testRuntime }
 }
 
 sourceSets {
-	generated {
-        java {
-            srcDirs = ['src/main/generated']
-        }
-    }
 	test {
 		resources { srcDir 'src/test/resources' }
 		resources { srcDir 'src/test/resources-jbossas-embedded' }
-
-		compileClasspath += main.output + configurations.provided + main.compileClasspath
-		runtimeClasspath += main.output + configurations.provided + main.compileClasspath + main.runtimeClasspath
 	}
 }
 
-sourceSets.main.java.srcDir 'src/main/generated'
-
 dependencies {
-	compile project(':xmdlab-framework-jee')
+//	compile project(':domain')
+//	compile project(':service')
 	
-	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+
+	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 
 	testCompile "junit:junit:${libraryVersions.junitVersion}"
 	testCompile "org.hamcrest:hamcrest-library:${libraryVersions.hamcrestVersion}"
-
-	testRuntime "com.h2database:h2:${libraryVersions.h2databaseVersion}"
-
-	// querydsl
-	compile "com.mysema.querydsl:querydsl-core:${libraryVersions.querydslVersion}"
-	compile "com.mysema.querydsl:querydsl-jpa:${libraryVersions.querydslVersion}"
 	
-	querydslapt "com.mysema.querydsl:querydsl-apt:${libraryVersions.querydslVersion}"
-
-	// Spring data
-	compile "org.springframework.data:spring-data-jpa:${libraryVersions.springDataVersion}"
-
-	// arquillian persistence extension
-	testCompile "org.jboss.arquillian.extension:arquillian-persistence-dbunit:${libraryVersions.arquillianPersistenceVersion}"
-
 	// jboss arquilian / shrinkwrap
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${libraryVersions.arquillianVersion}"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${libraryVersions.arquillianVersion}"
@@ -64,32 +54,9 @@ dependencies {
 	// glassfish managed
 	glassfishEmbeddedTestRuntime "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${libraryVersions.arquillianGlassfishEmbeddedVersion}"
 	glassfishEmbeddedTestRuntime "org.glassfish.main.extras:glassfish-embedded-all:${libraryVersions.glassfishVersion}"
-}
-
-// querydsl
-task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
-    source = sourceSets.main.java
-    classpath = configurations.compile + configurations.querydslapt
-    options.compilerArgs = [
-            "-proc:only",
-            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
-    ]
-    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
-}
-
-compileJava {
-    dependsOn generateQueryDSL
-    source generateQueryDSL.destinationDir
-}
-
-compileGeneratedJava {
-    dependsOn generateQueryDSL
-    options.warnings = false
-    classpath += sourceSets.main.runtimeClasspath
-}
-
-clean {
-    delete sourceSets.generated.java.srcDirs
+	
+	cargo 'org.wildfly:wildfly-controller-client:8.1.0.Final'
+	cargo 'org.codehaus.cargo:cargo-ant:1.4.8'
 }
 
 // jbossEmbeddedTest
@@ -151,18 +118,34 @@ test {
 	systemProperty 'slf4jVersion', libraryVersions.slf4jVersion
 }
 
+cargo {
+    containerId = 'wildfly8x'
+	
+	deployable {
+		file = file('build/libs/resource-0.1.0-SNAPSHOT.war')
+		context = 'app-manager-resource'
+	}
+	
+    local {
+        homeDir = file('/Users/seba/Develop/wildfly-8.2.0.Final')
+    }
+    remote {
+        hostname = 'localhost'
+        username = 'seba'
+        password = '00106078'
+    }
+}
+
 eclipse {
 	project {
-		natures = ['org.springsource.ide.eclipse.gradle.core.nature', 'org.eclipse.jdt.core.javanature']
+		natures = [
+			'org.springsource.ide.eclipse.gradle.core.nature',
+			'org.eclipse.jdt.core.javanature'
+		]
 	}
 	classpath {
-		//you can tweak the classpath of the Eclipse project by adding extra configurations:
-		plusConfigurations += [
-			configurations.jbossEmbeddedTestRuntime
-		]
-
 		//default settings for downloading sources and Javadoc:
 		downloadSources = true
-		downloadJavadoc = false
+		downloadJavadoc = true
 	}
 }
