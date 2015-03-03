@@ -28,10 +28,10 @@ sourceSets {
 }
 
 dependencies {
-//	compile project(':domain')
-//	compile project(':service')
+	compile project(':domain')
+	compile project(':service')
 	
-	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+	providedCompile "javax:javaee-api:${libraryVersions.javaeeVersion}"
 
 	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 
@@ -127,10 +127,10 @@ cargo {
 	}
 	
     local {
-        homeDir = file('/Users/seba/Develop/wildfly-8.2.0.Final')
+        homeDir = file(System.getenv('JBOSS_HOME'))
     }
     remote {
-        hostname = 'localhost'
+        hostname = '127.0.0.1'
         username = 'seba'
         password = '00106078'
     }
