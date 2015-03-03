@@ -38,8 +38,13 @@ dependencies {
 	testCompile "junit:junit:${libraryVersions.junitVersion}"
 	testCompile "org.hamcrest:hamcrest-library:${libraryVersions.hamcrestVersion}"
 	
+	// resteasy
 	testRuntime "org.jboss.resteasy:resteasy-client:3.0.10.Final"
 	testRuntime "org.jboss.resteasy:resteasy-jackson-provider:3.0.10.Final"
+	
+	// swagger
+	compile "com.wordnik:swagger-annotations:1.3.6"
+	compile "com.wordnik:swagger-jaxrs_2.10:1.3.6"
 	
 	// jboss arquilian / shrinkwrap
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${libraryVersions.arquillianVersion}"
