@@ -1,12 +1,17 @@
 package org.application.manager.resource;
 
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
+import org.application.manager.entity.Organisation;
 import org.application.manager.service.OrganisationService;
 
 /**
@@ -14,38 +19,50 @@ import org.application.manager.service.OrganisationService;
  * @author freund
  *
  */
-@Path("/organisations")
+@Path("/")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
 public class OrganisationResource {
-    
-    @Inject
-    OrganisationService organisationService;
 
-    /**
-     * 
-     * @return
-     */
-    @GET
-    @Path("json")
-    @Produces({ "application/json" })
-    public JsonObject getHelloWorldJSON() {
-    	
-    	System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA: " + organisationService);
-    	
-        return Json.createObjectBuilder()
-                .add("result", "Hello World!")
-                .build();
-    }
+	@Inject
+	OrganisationService organisationService;
 
-    /**
-     * Retrieves a XML hello world message.
-     * The {@link javax.ws.rs.Path} method annotation value is related to the one defined at the class level.
-     * @return
-     */
-    @GET
-    @Path("xml")
-    @Produces({ "application/xml" })
-    public String getHelloWorldXML() {
-        return "<xml><result>" + "Hello World!" + "</result></xml>";
-    }
+	@GET
+	@Path("/organisations")
+	public Organisation[] list() {
+		Organisation[] organisations = organisationService.findAll().toArray(
+				new Organisation[0]);
 
+		return organisations;
+	}
+
+	@GET
+	@Path("/organisation/{id}")
+	public Organisation get(@PathParam("id") Long id) {
+		return organisationService.findOne(id);
+	}
+
+	@PUT
+	@Path("/organisation")
+	public Organisation create(Organisation organisation) {
+		Organisation o = organisationService.save(organisation);
+
+		return o;
+	}
+
+	@POST
+	@Path("/organisation")
+	public Organisation update(Organisation organisation) {
+		Organisation o = organisationService.findOne(organisation.getId());
+		o.setName(organisation.getName());
+		o.setDescription(organisation.getDescription());
+
+		return organisationService.save(o);
+	}
+
+	@DELETE
+	@Path("/organisation/{id}")
+	public void delete(@PathParam("id") Long id) {
+		organisationService.delete(id);
+	}
 }

@@ -48,6 +48,21 @@ public class OrganisationServiceBean implements OrganisationService {
 	public void deleteAll() {
 		organisationRepository.deleteAll();
 	}
+	
+	@Override
+	public void delete(Long id) {
+		organisationRepository.delete(id);
+	}
+
+	@Override
+	public void delete(Organisation entity) {
+		organisationRepository.delete(entity);
+	}
+
+	@Override
+	public void delete(Iterable<? extends Organisation> entities) {
+		organisationRepository.delete(entities);
+	}
 
 	@Override
 	public Organisation findOne(Long id) {

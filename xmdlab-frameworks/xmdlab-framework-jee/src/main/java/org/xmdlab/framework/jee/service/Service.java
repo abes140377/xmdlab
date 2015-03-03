@@ -26,6 +26,12 @@ public interface Service<E> {
 	
 	public void deleteAll();
 	
+	public void delete(Long id);
+	
+	public void delete(E entity);
+	
+	public void delete(Iterable<? extends E> entities);
+	
 	public E findOne(Long id);
 	
 	public E findOne(Predicate predicate);

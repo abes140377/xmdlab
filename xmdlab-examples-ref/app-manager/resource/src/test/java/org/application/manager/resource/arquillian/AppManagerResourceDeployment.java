@@ -28,16 +28,20 @@ public class AppManagerResourceDeployment {
 				// add framework packages
 				.addPackage("org.xmdlab.framework.jee.domain")
 				.addPackage("org.xmdlab.framework.jee.repository")
+				.addPackage("org.xmdlab.framework.jee.service")
 
 				// add module packages
 				.addPackage("org.application.manager.entity")
 				.addPackage("org.application.manager.cdi")
 				.addPackage("org.application.manager.repository")
+				.addPackage("org.application.manager.service")
 				.addPackage("org.application.manager.resource")
 				
-				.setWebXML("src/main/webapp/WEB-INF/web.xml")
+//				.addAsResource("META-INF/services/javax.ws.rs.client.ClientBuilder")
 				
-				.addAsWebResource("src/main/webapp/index.html")
+//				.setWebXML("src/main/webapp/WEB-INF/web.xml")
+				
+				//.addAsWebResource("src/main/webapp/index.html")
 
 				.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -46,7 +50,7 @@ public class AppManagerResourceDeployment {
 						ArchivePaths.create("beans.xml"))
 				.addAsWebInfResource("jbossas-ds.xml");
 
-		 System.out.println(war.toString(true));
+//		 System.out.println(war.toString(true));
 
 		war.merge(createDomainBaseDeployment());
 

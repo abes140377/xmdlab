@@ -28,6 +28,10 @@
 
 	Deploy to container
 	
+*	gradle clean war cargoUndeployRemote
+
+	Undeploy from container
+	
 *	gradle clean war cargoUndeployRemote cargoDeployRemote
 
-	Redeploy to container
+	Redeploy on container

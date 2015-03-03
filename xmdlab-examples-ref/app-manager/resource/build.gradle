@@ -38,6 +38,9 @@ dependencies {
 	testCompile "junit:junit:${libraryVersions.junitVersion}"
 	testCompile "org.hamcrest:hamcrest-library:${libraryVersions.hamcrestVersion}"
 	
+	testRuntime "org.jboss.resteasy:resteasy-client:3.0.10.Final"
+	testRuntime "org.jboss.resteasy:resteasy-jackson-provider:3.0.10.Final"
+	
 	// jboss arquilian / shrinkwrap
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${libraryVersions.arquillianVersion}"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${libraryVersions.arquillianVersion}"
@@ -55,6 +58,7 @@ dependencies {
 	glassfishEmbeddedTestRuntime "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${libraryVersions.arquillianGlassfishEmbeddedVersion}"
 	glassfishEmbeddedTestRuntime "org.glassfish.main.extras:glassfish-embedded-all:${libraryVersions.glassfishVersion}"
 	
+	// cargo
 	cargo 'org.wildfly:wildfly-controller-client:8.1.0.Final'
 	cargo 'org.codehaus.cargo:cargo-ant:1.4.8'
 }

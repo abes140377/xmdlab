@@ -48,8 +48,8 @@ public class Organisation extends AbstractEntity {
      * @param lastName  The last name of the created user.
      * @return  A new Builder instance.
      */
-    public static Builder getBuilder(String firstName, String lastName) {
-        return new Builder(firstName, lastName);
+    public static Builder getBuilder(String name, String description) {
+        return new Builder(name, description);
     }
 
 	public String getName() {
