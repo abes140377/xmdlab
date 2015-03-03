@@ -1,0 +1,3 @@
+https://github.com/K0NRAD/swagger-wildfly-resteasy.git
+https://github.com/jmchung/swagger4javaee.git
+https://github.com/dave-ellis/gradle-swagger-plugin

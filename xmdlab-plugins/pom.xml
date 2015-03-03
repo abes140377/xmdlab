@@ -16,6 +16,7 @@
   <modules>
     <module>org.xmdlab.3rdparty</module>
     <module>org.xmdlab.util</module>
+<!--     <module>org.xmdlab.core</module> -->
   </modules>
 
   <build>
