@@ -1,4 +1,4 @@
-include ':domain', ':service', ':resource'
+include ':domain', ':service', ':resource', ':resource-spring'
 
 include ':xmdlab-framework-jee'
 project(':xmdlab-framework-jee').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-jee')
