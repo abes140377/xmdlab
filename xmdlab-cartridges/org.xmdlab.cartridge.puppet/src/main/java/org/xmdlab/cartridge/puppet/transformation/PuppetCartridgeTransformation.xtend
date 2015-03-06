@@ -14,6 +14,7 @@ import org.xmdlab.puppet.site.mm.MmFactory
 import org.xmdlab.puppet.site.mm.MmSite
 import org.xmdlab.dsl.domain.domainDsl.DslRole
 import org.xmdlab.dsl.domain.domainDsl.DslProfile
+import org.xmdlab.dsl.domain.domainDsl.DslModule
 
 class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 	val static final Logger LOG = LoggerFactory.getLogger(PuppetCartridgeTransformation)
@@ -71,5 +72,17 @@ class PuppetCartridgeTransformation extends PuppetCartridgeTransformationBase {
 		LOG.info("transform dsl profile: " + dslProfile.name + " to metamodel profile")
 		
 		name = dslProfile.name
+	}
+	
+	/**
+	 * 
+	 */
+	def create FACTORY.createMmModule transform(DslModule dslModule) {
+		LOG.info("transform dsl module: " + dslModule.name + " to metamodel module")
+		
+		name = dslModule.name
+		
+		forgeId = dslModule.forgeId
+		scmUrl = dslModule.scmUrl
 	}
 }

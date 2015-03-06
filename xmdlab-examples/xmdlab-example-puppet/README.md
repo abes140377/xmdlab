@@ -3,11 +3,7 @@ Roles & Profiles for domain femoplus.local
 
 This site contains the definitions for the following nodes
 
-*   appserver
+*   wordpress
 
     This is the jboss wildfly cluster node for the domain
-    
-*   bloghost
-
-    This is the apache webserver for the domain
     

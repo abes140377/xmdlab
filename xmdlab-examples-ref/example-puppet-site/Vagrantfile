@@ -1,4 +1,26 @@
+proxyUrl      = 'http://10.128.9.103:3128'
+noProxy       = 'localhost|127.0.0.1'
+
 Vagrant.configure('2') do |config|
+  # Vagrant proxy settings
+  # Run: 'vagrant plugin install vagrant-proxyconf' before use
+  # With it you can specify the Apt proxy globally in $HOME/.vagrant.d/Vagrantfile without the need to configure every single machine.
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = proxyUrl
+    config.proxy.https    = proxyUrl
+    config.proxy.no_proxy = noProxy
+
+    # VM proxy settings (wget, curl, yum, etc.). This configuration will be written to /etc/profile.d/proxy.sh on the guest.
+    config.env_proxy.http     = proxyUrl
+    config.env_proxy.https    = proxyUrl
+    config.env_proxy.no_proxy = noProxy
+  end
+  
+  # caching apt
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+
   config.vm.box = "precise32"
   config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 

@@ -1,18 +1,25 @@
 Domain femoplus.local {
 
 	"This is the jboss wildfly cluster node for the domain" 
-	Node appserver ip = "192.168.1.100" {
-		Role jboss8 {
-		
+	Node wordpress ip = "192.168.1.100" {
+		Role wordpress {
+			Profile db { }
+			Profile db::php { }
+			Profile wordpress {}
 		}
 	}
 	
-	"This is the apache webserver for the domain" 
-	Node bloghost ip = "192.168.1.101" {
-		Role blog {
-			Profile db
-			Profile db::php
-			Profile wordpress
-		}
-	}
+	//"This is the apache webserver for the domain" 
+	//Node bloghost ip = "192.168.1.101" {
+	//	Role blog {
+	//		Profile db {
+	//			Module mysql { 
+	//				forgeId = puppetlabs-mysql
+	//				version = 0.9.0
+	//			}
+	//		}
+	//		Profile db::php
+	//		Profile wordpress
+	//	}
+	//}
 }

@@ -27,7 +27,14 @@ DslRole:
 
 DslProfile:
 	'Profile' name=QualifiedPuppetName '{'
-		
+		(modules+=DslModule)*
+	'}'
+;
+
+DslModule:
+	'Module' name=ID '{'
+		('forgeId' '=' forgeId=ForgeId | 'scmUrl' '=' scmUrl=STRING)?
+		('version' '=' version=VERSION)?
 	'}'
 ;
 
@@ -41,7 +48,7 @@ QualifiedName:
 QualifiedPuppetName:
   ID (=>'::' ID)*;
   
-Version:
+VERSION:
   ID (=>'.' ID) (=>'.' ID);
   
 ForgeId:

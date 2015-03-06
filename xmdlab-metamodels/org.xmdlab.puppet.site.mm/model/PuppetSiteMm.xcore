@@ -40,5 +40,8 @@ class MmProfile extends NamedElement {
 
 class MmModule extends NamedElement {
 	
+	String forgeId
+	String scmUrl
+	
 	container MmProfile profile opposite modules
 }

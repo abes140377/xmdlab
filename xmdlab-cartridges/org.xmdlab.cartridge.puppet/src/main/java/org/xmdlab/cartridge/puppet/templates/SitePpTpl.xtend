@@ -8,14 +8,17 @@ import com.google.inject.Inject
 import org.xmdlab.cartridge.puppet.metafacade.*
 import org.xmdlab.cartridge.puppet.conf.PuppetCartridgeProperties
 
+import static org.xmdlab.cartridge.puppet.util.StringHelper.*
+
 class SitePpTpl extends SitePpTplBase {
 	
 	@Inject extension PuppetCartridgeProperties
 	
 	override doGenerate() '''
+	«createManifestComment(this.class)»
 	«val site = siteMetafacade.modelResource»
 	«FOR n : site.nodes»
-	node «n.hostname» {
+	node «site.domainName».«n.hostname» {
 		include role::«n.role.name»
 	}
 	
