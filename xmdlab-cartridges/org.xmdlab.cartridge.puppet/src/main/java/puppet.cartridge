@@ -48,9 +48,10 @@ Cartridge puppet {
 		
 	}
 		
-	Outlet base outputDirectory 			= '..' 								overwrite = false createOutputDirectory = true
-	Outlet site outputDirectory 			= '../site'							overwrite = false createOutputDirectory = true
-	Outlet profileManifests outputDirectory = '../modules/profile/manifests' 	overwrite = false createOutputDirectory = true
+	Outlet base outputDirectory 			= '..' 											overwrite = false createOutputDirectory = true
+	Outlet site outputDirectory 			= '../site'										overwrite = false createOutputDirectory = true
+	Outlet profileManifests outputDirectory = '../site/roles_profiles/profile/manifests'	overwrite = false createOutputDirectory = true
+	Outlet roleManifests outputDirectory 	= '../site/roles_profiles/roles/manifests' 		overwrite = false createOutputDirectory = true
 	
 	Template path = "templates/ReadmeMdTpl" outputPattern = "README.md" outlet = base overwrite = true {
 		ModelElement type = siteMetafacade {
@@ -77,7 +78,7 @@ Cartridge puppet {
 	}
 	
 	// Role
-	Template path = "templates/RoleManifestInitPpTpl" outputPattern = "modules/role/manifests/init.pp" outlet = site {
+	Template path = "templates/RoleManifestInitPpTpl" outputPattern = "init.pp" outlet = roleManifests {
 		ModelElement type = siteMetafacade {
 			
 		}
@@ -90,13 +91,13 @@ Cartridge puppet {
 	}
 	
 	// Profile
-	Template path = "templates/ProfileManifestBasePpTpl" outputPattern = "modules/profile/manifests/base.pp" outlet = site {
+	Template path = "templates/ProfileManifestBasePpTpl" outputPattern = "base.pp" outlet = profileManifests {
 		ModelElement type = siteMetafacade {
 			
 		}
 	}
 	
-	Template path = "templates/ProfileManifestPpTpl" outlet = site {
+	Template path = "templates/ProfileManifestPpTpl" outlet = profileManifests {
 		ModelElement type = profileMetafacade {
 			
 		}

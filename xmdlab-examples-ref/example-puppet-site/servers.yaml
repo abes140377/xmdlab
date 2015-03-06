@@ -1,0 +1,14 @@
+---
+- name: wordpress
+  box: precise64
+  boxUrl: http://files.vagrantup.com/precise64.box
+  ram: 512
+  ip: 192.168.1.100
+  message: echo Visit http://127.0.0.1:8080/blog to configure wordpress
+
+- name: appserver
+  box: precise64
+  boxUrl: http://files.vagrantup.com/precise64.box
+  ram: 512
+  ip: 192.168.1.200
+  
