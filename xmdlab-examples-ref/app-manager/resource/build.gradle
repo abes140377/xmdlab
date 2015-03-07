@@ -28,7 +28,7 @@ sourceSets {
 }
 
 dependencies {
-	compile project(':domain')
+	compile project(':domain-sql')
 	compile project(':service')
 	
 	providedCompile "javax:javaee-api:${libraryVersions.javaeeVersion}"

@@ -1,4 +1,14 @@
-include ':domain', ':service', ':resource', ':resource-spring'
+//include ':domain-sql', ':domain-nosql', 'repository-sql', 'repository-nosql', ':service', ':resource', ':resource-spring', ':resource-spring-test'
+include ':domain-sql', ':domain-nosql', ':repository-sql', 'repository-nosql', ':service', ':resource', ':resource-spring', ':resource-spring-test'
+
+include ':xmdlab-framework'
+project(':xmdlab-framework').projectDir = file('../../xmdlab-frameworks/xmdlab-framework')
 
 include ':xmdlab-framework-jee'
 project(':xmdlab-framework-jee').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-jee')
+
+include ':xmdlab-framework-jpa'
+project(':xmdlab-framework-jpa').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-jpa')
+
+include ':xmdlab-framework-mongodb'
+project(':xmdlab-framework-mongodb').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-mongodb')

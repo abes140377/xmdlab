@@ -1,0 +1,18 @@
+USER:
+  - id: -1
+    version: 0
+    firstname: Dave
+    lastname: Matthews
+    username: dave
+    email: dave@dmband.com
+  - id: -2
+    version: 0
+    firstname: Carter
+    lastname: Beauford
+    username: carter
+    email: carter@dmband.com
+  - id: 1
+    version: 0
+    name: Firstname2
+    description: Lastname2
+    username: Username2

@@ -7,7 +7,8 @@ println """
 
 ext.libraryVersions = [
 	slf4jVersion							: '1.7.7',
-	springDataVersion						: '1.7.2.RELEASE',
+	springDataJpaVersion					: '1.7.2.RELEASE',
+	springDataMongodbVersion				: '1.6.2.RELEASE',
 	springDataRestVersion					: '2.2.2.RELEASE',
 	javaeeVersion                  			: '7.0',
 	wildflyVersion                 			: '8.2.0.Final',

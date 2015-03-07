@@ -1,12 +1,5 @@
 description = 'Xmdlab jee framework'
 
-ext.libraryVersions = [
-	javaee				: '7.0',
-	junit				: '4.11',
-	querydsl			: '3.6.0',
-	springDataVersion	: '1.7.2.RELEASE',
-]
-
 sourceSets {
     generated {
         java {
@@ -15,44 +8,15 @@ sourceSets {
     }
 }
 
-configurations {
-    querydslapt
-}
-
 dependencies {
+	compile project(':xmdlab-framework-jpa')
+	compile project(':xmdlab-framework-mongodb')
+	
 	compile 'org.slf4j:slf4j-simple:1.7.7'
-	compile "javax:javaee-api:${libraryVersions.javaee}"
-	compile "com.mysema.querydsl:querydsl-jpa:$libraryVersions.querydsl"
-	compile "org.springframework.data:spring-data-jpa:${libraryVersions.springDataVersion}"
+	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+	compile "com.mysema.querydsl:querydsl-jpa:${libraryVersions.querydslVersion}"
 	
-	querydslapt "com.mysema.querydsl:querydsl-apt:$libraryVersions.querydsl"
-	
-	testCompile "junit:junit:${libraryVersions.junit}"
-}
-
-task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
-    source = sourceSets.main.java
-    classpath = configurations.compile + configurations.querydslapt
-    options.compilerArgs = [
-            "-proc:only",
-            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
-    ]
-    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
-}
-
-compileJava {
-    dependsOn generateQueryDSL
-    source generateQueryDSL.destinationDir
-}
-
-compileGeneratedJava {
-    dependsOn generateQueryDSL
-    options.warnings = false
-    classpath += sourceSets.main.runtimeClasspath
-}
-
-clean {
-    delete sourceSets.generated.java.srcDirs
+	testCompile "junit:junit:${libraryVersions.junitVersion}"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -71,20 +35,3 @@ artifacts {
 }
 
 sourceSets.main.java.srcDir 'src/main/generated'
-
-//uploadArchives {
-//	repositories.mavenDeployer {
-//		pom.artifactId = 'org.xmdlab.framework.jee'
-//		pom.groupId = 'org.xmdlab.framework'
-//		pom.version = '0.1.0-SNAPSHOT'
-//		
-//		configuration = configurations.deployerJars
-//		
-//		repository(url: "http://dzstuv193.dzbw.de:8080/nexus/content/repositories/releases/") {
-//			authentication(userName: nexusUser, password: nexusPassword)
-//		}
-//		repository(url: "http://dzstuv193.dzbw.de:8080/nexus/content/repositories/snapshots/") {
-//			authentication(userName: nexusUser, password: nexusPassword)
-//		}
-//	}
-//}

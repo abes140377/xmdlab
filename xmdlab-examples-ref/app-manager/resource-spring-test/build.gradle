@@ -1,0 +1,68 @@
+description = 'AppManager resource spring test - contains spring resource tests'
+
+buildscript {
+	repositories { jcenter() }
+
+	dependencies { classpath 'com.bmuschko:gradle-cargo-plugin:2.0.3' }
+}
+
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.cargo'
+
+sourceSets {
+	test {
+		resources { srcDir 'src/test/resources' }
+		resources { srcDir 'src/test/resources-jbossas-embedded' }
+	}
+}
+
+dependencies {
+	compile project(':domain-sql')
+	//compile project(':service')
+
+	providedCompile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+
+	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
+
+	compile "org.springframework:spring-webmvc:3.2.4.RELEASE"
+	compile "org.springframework.data:spring-data-rest-webmvc:1.0.0.RELEASE"
+
+	//	testCompile "junit:junit:${libraryVersions.junitVersion}"
+	//	testCompile "org.hamcrest:hamcrest-library:${libraryVersions.hamcrestVersion}"
+
+	// cargo
+	cargo 'org.wildfly:wildfly-controller-client:8.1.0.Final'
+	cargo 'org.codehaus.cargo:cargo-ant:1.4.8'
+}
+
+cargo {
+	containerId = 'wildfly8x'
+
+	deployable {
+		file = file('build/libs/resource-spring-test-0.1.0-SNAPSHOT.war')
+		context = 'app-manager-resource-spring-test'
+	}
+
+	local {
+		homeDir = file(System.getenv('JBOSS_HOME'))
+	}
+	remote {
+		hostname = '127.0.0.1'
+		username = 'seba'
+		password = '00106078'
+	}
+}
+
+eclipse {
+	project {
+		natures = [
+			'org.springsource.ide.eclipse.gradle.core.nature',
+			'org.eclipse.jdt.core.javanature'
+		]
+	}
+	classpath {
+		//default settings for downloading sources and Javadoc:
+		downloadSources = true
+		downloadJavadoc = true
+	}
+}
