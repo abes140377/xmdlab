@@ -3,7 +3,7 @@ description = 'Xmdlab jpa framework'
 sourceSets {
     generated {
         java {
-            srcDirs = ['src/main/generated']
+            srcDirs = ['build/generated']
         }
     }
 }
@@ -63,4 +63,4 @@ artifacts {
 	archives javadocJar
 }
 
-sourceSets.main.java.srcDir 'src/main/generated'
+sourceSets.main.java.srcDir 'build/generated'

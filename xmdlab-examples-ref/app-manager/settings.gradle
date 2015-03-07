@@ -1,5 +1,4 @@
-//include ':domain-sql', ':domain-nosql', 'repository-sql', 'repository-nosql', ':service', ':resource', ':resource-spring', ':resource-spring-test'
-include ':domain-sql', ':domain-nosql', ':repository-sql', 'repository-nosql', ':service', ':resource', ':resource-spring', ':resource-spring-test'
+include ':domain-sql', ':domain-nosql', ':repository-sql', 'repository-nosql', ':service', ':resource', ':resource-spring'
 
 include ':xmdlab-framework'
 project(':xmdlab-framework').projectDir = file('../../xmdlab-frameworks/xmdlab-framework')
