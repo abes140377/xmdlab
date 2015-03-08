@@ -1,1 +1,1 @@
-include 'xmdlab-framework-jpa', 'xmdlab-framework-mongodb', 'xmdlab-framework-jee'
+include 'xmdlab-framework-jpa', 'xmdlab-framework-mongodb', 'xmdlab-framework-jee', 'xmdlab-framework-test'

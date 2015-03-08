@@ -20,15 +20,15 @@ sourceSets {
 dependencies {
 	compile project(':domain-sql')
 	
+	compile project(':xmdlab-framework-jpa')
 	compile project(':xmdlab-framework-jee')
+	compile project(':xmdlab-framework-test')
 	
 	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
 
 	testCompile "junit:junit:${libraryVersions.junitVersion}"
 	testCompile "org.hamcrest:hamcrest-library:${libraryVersions.hamcrestVersion}"
-
-//	testRuntime "com.h2database:h2:${libraryVersions.h2databaseVersion}"
 
 	// Spring data
 	compile "org.springframework.data:spring-data-mongodb:${libraryVersions.springDataMongodbVersion}"

@@ -1,7 +1,7 @@
 package org.application.manager.document;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.xmdlab.framework.jee.document.AbstractDocument;
+import org.xmdlab.framework.jee.domain.AbstractDocument;
 
 @Document
 public class Team extends AbstractDocument {

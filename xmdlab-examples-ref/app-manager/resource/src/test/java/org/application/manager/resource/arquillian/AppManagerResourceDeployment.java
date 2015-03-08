@@ -36,12 +36,12 @@ public class AppManagerResourceDeployment {
 				.addPackage("org.application.manager.repository")
 				.addPackage("org.application.manager.service")
 				.addPackage("org.application.manager.resource")
-				
-//				.addAsResource("META-INF/services/javax.ws.rs.client.ClientBuilder")
-				
-//				.setWebXML("src/main/webapp/WEB-INF/web.xml")
-				
-				//.addAsWebResource("src/main/webapp/index.html")
+
+				// .addAsResource("META-INF/services/javax.ws.rs.client.ClientBuilder")
+
+				// .setWebXML("src/main/webapp/WEB-INF/web.xml")
+
+				// .addAsWebResource("src/main/webapp/index.html")
 
 				.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -50,7 +50,7 @@ public class AppManagerResourceDeployment {
 						ArchivePaths.create("beans.xml"))
 				.addAsWebInfResource("jbossas-ds.xml");
 
-//		 System.out.println(war.toString(true));
+		// System.out.println(war.toString(true));
 
 		war.merge(createDomainBaseDeployment());
 
@@ -67,6 +67,7 @@ public class AppManagerResourceDeployment {
 		String springDataVersion = System.getProperty("springDataVersion",
 				"1.7.2.RELEASE");
 		String querydslVersion = System.getProperty("querydslVersion", "3.6.0");
+		String swaggerVersion = System.getProperty("swaggerVersion", "1.3.6");
 
 		File[] slf4jDependencies = Maven.resolver()
 				.resolve("org.slf4j:slf4j-simple:" + slf4jVersion)
@@ -80,12 +81,20 @@ public class AppManagerResourceDeployment {
 		File[] querydslDependencies = Maven.resolver()
 				.resolve("com.mysema.querydsl:querydsl-jpa:" + querydslVersion)
 				.withTransitivity().asFile();
+		File[] swaggerJaxrsDependencies = Maven.resolver()
+				.resolve("com.wordnik:swagger-jaxrs_2.10:" + swaggerVersion)
+				.withTransitivity().asFile();
+		File[] swaggerAnnotationsDependencies = Maven.resolver()
+				.resolve("com.wordnik:swagger-annotations:" + swaggerVersion)
+				.withTransitivity().asFile();
 
 		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war");
 
 		war.addAsLibraries(slf4jDependencies);
 		war.addAsLibraries(springDataDependencies);
 		war.addAsLibraries(querydslDependencies);
+		war.addAsLibraries(swaggerJaxrsDependencies);
+		war.addAsLibraries(swaggerAnnotationsDependencies);
 
 		return war;
 	}

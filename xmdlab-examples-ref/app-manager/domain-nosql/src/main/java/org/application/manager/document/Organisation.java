@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.xmdlab.framework.jee.document.AbstractDocument;
+import org.xmdlab.framework.jee.domain.AbstractDocument;
 
 /**
  * 

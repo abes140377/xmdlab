@@ -28,6 +28,8 @@ sourceSets.main.java.srcDir 'build/generated'
 dependencies {
 	compile project(':xmdlab-framework-jpa')
 	
+	testCompile project(':xmdlab-framework-test')
+	
 	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
 

@@ -9,11 +9,12 @@ sourceSets {
 }
 
 dependencies {
-	compile project(':xmdlab-framework-jpa')
-	compile project(':xmdlab-framework-mongodb')
+	//compile project(':xmdlab-framework-mongodb')
 	
 	compile 'org.slf4j:slf4j-simple:1.7.7'
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+	
+	compile "org.springframework.data:spring-data-commons:1.9.2.RELEASE"
 	compile "com.mysema.querydsl:querydsl-jpa:${libraryVersions.querydslVersion}"
 	
 	testCompile "junit:junit:${libraryVersions.junitVersion}"

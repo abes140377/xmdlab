@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.xmdlab.framework.jee.document;
+package org.xmdlab.framework.jee.domain;
 
 import org.springframework.data.annotation.Id;
 

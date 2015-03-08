@@ -3,6 +3,7 @@ package org.xmdlab.framework.jee.domain;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 /**
@@ -10,7 +11,7 @@ import javax.persistence.Version;
  * 
  * @author freund
  */
-
+@MappedSuperclass
 public class AbstractEntity implements java.io.Serializable {
 
 	/**

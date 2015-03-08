@@ -11,3 +11,6 @@ project(':xmdlab-framework-jpa').projectDir = file('../../xmdlab-frameworks/xmdl
 
 include ':xmdlab-framework-mongodb'
 project(':xmdlab-framework-mongodb').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-mongodb')
+
+include ':xmdlab-framework-test'
+project(':xmdlab-framework-test').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-test')
