@@ -1,6 +1,15 @@
-repositories {
-	mavenCentral()
-}
+repositories { mavenCentral() }
+
+ext.libraryVersions = [
+	javaeeVersion          					: '7.0',
+	junitVersion                			: '4.11',
+	querydslVersion							: '3.6.0',
+	springDataJpaVersion					: '1.7.2.RELEASE',
+	springDataMongodbVersion				: '1.6.2.RELEASE',
+	arquillianVersion              			: '1.1.5.Final',
+	shrinkWrapResolverGradleVersion			: '2.1.0',
+	shrinkwrapResolverGradleDepchainVersion	: '2.2.0-beta-1',
+]
 
 allprojects {
 	group = "org.xmdlab.framework"
@@ -8,17 +17,25 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
+	apply plugin: 'java'
+	apply plugin: 'maven'
 	apply plugin: 'eclipse'
-	
-	sourceCompatibility = 1.7  
+
+	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
-    
-    repositories {
+
+	repositories {
 		mavenLocal()
 		mavenCentral()
 		maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
 		maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
-	}	
+		maven { url 'http://repo.gradle.org/gradle/libs-releases-local' }
+	}
 }
+
+//project(':xmdlab-framework-jee') {
+//	dependencies {
+//		compile project(':xmdlab-framework-jpa')
+//		compile project(':xmdlab-framework-mongodb')
+//	}
+//}

@@ -1,0 +1,66 @@
+description = 'Xmdlab mongodb framework'
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['build/generated']
+        }
+    }
+}
+
+configurations {
+    querydslapt
+}
+
+dependencies {
+	compile 'org.slf4j:slf4j-simple:1.7.7'
+	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+	compile "com.mysema.querydsl:querydsl-mongodb:${libraryVersions.querydslVersion}"
+	compile "org.springframework.data:spring-data-mongodb:${libraryVersions.springDataMongodbVersion}"
+	
+	querydslapt "com.mysema.querydsl:querydsl-apt:${libraryVersions.querydslVersion}"
+	
+	testCompile "junit:junit:${libraryVersions.junitVersion}"
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+
+sourceSets.main.java.srcDir 'build/generated'

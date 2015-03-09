@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns="http://jboss.org/schema/arquillian" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <container qualifier="jbossas-embedded" default="true">
+    <configuration>
+      <property name="jbossHome">${env.JBOSS_HOME}</property>
+      <property name="outputToConsole">true</property>
+      <property name="javaVmArguments">-Xmx512m -XX:MaxPermSize=128m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</property>
+    </configuration>
+  </container>
+
+  <container qualifier="jbossas-remote">
+    <configuration>
+<!--       <property name="host">localhost</property> -->
+<!--       <property name="jbossHome">${env.JBOSS_HOME}</property> -->
+      <property name="managementAddress">10.129.3.254</property>
+      <property name="managementPort">9990</property>
+      <property name="username">freund</property>
+      <property name="password">sebfre30</property>
+    </configuration>
+  </container>
+
+  <container qualifier="glassfish-embedded">
+    <configuration>
+      <property name="resourcesXml">
+                src/test/resources-glassfish-embedded/glassfish-resources.xml
+            </property>
+    </configuration>
+  </container>
+
+  <engine>
+    <property name="deploymentExportPath">build/deployments</property>
+  </engine>
+
+  <!-- <extension qualifier="transaction"> -->
+  <!-- <property name="manager">java:jboss/UserTransaction</property> -->
+  <!-- </extension> -->
+
+  <extension qualifier="persistence">
+    <!-- <property name="defaultDataSource">java:jboss/datasources/ExampleDS</property> -->
+    <!-- <property name="defaultDataSource">java:jboss/datasources/ExampleDS</property> -->
+    <property name="defaultDataSource">jdbc/arquillian</property>
+    <property name="dumpData">true</property>
+  </extension>
+
+  <extension qualifier="persistence-dbunit">
+    <property name="datatypeFactory">org.dbunit.ext.h2.H2DataTypeFactory</property>
+    <property name="excludePoi">true</property>
+  </extension>
+</arquillian>
