@@ -11,9 +11,6 @@ import org.application.manager.document.Organisation;
 import org.application.manager.repository.OrganisationRepository;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.persistence.PersistenceTest;
-import org.jboss.arquillian.persistence.UsingDataSet;
-import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,24 +19,30 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 /**
- * 
- * @author freund
+ * The Class OrganisationRepositoryIntegrationTest.
  *
+ * @author Sebastian Freund <seba140377@web.de>
  */
 @RunWith(Arquillian.class)
-@PersistenceTest
 public class OrganisationRepositoryIntegrationTest {
 
+	/** The organisation repository. */
 	@Inject
 	OrganisationRepository organisationRepository;
 
+	/**
+	 * Creates the deployment.
+	 *
+	 * @return the web archive
+	 */
 	@Deployment
 	public static WebArchive createDeployment() {
-		return AppManagerRepositoryDeployment.createDomainRepositoryDeployment();
+		return AppManagerRepositoryDeployment
+				.createDomainRepositoryDeployment();
 	}
 
 	/**
-	 * 
+	 * Should inject organisation repository.
 	 */
 	@Test
 	public void shouldInjectOrganisationRepository() {
@@ -48,10 +51,9 @@ public class OrganisationRepositoryIntegrationTest {
 	}
 
 	/**
-	 * 
+	 * Can save organisation.
 	 */
 	@Test
-	@Transactional
 	public void canSaveOrganisation() {
 		Organisation o = new Organisation();
 		o.setName("name1");
@@ -62,20 +64,25 @@ public class OrganisationRepositoryIntegrationTest {
 		Assert.assertNotNull(o.getId());
 	}
 
+	/**
+	 * Can find all and count.
+	 */
 	@Test
-	@UsingDataSet("datasets/organisations.yml")
 	public void canFindAllAndCount() {
-		Iterable<Organisation> organisations = organisationRepository.findAll();
+		// Iterable<Organisation> organisations =
+		// organisationRepository.findAll();
 
-//		Assert.assertEquals(1, organisations.size());
+		// Assert.assertEquals(1, organisations.size());
 
 		long count = organisationRepository.count();
 
 		Assert.assertEquals(1, count);
 	}
 
+	/**
+	 * Can get one.
+	 */
 	@Test
-	@UsingDataSet("datasets/organisations.yml")
 	public void canGetOne() {
 		Long organisationId = -1L;
 		Organisation result = organisationRepository.findOne(organisationId);
@@ -83,8 +90,10 @@ public class OrganisationRepositoryIntegrationTest {
 		Assert.assertEquals(organisationId, result.getId());
 	}
 
+	/**
+	 * Accesses organisation page by page.
+	 */
 	@Test
-	@UsingDataSet("datasets/organisations.yml")
 	public void accessesOrganisationPageByPage() {
 		Page<Organisation> result = organisationRepository
 				.findAll(new PageRequest(1, 1));

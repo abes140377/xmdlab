@@ -17,11 +17,12 @@ sourceSets {
 	}
 }
 
-dependencies {
-	compile project(':xmdlab-framework-jee')
-	
+dependencies {	
 	compile project(':domain-nosql')
-	testCompile(':xmdlab-framework-test')
+	
+	compile project(':xmdlab-framework-mongodb')
+	
+	testCompile project(':xmdlab-framework-test')
 	
 	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"

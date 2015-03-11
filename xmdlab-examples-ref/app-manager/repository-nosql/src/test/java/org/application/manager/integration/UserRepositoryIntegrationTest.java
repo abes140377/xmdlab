@@ -7,17 +7,12 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 
 import org.application.manager.arquillian.AppManagerRepositoryDeployment;
 import org.application.manager.document.User;
 import org.application.manager.repository.UserRepository;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.persistence.PersistenceTest;
-import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,21 +26,15 @@ import org.springframework.data.domain.PageRequest;
  *
  */
 @RunWith(Arquillian.class)
-@PersistenceTest
 public class UserRepositoryIntegrationTest {
 
 	@Inject
 	UserRepository userRepository;
 
-	@PersistenceContext
-	EntityManager em;
-
-	@Inject
-	UserTransaction utx;
-
 	@Deployment
 	public static WebArchive createDeployment() {
-		return AppManagerRepositoryDeployment.createDomainRepositoryDeployment();
+		return AppManagerRepositoryDeployment
+				.createDomainRepositoryDeployment();
 	}
 
 	/**
@@ -61,7 +50,6 @@ public class UserRepositoryIntegrationTest {
 	 * 
 	 */
 	@Test
-	// @Transactional
 	public void canSaveUser() throws Exception {
 		User o = new User();
 		o.setFirstname("firstname");
@@ -76,7 +64,6 @@ public class UserRepositoryIntegrationTest {
 	}
 
 	@Test
-	@UsingDataSet("datasets/users.yml")
 	public void canFindAllAndCount() throws Exception {
 		List<User> users = userRepository.findAll();
 
@@ -88,7 +75,6 @@ public class UserRepositoryIntegrationTest {
 	}
 
 	@Test
-	@UsingDataSet("datasets/users.yml")
 	public void canGetOne() {
 		Long userId = -1L;
 		User result = userRepository.findOne(userId);
@@ -97,7 +83,6 @@ public class UserRepositoryIntegrationTest {
 	}
 
 	@Test
-	@UsingDataSet("datasets/users.yml")
 	public void accessesUserPageByPage() {
 		Page<User> result = userRepository.findAll(new PageRequest(1, 1));
 
@@ -107,25 +92,25 @@ public class UserRepositoryIntegrationTest {
 		assertThat(result.getNumberOfElements(), is(1));
 	}
 
-//	@Test
-//	@UsingDataSet("datasets/users.yml")
-//	@Transactional
-//	public void executesQuerydslPredicate() {
-//		User dave = userRepository.findByEmailAddress(new EmailAddress(
-//				"dave@dmband.com"));
-//		User carter = userRepository.findByEmailAddress(new EmailAddress(
-//				"carter@dmband.com"));
-//
-//		QUser user = QUser.user;
-//
-//		BooleanExpression firstnameStartsWithDa = user.firstname
-//				.startsWith("Da");
-//		BooleanExpression lastnameContainsEau = user.lastname.contains("eau");
-//
-//		Iterable<User> result = userRepository.findAll(firstnameStartsWithDa
-//				.or(lastnameContainsEau));
-//
-//		assertThat(result, is(Matchers.<User> iterableWithSize(2)));
-//		assertThat(result, hasItems(dave, carter));
-//	}
+	// @Test
+	// @UsingDataSet("datasets/users.yml")
+	// @Transactional
+	// public void executesQuerydslPredicate() {
+	// User dave = userRepository.findByEmailAddress(new EmailAddress(
+	// "dave@dmband.com"));
+	// User carter = userRepository.findByEmailAddress(new EmailAddress(
+	// "carter@dmband.com"));
+	//
+	// QUser user = QUser.user;
+	//
+	// BooleanExpression firstnameStartsWithDa = user.firstname
+	// .startsWith("Da");
+	// BooleanExpression lastnameContainsEau = user.lastname.contains("eau");
+	//
+	// Iterable<User> result = userRepository.findAll(firstnameStartsWithDa
+	// .or(lastnameContainsEau));
+	//
+	// assertThat(result, is(Matchers.<User> iterableWithSize(2)));
+	// assertThat(result, hasItems(dave, carter));
+	// }
 }

@@ -72,7 +72,8 @@ public class DeploymentUtil {
 	/**
 	 * Adds the jpa framework packages.
 	 *
-	 * @param archiveToMerge the archive to merge
+	 * @param archiveToMerge
+	 *            the archive to merge
 	 */
 	public static void addJpaFrameworkPackages(WebArchive archiveToMerge) {
 		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
@@ -86,7 +87,8 @@ public class DeploymentUtil {
 	/**
 	 * Adds the mongodb framework packages.
 	 *
-	 * @param archiveToMerge the archive to merge
+	 * @param archiveToMerge
+	 *            the archive to merge
 	 */
 	public static void addMongodbFrameworkPackages(WebArchive archiveToMerge) {
 		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
@@ -99,7 +101,8 @@ public class DeploymentUtil {
 	/**
 	 * Adds the libraries.
 	 *
-	 * @param archiveToMerge the archive to merge
+	 * @param archiveToMerge
+	 *            the archive to merge
 	 */
 	public static void addLibraries(WebArchive archiveToMerge) {
 		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war");
@@ -114,10 +117,33 @@ public class DeploymentUtil {
 		archiveToMerge.merge(war);
 	}
 
+	public static void addLibrary(WebArchive archiveToMerge, String dependency) {
+		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war");
+
+		File[] deps = Maven.resolver().resolve(dependency)
+				.withoutTransitivity().asFile();
+
+		war.addAsLibraries(deps);
+
+		archiveToMerge.merge(war);
+	}
+	
+	public static void addLibraryTransitive(WebArchive archiveToMerge, String dependency) {
+		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war");
+
+		File[] deps = Maven.resolver().resolve(dependency)
+				.withTransitivity().asFile();
+
+		war.addAsLibraries(deps);
+
+		archiveToMerge.merge(war);
+	}
+
 	/**
 	 * Adds the libraries transitiv.
 	 *
-	 * @param archiveToMerge the archive to merge
+	 * @param archiveToMerge
+	 *            the archive to merge
 	 */
 	public static void addLibrariesTransitiv(WebArchive archiveToMerge) {
 		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war");

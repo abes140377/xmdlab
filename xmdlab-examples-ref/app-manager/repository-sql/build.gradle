@@ -22,7 +22,8 @@ dependencies {
 	
 	compile project(':xmdlab-framework-jpa')
 	compile project(':xmdlab-framework-jee')
-	compile project(':xmdlab-framework-test')
+	
+	testCompile project(':xmdlab-framework-test')
 	
 	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
 	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"

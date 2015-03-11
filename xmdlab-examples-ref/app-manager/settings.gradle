@@ -1,7 +1,7 @@
 include ':domain-sql', ':domain-nosql', ':repository-sql', 'repository-nosql', ':service', ':resource', ':resource-spring'
 
-include ':xmdlab-framework'
-project(':xmdlab-framework').projectDir = file('../../xmdlab-frameworks/xmdlab-framework')
+//include ':xmdlab-framework'
+//project(':xmdlab-framework').projectDir = file('../../xmdlab-frameworks/xmdlab-framework')
 
 include ':xmdlab-framework-jee'
 project(':xmdlab-framework-jee').projectDir = file('../../xmdlab-frameworks/xmdlab-framework-jee')
