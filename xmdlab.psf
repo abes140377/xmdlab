@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.egit.core.GitProvider">
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,devtools/eclipse-ide"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,devtools/eclipse-mirror"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-plugins/org.xmdlab.3rdparty"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.common"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator/org.xmdlab.cartridge.generator.dsl"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator/org.xmdlab.cartridge.generator.dsl.tests"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator/org.xmdlab.cartridge.generator.dsl.ui"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.jee"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.jee.tests"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.puppet"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges/org.xmdlab.cartridge.puppet.tests"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.application"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.application.ui"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.domain"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls/org.xmdlab.dsl.domain.ui"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-features/org.xmdlab.feature"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-metamodels/org.xmdlab.jee.application.mm"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-metamodels/org.xmdlab.puppet.site.mm"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-plugins/org.xmdlab.util"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,."/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridge-generator"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-cartridges"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-dsls"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-jee"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-jee/model"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-puppet"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples/xmdlab-example-puppet/model"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-examples"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-features"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks/xmdlab-framework-jee"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks/xmdlab-framework-jpa"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks/xmdlab-framework-mongodb"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks/xmdlab-framework-test"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-frameworks"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-maven"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-maven/xmdlab-maven-plugin"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-metamodels"/>
+<project reference="1.0,https://github.com/abes140377/xmdlab.git,develop,xmdlab-plugins"/>
+</provider>
+<workingSets editPageId="org.eclipse.ui.resourceWorkingSetPage" id="1427052498807_1" label="xmdlab" name="xmdlab">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-metamodels" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-dsls" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-cartridge-generator" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-cartridges" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-examples" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-plugins" type="4"/>
+<item elementID="=xmdlab-features" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-maven" type="4"/>
+<item elementID="=xmdlab-frameworks" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052533844_2" label="xmdlab-cartridge-generator" name="xmdlab-cartridge-generator">
+<item elementID="=org.xmdlab.cartridge.generator.dsl" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.cartridge.generator.dsl.tests" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.cartridge.generator.dsl.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052545603_3" label="xmdlab-cartridges" name="xmdlab-cartridges">
+<item elementID="=org.xmdlab.cartridge.common" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.cartridge.jee" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.cartridge.jee.tests" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.cartridge.puppet" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.cartridge.puppet.tests" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427056458348_13" label="xmdlab-devtools" name="xmdlab-devtools">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/eclipse-ide" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/eclipse-mirror" type="4"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052567304_4" label="xmdlab-dsl" name="xmdlab-dsl">
+<item elementID="=org.xmdlab.dsl.application" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.dsl.application.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.dsl.domain" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.dsl.domain.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052634431_5" label="xmdlab-examples" name="xmdlab-examples">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-example-jee" type="4"/>
+<item elementID="=xmdlab-example-jee-model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/xmdlab-example-puppet" type="4"/>
+<item elementID="=xmdlab-example-puppet-model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052661614_6" label="xmdlab-features" name="xmdlab-features">
+<item elementID="=org.xmdlab.feature" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052679537_7" label="xmdlab-frameworks" name="xmdlab-frameworks">
+<item elementID="=xmdlab-framework-jee" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-jee" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-jpa" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-jpa" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-mongodb" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-mongodb" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=xmdlab-framework-test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052700425_8" label="xmdlab-maven" name="xmdlab-maven">
+<item elementID="=xmdlab-maven-plugin" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052712190_9" label="xmdlab-metamdels" name="xmdlab-metamdels">
+<item elementID="=org.xmdlab.jee.application.mm" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.puppet.site.mm" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1427052734467_10" label="xmdlab-plugins" name="xmdlab-plugins">
+<item elementID="=org.xmdlab.3rdparty" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.xmdlab.util" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+</psf>

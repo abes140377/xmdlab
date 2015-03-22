@@ -1,0 +1,130 @@
+description = 'AppManager repository nosql - contains nosql repository'
+
+configurations {
+	provided
+	glassfishEmbeddedTestRuntime { extendsFrom testRuntime }
+	jbossEmbeddedTestRuntime { extendsFrom testRuntime, provided }
+	jbossRemoteTestRuntime { extendsFrom testRuntime }
+}
+
+sourceSets {
+	test {
+		resources { srcDir 'src/test/resources' }
+		resources { srcDir 'src/test/resources-jbossas-embedded' }
+
+		compileClasspath += main.output + configurations.provided + main.compileClasspath
+		runtimeClasspath += main.output + configurations.provided + main.compileClasspath + main.runtimeClasspath
+	}
+}
+
+dependencies {	
+	compile project(':domain')
+	
+	compile project(':xmdlab-framework-mongodb')
+	
+	testCompile project(':xmdlab-framework-test')
+	
+	compile "org.slf4j:slf4j-simple:${libraryVersions.slf4jVersion}"
+	compile "javax:javaee-api:${libraryVersions.javaeeVersion}"
+
+	testCompile "junit:junit:${libraryVersions.junitVersion}"
+	testCompile "org.hamcrest:hamcrest-library:${libraryVersions.hamcrestVersion}"
+
+	// Spring data
+	compile "org.springframework.data:spring-data-mongodb:${libraryVersions.springDataMongodbVersion}"
+
+	// arquillian persistence extension
+	testCompile "org.jboss.arquillian.extension:arquillian-persistence-dbunit:${libraryVersions.arquillianPersistenceVersion}"
+
+	// jboss arquilian / shrinkwrap
+	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${libraryVersions.arquillianVersion}"
+	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${libraryVersions.arquillianVersion}"
+
+	testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain:${libraryVersions.shrinkWrapResolverGradleVersion}"
+	testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:${libraryVersions.shrinkwrapResolverGradleDepchainVersion}"
+
+	// wildfly managed
+	jbossEmbeddedTestRuntime "org.wildfly:wildfly-arquillian-container-managed:${libraryVersions.wildflyVersion}"
+
+	// wildfly remote
+	jbossRemoteTestRuntime "org.wildfly:wildfly-arquillian-container-remote:${libraryVersions.wildflyVersion}"
+
+	// glassfish managed
+	glassfishEmbeddedTestRuntime "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${libraryVersions.arquillianGlassfishEmbeddedVersion}"
+	glassfishEmbeddedTestRuntime "org.glassfish.main.extras:glassfish-embedded-all:${libraryVersions.glassfishVersion}"
+}
+
+// jbossEmbeddedTest
+task jbossEmbeddedTest(type: Test)
+
+jbossEmbeddedTest {
+	include '**/integration/*'
+
+	systemProperty 'arquillian.launch', "jbossas-embedded"
+	systemProperty 'java.util.logging.manager', 'org.jboss.logmanager.LogManager'
+}
+
+// jbossRemoteTest
+task jbossRemoteTest(type: Test)
+
+jbossRemoteTest {
+	include '**/integration/*'
+
+	systemProperty 'arquillian.launch', "jbossas-remote"
+}
+
+// glassfishEmbeddedTest
+task glassfishEmbeddedTest(type: Test) {
+	include '**/integration/*'
+
+	systemProperty 'arquillian.launch', "glassfish-embedded"
+	systemProperty 'java.util.logging.config.file', "${projectDir}/src/test/resources-glassfish-embedded/logging.properties"
+	systemProperty 'derby.stream.error.file', "${projectDir}/build/derby.log"
+}
+
+tasks.withType(Test).matching({ t-> t.name.endsWith('Test') } as Spec).each { t ->
+
+	if (System.getProperty('test.debug', 'false') == 'true') {
+		t.jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
+	}
+	if (System.getProperty('test.single', '') != '') {
+		t.includes = [
+			System.getProperty('test.single')
+		]
+	}
+	t.testLogging.showStandardStreams = true
+	t.testClassesDir = project.sourceSets.test.output.classesDir
+	t.classpath = project.configurations.getByName(t.name + 'Runtime') +
+			project.sourceSets.main.output +
+			project.sourceSets.test.output
+	if (t.name.startsWith('jbossEmbedded')) {
+		t.classpath += files('src/test/resources-jbossas-embedded')
+	} else if(t.name.startsWith('glassfishEmbedded')){
+		t.classpath += files('src/test/resources-glassfish-embedded')
+	}
+}
+
+test {
+	exclude '**/integration/*'
+	testLogging.showStandardStreams = true
+
+	jvmArgs '-XX:MaxPermSize=256m'
+	
+	systemProperty 'slf4jVersion', libraryVersions.slf4jVersion
+}
+
+eclipse {
+	project {
+		natures = ['org.springsource.ide.eclipse.gradle.core.nature', 'org.eclipse.jdt.core.javanature']
+	}
+	classpath {
+		//you can tweak the classpath of the Eclipse project by adding extra configurations:
+		plusConfigurations += [
+			configurations.jbossEmbeddedTestRuntime
+		]
+
+		//default settings for downloading sources and Javadoc:
+		downloadSources = true
+		downloadJavadoc = false
+	}
+}

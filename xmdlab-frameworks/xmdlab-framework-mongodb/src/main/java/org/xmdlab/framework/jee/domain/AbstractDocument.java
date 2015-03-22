@@ -15,6 +15,8 @@
  */
 package org.xmdlab.framework.jee.domain;
 
+import java.math.BigInteger;
+
 import org.springframework.data.annotation.Id;
 
 /**
@@ -25,15 +27,15 @@ import org.springframework.data.annotation.Id;
 public class AbstractDocument {
 
 	@Id
-	private Long id;
+	private BigInteger id;
 
 	/**
 	 * Returns the identifier of the document.
 	 * 
 	 * @return the id
 	 */
-	public Long getId() {
-		return id; 
+	public BigInteger getId() {
+		return id;
 	}
 
 	/* 

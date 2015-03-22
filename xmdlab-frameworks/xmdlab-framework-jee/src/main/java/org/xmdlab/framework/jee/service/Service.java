@@ -40,7 +40,7 @@ public interface Service<E> {
 	
 	public E save(E entity);
 	
-	public E saveAndFlush(E entity);
+	//public E saveAndFlush(E entity);
 	
 	public boolean exists(Long id);
 }
