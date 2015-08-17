@@ -8,8 +8,8 @@
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore"
-    name="boxen-linux"
-    label="Boxen Linux">
+    name="xmdlab"
+    label="Xmdlab">
   <setupTask
       xsi:type="setup:CompoundTask"
       name="Start configuration">
@@ -151,5 +151,5 @@
   <logicalProjectContainer
       xsi:type="setup:Project"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='GitHubContainer']"/>
-  <description>Boxen Linux</description>
+  <description>Xmdlab</description>
 </setup:Project>
