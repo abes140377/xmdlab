@@ -805,8 +805,16 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>itemis</id>
+      <url>https://projects.itemis.de/nexus/content/groups/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <modules>
-    <module>xmdlab-features</module>
+    <module>xmdlab-plugins</module>
+    <module>xmdlab-dsls</module>
   </modules>
 </project>
